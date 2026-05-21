@@ -1,0 +1,65 @@
+2026-05-12 16:55:16
+START RequestId: 12e57043-332d-4284-b8d4-787483c17735
+2026-05-12 16:55:16
+Event RequestId: 12e57043-332d-4284-b8d4-787483c17735
+2026-05-12 16:55:16
+=== create-user 云函数被调用 ===
+2026-05-12 16:55:16
+CloudBase SDK 版本: 3.18.1
+2026-05-12 16:55:16
+event: {"department":"","name":"323","phone":"15900690008","role":"admin","tcbContext":{"accessToken":"eyJhbGciOiJSUzI1NiIsImtpZCI6IjlkMWRjMzFlLWI0ZDAtNDQ4Yi1hNzZmLWIwY2M2M2Q4MTQ5OCJ9.eyJpc3MiOiJodHRwczovL3dhdGVycHJvb2YtM2c5ZjdoOWtkYjYyNmJiMy5hcC1zaGFuZ2hhaS50Y2ItYXBpLnRlbmNlbnRjbG91ZGFwaS5jb20iLCJzdWIiOiIyMDUyMjkzNjM5NTM5NzAzODA5IiwiYXVkIjoid2F0ZXJwcm9vZi0zZzlmN2g5a2RiNjI2YmIzIiwiZXhwIjoxNzc4NTgzMjk5LCJpYXQiOjE3Nzg1NzYwOTksImF0X2hhc2giOiJyLmpHYlZsTnVTU2JPNDNOeF9Ka0pwTUEiLCJuYW1lIjoi5a6i5pyNIDEiLCJzY29wZSI6InNzbyB1c2VyIiwicHJvamVjdF9pZCI6IndhdGVycHJvb2YtM2c5ZjdoOWtkYjYyNmJiMyIsInByb3ZpZGVyX3R5cGUiOiJ1c2VybmFtZSIsImdyb3VwcyI6WyJpbnRlcm5hbFVzZXIiLCJndWVzdHNlcnZpY2UiXSwibWV0YSI6eyJ1c2VyRGVwVmVyc2lvbiI6IkNFTlRFUiIsInd4T3BlbklkIjoiIiwid3hVbmlvbklkIjoiIn0sInVzZXJfaWQiOiIyMDUyMjkzNjM5NTM5NzAzODA5IiwidXNlcl90eXBlIjoiaW50ZXJuYWwiLCJjbGllbnRfdHlwZSI6ImNsaWVudF91c2VyIiwiaXNfc3lzdGVtX2FkbWluIjpmYWxzZX0.Xn8cMCMdcaUSpqd3jnIY-erNNvLWWkA8dTJLxXmsd_hMrO3kKWAn3F6B4KmW8Ez4lO7QKFj8R6PvLIYBZ2PU1aGHSge3S4En_Vmk4-ez5XfE-IaF5AO1yT-UJPkoakxQZy62DWb1XcvhKICSrtzqUHflbOXjBi__lv_xxQC3G9W-eDVs3aeV4hnnndGUX1bLDiN_peXsC2udwzFQpFFUdDoH0r93VZmTt-JkjpgAB6T4xZ5wiNni16im4LC0qGTCE87ONl41KImrt_kLnC17Wz-8Kn99UIHoMtDBnS6Kh_RQ23PKDoc0jJH_I0Pj_Ri-Bh489RaxykbWZSJH_OxTOQ"}}
+2026-05-12 16:55:16
+参数: { phone: '15900690008', name: '323', department: '', role: 'admin' }
+2026-05-12 16:55:16
+手机号检查结果: {"data":[],"requestId":"bd2eae23cbad2-19e1b65c966_2"}
+2026-05-12 16:55:16
+=== 尝试创建身份认证用户 ===
+2026-05-12 16:55:16
+尝试使用 CloudBase 服务域名调用身份认证 API
+2026-05-12 16:55:16
+accessToken: 存在
+2026-05-12 16:55:16
+请求 URL: https://waterproof-3g9f7h9kdb626bb3.service.tcloudbase.com/api/auth/users
+2026-05-12 16:55:16
+请求头: {"Content-Type":"application/json","Content-Length":46,"Authorization":"Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjlkMWRjMzFlLWI0ZDAtNDQ4Yi1hNzZmLWIwY2M2M2Q4MTQ5OCJ9.eyJpc3MiOiJodHRwczovL3dhdGVycHJvb2YtM2c5ZjdoOWtkYjYyNmJiMy5hcC1zaGFuZ2hhaS50Y2ItYXBpLnRlbmNlbnRjbG91ZGFwaS5jb20iLCJzdWIiOiIyMDUyMjkzNjM5NTM5NzAzODA5IiwiYXVkIjoid2F0ZXJwcm9vZi0zZzlmN2g5a2RiNjI2YmIzIiwiZXhwIjoxNzc4NTgzMjk5LCJpYXQiOjE3Nzg1NzYwOTksImF0X2hhc2giOiJyLmpHYlZsTnVTU2JPNDNOeF9Ka0pwTUEiLCJuYW1lIjoi5a6i5pyNIDEiLCJzY29wZSI6InNzbyB1c2VyIiwicHJvamVjdF9pZCI6IndhdGVycHJvb2YtM2c5ZjdoOWtkYjYyNmJiMyIsInByb3ZpZGVyX3R5cGUiOiJ1c2VybmFtZSIsImdyb3VwcyI6WyJpbnRlcm5hbFVzZXIiLCJndWVzdHNlcnZpY2UiXSwibWV0YSI6eyJ1c2VyRGVwVmVyc2lvbiI6IkNFTlRFUiIsInd4T3BlbklkIjoiIiwid3hVbmlvbklkIjoiIn0sInVzZXJfaWQiOiIyMDUyMjkzNjM5NTM5NzAzODA5IiwidXNlcl90eXBlIjoiaW50ZXJuYWwiLCJjbGllbnRfdHlwZSI6ImNsaWVudF91c2VyIiwiaXNfc3lzdGVtX2FkbWluIjpmYWxzZX0.Xn8cMCMdcaUSpqd3jnIY-erNNvLWWkA8dTJLxXmsd_hMrO3kKWAn3F6B4KmW8Ez4lO7QKFj8R6PvLIYBZ2PU1aGHSge3S4En_Vmk4-ez5XfE-IaF5AO1yT-UJPkoakxQZy62DWb1XcvhKICSrtzqUHflbOXjBi__lv_xxQC3G9W-eDVs3aeV4hnnndGUX1bLDiN_peXsC2udwzFQpFFUdDoH0r93VZmTt-JkjpgAB6T4xZ5wiNni16im4LC0qGTCE87ONl41KImrt_kLnC17Wz-8Kn99UIHoMtDBnS6Kh_RQ23PKDoc0jJH_I0Pj_Ri-Bh489RaxykbWZSJH_OxTOQ"}
+2026-05-12 16:55:16
+响应状态: 404
+2026-05-12 16:55:16
+响应头: {"content-type":"application/json; charset=utf-8","x-cloudbase-request-id":"1485589c-5af6-4543-b49b-d455ac5d4a2d","x-request-id":"1485589c-5af6-4543-b49b-d455ac5d4a2d","date":"Tue, 12 May 2026 08:55:16 GMT","content-length":"197","server":"tcbgw"}
+2026-05-12 16:55:16
+HTTP API 响应: {"code":"INVALID_PATH","message":"Invalid path. For more information, please refer to https://docs.cloudbase.net/error-code/service/INVALID_PATH","requestId":"1485589c-5af6-4543-b49b-d455ac5d4a2d"}
+2026-05-12 16:55:16
+HTTP API 返回错误状态: 404
+2026-05-12 16:55:16
+获取到 systemUserId: null
+2026-05-12 16:55:16
+=== 最终 systemUserId: null
+2026-05-12 16:55:16
+角色数组: [ 'admin' ]
+2026-05-12 16:55:16
+managers 数据: {"_id":"mp2eaqhe96ah9q2fh6f","name":"323","phone":"15900690008","department":"","role":["admin"],"createdAt":1778576116370,"system_userid":"mp2eaqhe96ah9q2fh6f"}
+2026-05-12 16:55:16
+添加结果: {"id":"mp2eaqhe96ah9q2fh6f","requestId":"bd2eae23cbad2-19e1b65ca93_3"}
+2026-05-12 16:55:16
+Response RequestId: 12e57043-332d-4284-b8d4-787483c17735 RetMsg:
+{
+  "code": 201,
+  "message": "用户创建成功（身份认证用户创建失败，已使用本地ID）",
+  "data": {
+    "userId": "mp2eaqhe96ah9q2fh6f",
+    "systemUserId": null,
+    "_id": "mp2eaqhe96ah9q2fh6f",
+    "name": "323",
+    "phone": "15900690008",
+    "department": "",
+    "role": [
+      "admin"
+    ],
+    "createdAt": 1778576116370,
+    "system_userid": "mp2eaqhe96ah9q2fh6f"
+  }
+}
+2026-05-12 16:55:16
+END RequestId: 12e57043-332d-4284-b8d4-787483c17735
+2026-05-12 16:55:16
+Report RequestId: 12e57043-332d-4284-b8d4-787483c17735 Duration: 363ms Memory: 256MB MemUsage: 20.261719MB

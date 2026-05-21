@@ -1,0 +1,15 @@
+{
+  "envId": "waterproof-3g9f7h9kdb626bb3",
+  "version": "2.0",
+  "staticSite": {
+    "rewrites": [
+      {
+        "source": "**",
+        "target": "/index.html"
+      }
+    ],
+    "errorDocument": {
+      "404": "/index.html"
+    }
+  }
+}

@@ -1,0 +1,209 @@
+{
+    "previewTableName": "",
+    "publishCacheStatus": "ready",
+    "subType": "database",
+    "schema": {
+        "x-primary-column": "_id",
+        "x-kind": "tcb",
+        "x-defaultMethods": [
+            "wedaCreate",
+            "wedaUpdate",
+            "wedaDelete",
+            "wedaGetItem",
+            "wedaGetRecords",
+            "wedaGetList",
+            "wedaBatchCreate",
+            "wedaBatchUpdate",
+            "wedaBatchDelete"
+        ],
+        "type": "object",
+        "x-relatedType": "exist",
+        "x-viewId": "view-7u8qmzg328",
+        "required": [],
+        "properties": {
+            "owner": {
+                "default": "",
+                "x-system": true,
+                "x-id": "9d59c49",
+                "name": "owner",
+                "format": "father-son",
+                "pattern": "",
+                "x-hidden": true,
+                "type": "string",
+                "title": "所有人",
+                "x-index": 4,
+                "x-unique": false,
+                "x-parent": {
+                    "fatherAction": "judge",
+                    "type": "father-son",
+                    "parentDataSourceName": "sys_user"
+                }
+            },
+            "_mainDep": {
+                "x-system": true,
+                "x-id": "f734cae",
+                "name": "_mainDep",
+                "format": "father-son",
+                "x-hidden": true,
+                "type": "string",
+                "title": "所属主管部门",
+                "x-index": 7,
+                "x-unique": false,
+                "x-parent": {
+                    "fatherAction": "judge",
+                    "type": "father-son",
+                    "parentDataSourceName": "sys_department"
+                }
+            },
+            "createdAt": {
+                "default": 0,
+                "x-system": true,
+                "x-id": "9ce2017",
+                "format": "datetime",
+                "type": "number",
+                "title": "创建时间",
+                "x-index": 2,
+                "x-unique": false
+            },
+            "createBy": {
+                "default": "",
+                "x-system": true,
+                "x-id": "a56b254",
+                "name": "createBy",
+                "format": "father-son",
+                "pattern": "",
+                "x-hidden": true,
+                "type": "string",
+                "title": "创建人",
+                "x-index": 5,
+                "x-unique": false,
+                "x-parent": {
+                    "fatherAction": "judge",
+                    "type": "father-son",
+                    "parentDataSourceName": "sys_user"
+                }
+            },
+            "role": {
+                "x-keyPath": "",
+                "x-id": "c5a49ac2",
+                "format": "x-enum",
+                "description": "",
+                "x-option-name": "role_dict",
+                "type": "array",
+                "x-index": 47,
+                "title": "角色身份",
+                "x-unique": false,
+                "x-required": false,
+                "x-enum-type": "general-option",
+                "x-multi-select": true,
+                "items": {
+                    "type": "string"
+                }
+            },
+            "phone": {
+                "x-required": false,
+                "x-keyPath": "",
+                "x-id": "d37c3af4",
+                "format": "",
+                "description": "手机号",
+                "type": "string",
+                "x-index": 4,
+                "title": "手机号",
+                "x-unique": false,
+                "maxLength": 256
+            },
+            "updateBy": {
+                "default": "",
+                "x-system": true,
+                "x-id": "93a079a",
+                "name": "updateBy",
+                "format": "father-son",
+                "pattern": "",
+                "x-hidden": true,
+                "type": "string",
+                "title": "修改人",
+                "x-index": 6,
+                "x-unique": false,
+                "x-parent": {
+                    "fatherAction": "judge",
+                    "type": "father-son",
+                    "parentDataSourceName": "sys_user"
+                }
+            },
+            "_openid": {
+                "default": "",
+                "x-system": true,
+                "x-id": "0346425",
+                "name": "_openid",
+                "format": "",
+                "pattern": "",
+                "description": "仅微信云开发下使用",
+                "type": "string",
+                "title": "记录创建者",
+                "x-index": 45,
+                "x-unique": false
+            },
+            "name": {
+                "x-required": false,
+                "x-keyPath": "",
+                "x-id": "7e3b19a2",
+                "format": "",
+                "description": "姓名",
+                "type": "string",
+                "x-index": 2,
+                "title": "姓名",
+                "x-unique": false,
+                "maxLength": 256
+            },
+            "_id": {
+                "x-system": true,
+                "x-id": "bba1ee8",
+                "format": "",
+                "type": "string",
+                "title": "数据标识",
+                "x-index": 1,
+                "x-unique": true
+            },
+            "bind_openid": {
+                "x-required": false,
+                "x-keyPath": "",
+                "x-id": "98ddcc95",
+                "format": "",
+                "description": "",
+                "type": "string",
+                "x-index": 15,
+                "title": "微信绑定标识",
+                "x-unique": false,
+                "maxLength": 256
+            },
+            "updatedAt": {
+                "default": 0,
+                "x-system": true,
+                "x-id": "1850030",
+                "format": "datetime",
+                "type": "number",
+                "title": "更新时间",
+                "x-index": 3,
+                "x-unique": false
+            }
+        }
+    },
+    "dbInstanceType": "FLEXDB",
+    "title": "项目人员表",
+    "prodDbInfo": null,
+    "stagingSwitch": false,
+    "name": "managers",
+    "dataHubName": "flexdb",
+    "dbLinkType": "internal",
+    "tableNameRule": "only_name",
+    "type": "database",
+    "previewDbInfo": null,
+    "updateTime": "2026-04-19T05:29:01",
+    "publishedTableName": "managers",
+    "id": "data-5pWUkyZG9",
+    "dbSourceType": "internal_flexdb",
+    "methods": [],
+    "fun": "{\"onlineVersion\": 10, \"previewVersion\": 9, \"onlinePublishAt\": 1776576541559, \"prviewPublishAt\": 1776576541112}",
+    "publishStatus": 1,
+    "configuration": {}
+}

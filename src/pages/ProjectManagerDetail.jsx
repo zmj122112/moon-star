@@ -1,0 +1,778 @@
+import { useState, useEffect } from 'react';
+import { 
+  Card, 
+  Typography, 
+  Row, 
+  Col, 
+  Tag, 
+  Button, 
+  Form, 
+  Input, 
+  InputNumber,
+  Table,
+  Divider,
+  message,
+  Space,
+  Descriptions,
+  Image,
+  Upload,
+  Modal
+} from 'antd';
+import { 
+  ArrowLeftOutlined, 
+  PhoneOutlined, 
+  EnvironmentOutlined, 
+  CalendarOutlined,
+  DollarOutlined,
+  SendOutlined,
+  PlusOutlined
+} from '@ant-design/icons';
+import { cloudbase, db, storage, uploadFileViaCloudFunction } from '../cloudbase';
+import { useParams, useNavigate } from 'react-router-dom';
+import AppLayout from '../components/Layout';
+
+const { TextArea } = Input;
+const { Title, Text } = Typography;
+
+const imageUploadProps = {
+  name: 'file',
+  action: '',
+  listType: 'picture-card',
+  accept: 'image/*',
+  multiple: true,
+  beforeUpload: () => false,
+};
+
+const attachmentUploadProps = {
+  name: 'file',
+  action: '',
+  accept: '.doc,.docx,.pdf,.xls,.xlsx,.zip,.rar',
+  multiple: true,
+  beforeUpload: () => false,
+};
+
+const PRIMARY_COLOR = '#2563eb';
+const PRIMARY_HOVER = '#1d4ed8';
+const TEXT_COLOR = '#1e293b';
+const TEXT_SECONDARY = '#64748b';
+
+const STATUS_MAP = {
+  '10': { color: 'orange', label: '待接单' },
+  '20': { color: 'cyan', label: '待勘测' },
+  '30': { color: 'gold', label: '待报价' },
+  '40': { color: 'lime', label: '待确认报价' },
+  '45': { color: 'magenta', label: '待派工' },
+  '50': { color: 'blue', label: '待进场' },
+  '60': { color: 'purple', label: '施工中' },
+  '65': { color: 'volcano', label: '重新报价' },
+  '70': { color: 'geekblue', label: '待验收' },
+  '80': { color: 'red', label: '待支付' },
+  '90': { color: 'green', label: '已结单' },
+};
+
+const recordTypeMap = {
+  '0': { label: '客服接单及派单', color: 'blue' },
+  '1': { label: '上门勘测打卡', color: 'cyan' },
+  '2': { label: '提交方案及报价', color: 'purple' },
+  '3': { label: '客户确认报价', color: 'green' },
+  '4': { label: '进场施工打卡', color: 'orange' },
+  '5': { label: '施工进度汇报', color: 'gold' },
+  '6': { label: '提交完工验收', color: 'pink' },
+  '7': { label: '内部沟通备注', color: 'gray' },
+  '9': { label: '客户完工验收', color: 'purple' },
+  '10': { label: '已付款结单', color: 'green' },
+  '3_5': { label: '项目经理派工', color: 'magenta' },
+};
+
+const getImageUrl = (cloudPath) => {
+  if (!cloudPath) return '';
+  
+  const bucketName = '7761-waterproof-3g9f7h9kdb626bb3-1257706342';
+  
+  let filePath = cloudPath;
+  if (filePath.startsWith('cloud://')) {
+    const pathWithoutPrefix = filePath.replace('cloud://', '');
+    const firstSlashIndex = pathWithoutPrefix.indexOf('/');
+    if (firstSlashIndex !== -1) {
+      filePath = pathWithoutPrefix.substring(firstSlashIndex + 1);
+    } else {
+      filePath = pathWithoutPrefix;
+    }
+  }
+  
+  return `https://${bucketName}.tcb.qcloud.la/${filePath}`;
+};
+
+function ProjectManagerDetail() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [order, setOrder] = useState(null);
+  const [records, setRecords] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [quoteForm] = Form.useForm();
+  const [uploadedImages, setUploadedImages] = useState([]);
+  const [uploadedAttachments, setUploadedAttachments] = useState([]);
+  const [previewImage, setPreviewImage] = useState('');
+  const [previewVisible, setPreviewVisible] = useState(false);
+  const [previewFile, setPreviewFile] = useState(null);
+  const [filePreviewVisible, setFilePreviewVisible] = useState(false);
+
+  useEffect(() => {
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      try {
+        const user = JSON.parse(userStr);
+        setCurrentUser(user);
+      } catch (e) {
+        console.error('解析用户信息失败:', e);
+      }
+    }
+    
+    fetchOrder();
+    fetchRecords();
+  }, []);
+
+  const fetchOrder = async () => {
+    try {
+      const res = await db.collection('workorders').doc(id).get();
+      
+      let orderData = null;
+      if (res && res.data) {
+        if (Array.isArray(res.data) && res.data.length > 0) {
+          orderData = res.data[0];
+        } else if (typeof res.data === 'object' && res.data !== null) {
+          orderData = res.data;
+        }
+      }
+      
+      if (orderData) {
+        setOrder(orderData);
+      } else {
+        setError('项目不存在');
+      }
+    } catch (err) {
+      console.error('获取项目信息失败:', err);
+      setError(err.message || '获取项目信息失败');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchRecords = async () => {
+    try {
+      const res = await db.collection('wo_records')
+        .where({ order_id: id })
+        .orderBy('createdAt', 'desc')
+        .get();
+      
+      let recordsData = [];
+      if (res && res.data) {
+        recordsData = Array.isArray(res.data) ? res.data : [];
+      }
+      
+      for (const record of recordsData) {
+        if (record.creator_id) {
+          try {
+            const managerRes = await db.collection('managers')
+              .where({ _id: record.creator_id })
+              .get();
+            if (managerRes && managerRes.data && managerRes.data.length > 0) {
+              record.creator_name = managerRes.data[0].name || record.creator_name;
+            }
+          } catch (err) {
+            console.error('查询操作人姓名失败:', err);
+          }
+        }
+      }
+      
+      setRecords(recordsData);
+    } catch (err) {
+      console.error('获取工单跟进记录失败:', err);
+    }
+  };
+
+  const handleQuoteSubmit = async (values) => {
+    if (!order || !currentUser) return;
+
+    setSubmitting(true);
+    try {
+      console.log('=== 开始提交报价 ===');
+      console.log('当前用户:', currentUser);
+      console.log('订单信息:', order);
+      console.log('表单值:', values);
+      console.log('待上传图片:', uploadedImages.length);
+      console.log('待上传附件:', uploadedAttachments.length);
+
+      const userId = currentUser?.id || currentUser?._id || currentUser?.userId || currentUser?.user_id || currentUser?.phone || '';
+
+      const imageUrls = [];
+      if (uploadedImages.length > 0) {
+        console.log('开始上传图片...');
+        for (const file of uploadedImages) {
+          if (file.originFileObj) {
+            console.log('上传图片:', file.name, file.originFileObj.size);
+            try {
+              const url = await uploadFileViaCloudFunction(file.originFileObj, 'quote/images');
+              imageUrls.push(url);
+              console.log('图片上传成功:', url);
+            } catch (err) {
+              console.error('图片上传失败:', err.message, err.stack);
+              message.warning(`图片 ${file.name} 上传失败，已跳过: ${err.message}`);
+            }
+          }
+        }
+      }
+
+      const attachmentUrls = [];
+      if (uploadedAttachments.length > 0) {
+        console.log('开始上传附件...');
+        for (const file of uploadedAttachments) {
+          if (file.originFileObj) {
+            console.log('上传附件:', file.name, file.originFileObj.size);
+            try {
+              const url = await uploadFileViaCloudFunction(file.originFileObj, 'quote/attachments');
+              attachmentUrls.push(url);
+              console.log('附件上传成功:', url);
+            } catch (err) {
+              console.error('附件上传失败:', err.message, err.stack);
+              message.warning(`附件 ${file.name} 上传失败，已跳过: ${err.message}`);
+            }
+          }
+        }
+      }
+
+      const recordData = {
+        order_id: order._id,
+        record_type: '2',
+        creator_role: 'manager',
+        creator_name: currentUser?.name || '项目经理',
+        creator_id: userId,
+        content: `提交报价方案：${values.scheme || ''}，报价金额：¥${values.price || 0}，备注：${values.remark || ''}`,
+        price: values.price || 0,
+        manager_name: currentUser?.name || '',
+        createdAt: new Date().getTime(),
+        images: imageUrls.length > 0 ? imageUrls : [],
+        attachments: attachmentUrls.length > 0 ? attachmentUrls : [],
+      };
+
+      console.log('添加 wo_records 记录...');
+      const addResult = await db.collection('wo_records').add(recordData);
+      console.log('wo_records 添加结果:', addResult);
+
+      const updateData = {
+        status: '40',
+        total_price: values.price || 0,
+      };
+      console.log('更新 workorders, orderId:', order._id, 'updateData:', updateData);
+
+      // 通过云函数更新 workorders 表
+      console.log('通过云函数更新 workorders...');
+      const cloudFunctionResult = await cloudbase.callFunction({
+        name: 'update-workorder',
+        data: {
+          orderId: order._id,
+          status: '40',
+          total_price: values.price || 0
+        }
+      });
+      console.log('云函数返回结果:', cloudFunctionResult);
+
+      message.success('报价提交成功');
+      setUploadedImages([]);
+      setUploadedAttachments([]);
+      navigate('/project-manager');
+    } catch (err) {
+      console.error('报价提交失败:', err);
+      message.error('报价提交失败');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleImageUploadChange = ({ fileList }) => {
+    setUploadedImages(fileList);
+  };
+
+  const handleImageRemove = (file) => {
+    const newList = uploadedImages.filter(item => item.uid !== file.uid);
+    setUploadedImages(newList);
+  };
+
+  const handlePreview = (file) => {
+    setPreviewImage(file.url || getImageUrl(file.response));
+    setPreviewVisible(true);
+  };
+
+  const handleAttachmentUploadChange = ({ fileList }) => {
+    setUploadedAttachments(fileList);
+  };
+
+  const handleAttachmentRemove = (file) => {
+    const newList = uploadedAttachments.filter(item => item.uid !== file.uid);
+    setUploadedAttachments(newList);
+  };
+
+  const recordColumns = [
+    {
+      title: '跟进类型',
+      dataIndex: 'record_type',
+      key: 'record_type',
+      width: 150,
+      render: (type) => {
+        const info = recordTypeMap[String(type)] || { label: type, color: 'gray' };
+        return <Tag color={info.color}>{info.label}</Tag>;
+      },
+    },
+    {
+      title: '操作人',
+      dataIndex: 'creator_name',
+      key: 'creator_name',
+      width: 100,
+      render: (name, record) => {
+        if (name) return name;
+        const role = record.creator_role;
+        if (role === 'cs') return '客服';
+        if (role === 'manager') return '项目经理';
+        if (role === 'client') return '客户';
+        return role || '-';
+      },
+    },
+    {
+      title: '描述',
+      dataIndex: 'content',
+      key: 'content',
+      ellipsis: true,
+    },
+    {
+      title: '照片',
+      dataIndex: 'images',
+      key: 'images',
+      width: 120,
+      render: (images) => {
+        if (!images || !Array.isArray(images) || images.length === 0) {
+          return '-';
+        }
+        return (
+          <div style={{ display: 'flex', gap: '4px' }}>
+            {images.slice(0, 3).map((img, idx) => (
+              <Image
+                key={idx}
+                src={getImageUrl(img)}
+                alt={`照片${idx + 1}`}
+                style={{ width: '36px', height: '36px', borderRadius: '4px', objectFit: 'cover' }}
+                fallback="https://via.placeholder.com/36x36?text=图"
+              />
+            ))}
+            {images.length > 3 && (
+              <span style={{ fontSize: '12px', color: '#64748b', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', backgroundColor: '#f1f5f9', borderRadius: '4px' }}>
+                +{images.length - 3}
+              </span>
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      title: '金额',
+      dataIndex: 'price',
+      key: 'price',
+      width: 100,
+      render: (price) => price ? `¥${price.toFixed(2)}` : '-',
+    },
+    {
+      title: '附件',
+      dataIndex: 'attachments',
+      key: 'attachments',
+      width: 180,
+      render: (attachments) => {
+        if (!attachments || !Array.isArray(attachments) || attachments.length === 0) {
+          return <span style={{ color: '#9ca3af' }}>-</span>;
+        }
+        return (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', padding: '4px 0' }}>
+            {attachments.slice(0, 3).map((file, idx) => {
+              const fileName = file.split('/').pop().replace(/^\d+_/, '');
+              const fileUrl = getImageUrl(file);
+              const lowerFileName = fileName.toLowerCase();
+              const isImage = lowerFileName.match(/\.(jpg|jpeg|png|gif|bmp)$/) || lowerFileName.match(/\.(jpg|jpeg|png|gif|bmp)/);
+              const isOffice = lowerFileName.match(/\.(doc|docx|xls|xlsx|ppt|pptx|pdf)$/) || lowerFileName.match(/\.(doc|docx|xls|xlsx|ppt|pptx|pdf)/);
+              
+              const handleFileClick = () => {
+                const lowerName = fileName.toLowerCase();
+                if (lowerName.match(/\.(jpg|jpeg|png|gif|bmp)$/)) {
+                  setPreviewImage(fileUrl);
+                  setPreviewVisible(true);
+                } else {
+                  const link = document.createElement('a');
+                  link.href = fileUrl;
+                  link.download = fileName;
+                  link.target = '_blank';
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                }
+              };
+              
+              return (
+                <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '6px', width: '100%' }}>
+                  <span 
+                    onClick={handleFileClick}
+                    style={{ 
+                      fontSize: '12px', 
+                      color: '#2563eb', 
+                      cursor: 'pointer',
+                      wordBreak: 'break-all',
+                      flex: 1,
+                      whiteSpace: 'normal',
+                      lineHeight: '1.4'
+                    }}
+                    title="点击打开"
+                  >
+                    📎 {fileName.length > 18 ? fileName.substring(0, 18) + '...' : fileName}
+                  </span>
+                  <span
+                    onClick={() => {
+                      const link = document.createElement('a');
+                      link.href = fileUrl;
+                      link.download = fileName;
+                      document.body.appendChild(link);
+                      link.click();
+                      document.body.removeChild(link);
+                    }}
+                    style={{ 
+                      fontSize: '14px', 
+                      color: '#64748b',
+                      width: '20px',
+                      textAlign: 'center',
+                      display: 'inline-block',
+                      cursor: 'pointer'
+                    }}
+                    title="下载"
+                  >
+                    ↓
+                  </span>
+                </div>
+              );
+            })}
+            {attachments.length > 3 && (
+              <span style={{ fontSize: '12px', color: '#9ca3af', marginTop: '4px', display: 'block' }}>
+                +{attachments.length - 3} 个附件
+              </span>
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      title: '时间',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      width: 160,
+      render: (time) => time ? new Date(time).toLocaleString('zh-CN') : '-',
+    },
+  ];
+
+  const handleGoBack = () => {
+    navigate('/project-manager');
+  };
+
+  if (loading) {
+    return (
+      <AppLayout>
+        <div style={{ textAlign: 'center', padding: '100px' }}>
+          <Title level={3}>加载中...</Title>
+        </div>
+      </AppLayout>
+    );
+  }
+
+  if (error) {
+    return (
+      <AppLayout>
+        <div style={{ textAlign: 'center', padding: '100px' }}>
+          <Title level={3} style={{ color: '#dc2626' }}>{error}</Title>
+        </div>
+      </AppLayout>
+    );
+  }
+
+  const statusInfo = STATUS_MAP[String(order?.status)] || { label: order?.status, color: 'gray' };
+
+  return (
+    <AppLayout>
+      <div style={{ padding: '24px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px' }}>
+          <Button
+            type="text"
+            icon={<ArrowLeftOutlined />}
+            onClick={handleGoBack}
+            style={{ marginRight: '16px' }}
+          >
+            返回列表
+          </Button>
+          <Title level={2} style={{ margin: 0 }}>项目详情</Title>
+        </div>
+
+        <Card 
+          style={{ 
+            marginBottom: '24px',
+            borderRadius: '8px',
+            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.06)'
+          }}
+        >
+          <Title level={4} style={{ marginBottom: '20px' }}>基本信息</Title>
+          <Descriptions column={2} bordered size="small">
+            <Descriptions.Item label="联系人" span={2}>
+              <span style={{ fontWeight: '500', fontSize: '15px' }}>{order.name}</span>
+            </Descriptions.Item>
+            <Descriptions.Item label="联系电话">
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <PhoneOutlined style={{ color: TEXT_SECONDARY }} />
+                {order.phone}
+              </span>
+            </Descriptions.Item>
+            <Descriptions.Item label="项目地址" span={2}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <EnvironmentOutlined style={{ color: TEXT_SECONDARY }} />
+                {order.addresses}
+              </span>
+            </Descriptions.Item>
+            
+            <Descriptions.Item label="当前状态">
+              <Tag color={statusInfo.color}>{statusInfo.label}</Tag>
+            </Descriptions.Item>
+            <Descriptions.Item label="预约勘测">
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <CalendarOutlined style={{ color: TEXT_SECONDARY }} />
+                {order.visit_time ? new Date(order.visit_time).toLocaleString('zh-CN') : '-'}
+              </span>
+            </Descriptions.Item>
+            <Descriptions.Item label="预约施工">
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <CalendarOutlined style={{ color: TEXT_SECONDARY }} />
+                {order.date_appointment ? new Date(order.date_appointment).toLocaleString('zh-CN') : '-'}
+              </span>
+            </Descriptions.Item>
+            <Descriptions.Item label="总价" span={2}>
+                <span style={{ color: PRIMARY_COLOR, fontWeight: '600', fontSize: '16px' }}>
+                  ¥{(order.final_price || order.total_price || 0).toFixed(2)}
+                </span>
+              </Descriptions.Item>
+            {order.cs_remark && (
+              <Descriptions.Item label="客服备注" span={2}>{order.cs_remark}</Descriptions.Item>
+            )}
+            {order.manager_remark && (
+              <Descriptions.Item label="项目经理备注" span={2}>{order.manager_remark}</Descriptions.Item>
+            )}
+            {order.review_stars && (
+              <Descriptions.Item label="客户评价" span={2}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  {[1, 2, 3, 4, 5].map(star => (
+                    <span 
+                      key={star} 
+                      style={{ 
+                        fontSize: '18px', 
+                        color: star <= order.review_stars ? '#f59e0b' : '#e5e7eb' 
+                      }}
+                    >
+                      ★
+                    </span>
+                  ))}
+                </div>
+                {order.customer_review && (
+                  <p style={{ margin: '8px 0 0', color: TEXT_COLOR }}>"{order.customer_review}"</p>
+                )}
+              </Descriptions.Item>
+            )}
+            <Descriptions.Item label="创建时间">
+              {order.createdAt ? new Date(order.createdAt).toLocaleString('zh-CN') : '-'}
+            </Descriptions.Item>
+          </Descriptions>
+        </Card>
+
+        {String(order.status) === '30' && (
+          <Card 
+            style={{ 
+              marginBottom: '24px',
+              borderRadius: '8px',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.06)'
+            }}
+          >
+            <Title level={4} style={{ marginBottom: '20px' }}>提交报价方案</Title>
+            <Form
+              form={quoteForm}
+              layout="vertical"
+              onFinish={handleQuoteSubmit}
+            >
+              <Row gutter={24}>
+                <Col span={12}>
+                  <Form.Item
+                    label="报价金额（元）"
+                    name="price"
+                    rules={[{ required: true, message: '请输入报价金额' }]}
+                  >
+                    <InputNumber
+                      style={{ width: '100%' }}
+                      min={0}
+                      precision={2}
+                      placeholder="请输入报价金额"
+                      formatter={value => `¥ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                      parser={value => value.replace(/¥\s?|(,*)/g, '')}
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+              
+              <Form.Item
+                label="方案说明"
+                name="scheme"
+                rules={[{ required: true, message: '请输入方案说明' }]}
+              >
+                <TextArea
+                  rows={4}
+                  placeholder="请详细描述施工方案、材料清单、施工工艺等"
+                />
+              </Form.Item>
+
+              <Form.Item
+                label="备注"
+                name="remark"
+              >
+                <TextArea
+                  rows={3}
+                  placeholder="其他补充说明（选填）"
+                />
+              </Form.Item>
+
+              <Form.Item label="方案图片">
+                <Upload
+                  {...imageUploadProps}
+                  fileList={uploadedImages}
+                  onChange={handleImageUploadChange}
+                  onRemove={handleImageRemove}
+                  onPreview={handlePreview}
+                >
+                  {uploadedImages.length >= 6 ? null : (
+                    <div style={{ padding: '32px' }}>
+                      <PlusOutlined style={{ fontSize: '24px', color: '#999' }} />
+                      <p style={{ marginTop: '8px', color: '#999' }}>点击上传图片</p>
+                    </div>
+                  )}
+                </Upload>
+              </Form.Item>
+
+              <Form.Item label="方案附件">
+                <Upload
+                  {...attachmentUploadProps}
+                  fileList={uploadedAttachments}
+                  onChange={handleAttachmentUploadChange}
+                  onRemove={handleAttachmentRemove}
+                >
+                  <Button icon={<PlusOutlined />}>
+                    点击上传附件
+                  </Button>
+                </Upload>
+                <p style={{ marginTop: '8px', color: '#999', fontSize: '12px' }}>
+                  支持上传 .doc .docx .pdf .xls .xlsx .zip .rar 格式文件
+                </p>
+              </Form.Item>
+
+              <Form.Item style={{ marginBottom: 0, textAlign: 'right' }}>
+                <Space>
+                  <Button onClick={handleGoBack}>
+                    取消
+                  </Button>
+                  <Button type="primary" htmlType="submit" loading={submitting} icon={<SendOutlined />}>
+                    提交报价
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Form>
+          </Card>
+        )}
+
+        <Card 
+          style={{ 
+            borderRadius: '8px',
+            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.06)'
+          }}
+        >
+          <Title level={4} style={{ marginBottom: '20px' }}>工单跟进记录</Title>
+          <Table
+            dataSource={records.map((item, index) => ({ ...item, key: item._id || index }))}
+            columns={recordColumns}
+            pagination={false}
+            bordered={false}
+            size="middle"
+          />
+        </Card>
+
+        <Modal
+            visible={previewVisible}
+            footer={null}
+            onCancel={() => setPreviewVisible(false)}
+          >
+            <Image 
+              alt="预览图片" 
+              src={previewImage} 
+              style={{ width: '100%' }} 
+            />
+          </Modal>
+
+          <Modal
+            visible={filePreviewVisible}
+            title={previewFile?.name || '附件预览'}
+            footer={null}
+            onCancel={() => setFilePreviewVisible(false)}
+            width="90%"
+            destroyOnClose
+            bodyStyle={{ padding: 0 }}
+          >
+            {previewFile && (
+              <>
+                {previewFile.name.toLowerCase().match(/\.(jpg|jpeg|png|gif|bmp)$/) ? (
+                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '500px', padding: '20px' }}>
+                    <Image
+                      src={previewFile.url}
+                      alt={previewFile.name}
+                      style={{ maxWidth: '100%', maxHeight: '600px', objectFit: 'contain' }}
+                    />
+                  </div>
+                ) : previewFile.name.toLowerCase().includes('.pdf') ? (
+                  <div style={{ width: '100%', height: '600px' }}>
+                    <embed
+                      src={previewFile.url}
+                      type="application/pdf"
+                      style={{ width: '100%', height: '100%' }}
+                    />
+                  </div>
+                ) : previewFile.name.toLowerCase().match(/\.(doc|docx|xls|xlsx|ppt|pptx)$/) ? (
+                  <div style={{ width: '100%', height: '600px' }}>
+                    <iframe
+                      src={`https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(previewFile.url)}`}
+                      style={{ width: '100%', height: '100%', border: 'none' }}
+                      title={previewFile.name}
+                    />
+                  </div>
+                ) : (
+                  <div style={{ textAlign: 'center', padding: '60px' }}>
+                    <p style={{ color: '#6b7280', fontSize: '16px' }}>
+                      该文件类型不支持在线预览
+                    </p>
+                    <p style={{ color: '#9ca3af', fontSize: '14px', marginTop: '8px' }}>
+                      {previewFile.name}
+                    </p>
+                  </div>
+                )}
+              </>
+            )}
+          </Modal>
+        </div>
+      </AppLayout>
+  );
+}
+
+export default ProjectManagerDetail;

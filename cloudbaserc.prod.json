@@ -1,0 +1,63 @@
+{
+  "envId": "waterproof-3g9f7h9kdb626bb3",
+  "version": "2.0",
+  "functionRoot": "functions",
+  "functions": [
+    {
+      "name": "create-user",
+      "timeout": 15,
+      "runtime": "Nodejs20.19",
+      "handler": "index.main",
+      "installDependency": true
+    },
+    {
+      "name": "change-password",
+      "timeout": 15,
+      "runtime": "Nodejs18.15",
+      "handler": "index.main",
+      "installDependency": true
+    },
+    {
+      "name": "reset-password",
+      "timeout": 15,
+      "runtime": "Nodejs18.15",
+      "handler": "index.main",
+      "installDependency": true
+    },
+    {
+      "name": "upload-file",
+      "timeout": 30,
+      "runtime": "Nodejs20.19",
+      "handler": "index.main",
+      "installDependency": true
+    }
+  ],
+  "staticSite": {
+    "src": "./dist",
+    "deployType": "cloudbaserc",
+    "envVariables": {},
+    "rewrites": [
+      {
+        "source": "moon-star-admin/**",
+        "target": "/moon-star-admin/index.html"
+      },
+      {
+        "source": "**",
+        "target": "/index.html"
+      }
+    ],
+    "errorDocument": {
+      "404": "/moon-star-admin/index.html"
+    },
+    "indexDocument": {
+      "default": "index.html"
+    }
+  },
+  "app": {
+    "serviceName": "moon-star-admin",
+    "framework": "vite",
+    "installCommand": "npm install",
+    "buildCommand": "npm run build:prod",
+    "outputDir": "dist"
+  }
+}

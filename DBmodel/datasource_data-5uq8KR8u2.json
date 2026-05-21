@@ -1,0 +1,258 @@
+{
+    "previewTableName": "",
+    "publishCacheStatus": "ready",
+    "subType": "database",
+    "schema": {
+        "x-primary-column": "_id",
+        "x-kind": "tcb",
+        "x-defaultMethods": [
+            "wedaCreate",
+            "wedaUpdate",
+            "wedaDelete",
+            "wedaGetItem",
+            "wedaGetRecords",
+            "wedaGetList",
+            "wedaBatchCreate",
+            "wedaBatchUpdate",
+            "wedaBatchDelete"
+        ],
+        "type": "object",
+        "x-relatedType": "exist",
+        "x-viewId": "view-7y6z0ulvi8",
+        "required": [
+            "order_id",
+            "record_type",
+            "creator_role"
+        ],
+        "properties": {
+            "owner": {
+                "default": "",
+                "x-system": true,
+                "x-id": "64f1cee",
+                "name": "owner",
+                "format": "father-son",
+                "pattern": "",
+                "x-hidden": true,
+                "type": "string",
+                "title": "所有人",
+                "x-index": 4,
+                "x-unique": false,
+                "x-parent": {
+                    "fatherAction": "judge",
+                    "type": "father-son",
+                    "parentDataSourceName": "sys_user"
+                }
+            },
+            "_mainDep": {
+                "x-system": true,
+                "x-id": "bec427a",
+                "name": "_mainDep",
+                "format": "father-son",
+                "x-hidden": true,
+                "type": "string",
+                "title": "所属主管部门",
+                "x-index": 7,
+                "x-unique": false,
+                "x-parent": {
+                    "fatherAction": "judge",
+                    "type": "father-son",
+                    "parentDataSourceName": "sys_department"
+                }
+            },
+            "images": {
+                "x-required": false,
+                "x-keyPath": "",
+                "x-id": "2c1b158b",
+                "format": "",
+                "description": "现场记录的照片",
+                "type": "array",
+                "x-index": 47,
+                "title": "现场照片",
+                "items": {
+                    "x-image-size": 5242880,
+                    "format": "x-image",
+                    "type": "string",
+                    "x-storage-type": "cloudID"
+                },
+                "x-unique": false
+            },
+            "attachments": {
+                "x-required": false,
+                "x-keyPath": "",
+                "x-id": "4d51dfe1",
+                "format": "",
+                "description": "",
+                "type": "array",
+                "x-index": 49,
+                "title": "方案附件",
+                "items": {
+                    "format": "x-file",
+                    "x-file-size": 31457280,
+                    "type": "string",
+                    "x-storage-type": "cloudID"
+                },
+                "x-unique": false
+            },
+            "content": {
+                "x-required": false,
+                "x-keyPath": "",
+                "x-id": "7489838c",
+                "format": "x-long-text",
+                "description": "具体的方案详情、变更原因等",
+                "type": "string",
+                "x-index": 6,
+                "title": "描述",
+                "x-unique": false,
+                "maxLength": 131072
+            },
+            "record_type": {
+                "x-keyPath": "",
+                "x-id": "54c85c6f",
+                "format": "x-enum",
+                "description": "",
+                "isEnum": false,
+                "x-option-name": "record_type_dict",
+                "type": "string",
+                "x-index": 23,
+                "title": "工单跟进状态",
+                "x-unique": false,
+                "x-required": true,
+                "x-enum-type": "general-option",
+                "name": "record_type",
+                "x-multi-select": false
+            },
+            "creator_role": {
+                "x-required": true,
+                "x-keyPath": "",
+                "x-id": "1b9b56ba",
+                "format": "",
+                "description": "项目经理填的，还是工人",
+                "type": "string",
+                "x-index": 12,
+                "title": "操作人身份",
+                "x-unique": false,
+                "maxLength": 256
+            },
+            "createdAt": {
+                "default": 0,
+                "x-system": true,
+                "x-id": "b752a8c",
+                "format": "datetime",
+                "type": "number",
+                "title": "创建时间",
+                "x-index": 2,
+                "x-unique": false
+            },
+            "createBy": {
+                "default": "",
+                "x-system": true,
+                "x-id": "0a5ac6c",
+                "name": "createBy",
+                "format": "father-son",
+                "pattern": "",
+                "x-hidden": true,
+                "type": "string",
+                "title": "创建人",
+                "x-index": 5,
+                "x-unique": false,
+                "x-parent": {
+                    "fatherAction": "judge",
+                    "type": "father-son",
+                    "parentDataSourceName": "sys_user"
+                }
+            },
+            "updateBy": {
+                "default": "",
+                "x-system": true,
+                "x-id": "93a079a",
+                "name": "updateBy",
+                "format": "father-son",
+                "pattern": "",
+                "x-hidden": true,
+                "type": "string",
+                "title": "修改人",
+                "x-index": 6,
+                "x-unique": false,
+                "x-parent": {
+                    "fatherAction": "judge",
+                    "type": "father-son",
+                    "parentDataSourceName": "sys_user"
+                }
+            },
+            "price": {
+                "x-required": false,
+                "x-keyPath": "",
+                "x-id": "383e4eb5",
+                "format": "",
+                "numberCount": 2,
+                "description": "合同金额",
+                "type": "number",
+                "x-index": 10,
+                "title": "合同金额",
+                "x-unique": false
+            },
+            "_openid": {
+                "default": "",
+                "x-system": true,
+                "x-id": "11ba8ed",
+                "name": "_openid",
+                "format": "",
+                "pattern": "",
+                "description": "仅微信云开发下使用",
+                "type": "string",
+                "title": "记录创建者",
+                "x-index": 45,
+                "x-unique": false
+            },
+            "_id": {
+                "x-system": true,
+                "x-id": "3efcc36",
+                "format": "",
+                "type": "string",
+                "title": "数据标识",
+                "x-index": 1,
+                "x-unique": true
+            },
+            "order_id": {
+                "x-required": true,
+                "x-keyPath": "",
+                "x-id": "878716a6",
+                "format": "",
+                "description": "",
+                "type": "string",
+                "x-index": 2,
+                "title": "关联的工单编号",
+                "x-unique": false,
+                "maxLength": 256
+            },
+            "updatedAt": {
+                "default": 0,
+                "x-system": true,
+                "x-id": "224b2b9",
+                "format": "datetime",
+                "type": "number",
+                "title": "更新时间",
+                "x-index": 3,
+                "x-unique": false
+            }
+        }
+    },
+    "dbInstanceType": "FLEXDB",
+    "title": "工单跟进记录表",
+    "prodDbInfo": null,
+    "stagingSwitch": false,
+    "name": "wo_records",
+    "dataHubName": "flexdb",
+    "dbLinkType": "internal",
+    "tableNameRule": "only_name",
+    "type": "database",
+    "previewDbInfo": null,
+    "updateTime": "2026-04-12T15:32:19",
+    "publishedTableName": "wo_records",
+    "id": "data-5uq8KR8u2",
+    "dbSourceType": "internal_flexdb",
+    "methods": [],
+    "fun": "{\"onlineVersion\": 16, \"previewVersion\": 15, \"onlinePublishAt\": 1776007939022, \"prviewPublishAt\": 1776007938708}",
+    "publishStatus": 1,
+    "configuration": {}
+}

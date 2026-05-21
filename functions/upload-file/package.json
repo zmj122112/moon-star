@@ -1,0 +1,9 @@
+{
+  "name": "upload-file",
+  "version": "1.0.0",
+  "description": "Upload file function",
+  "main": "index.js",
+  "dependencies": {
+    "@cloudbase/node-sdk": "^3.18.1"
+  }
+}
