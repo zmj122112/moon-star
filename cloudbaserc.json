@@ -30,6 +30,13 @@
       "runtime": "Nodejs20.19",
       "handler": "index.main",
       "installDependency": true
+    },
+    {
+      "name": "update-record",
+      "timeout": 15,
+      "runtime": "Nodejs18.15",
+      "handler": "index.main",
+      "installDependency": true
     }
   ],
   "staticSite": {

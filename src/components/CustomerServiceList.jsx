@@ -362,7 +362,7 @@ function CustomerServiceList() {
                 <Option value="30">待报价</Option>
                 <Option value="40">待确认报价</Option>
                 <Option value="45">待派工</Option>
-                <Option value="50">待进场</Option>
+                <Option value="50">施工准备</Option>
                 <Option value="60">施工中</Option>
                 <Option value="70">待验收</Option>
                 <Option value="80">待支付</Option>
@@ -453,7 +453,7 @@ function CustomerServiceList() {
                     <Option value="30">待报价</Option>
                     <Option value="40">待确认报价</Option>
                     <Option value="45">待派工</Option>
-                    <Option value="50">待进场</Option>
+                    <Option value="50">施工准备</Option>
                     <Option value="60">施工中</Option>
                     <Option value="70">待验收</Option>
                     <Option value="80">待支付</Option>

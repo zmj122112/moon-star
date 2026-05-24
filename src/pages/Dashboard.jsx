@@ -20,7 +20,7 @@ const STATUS_MAP = {
   '30': { color: 'gold', label: '待报价' },
   '40': { color: 'lime', label: '待确认报价' },
   '45': { color: 'magenta', label: '待派工' },
-  '50': { color: 'blue', label: '待进场' },
+  '50': { color: 'blue', label: '施工准备' },
   '60': { color: 'purple', label: '施工中' },
   '65': { color: 'volcano', label: '重新报价' },
   '70': { color: 'geekblue', label: '待验收' },

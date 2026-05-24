@@ -1,0 +1,9 @@
+{
+  "name": "update-record",
+  "version": "1.0.0",
+  "description": "更新数据库记录",
+  "main": "index.js",
+  "dependencies": {
+    "@cloudbase/node-sdk": "^2.9.0"
+  }
+}

@@ -29,12 +29,14 @@ import {
   FileImageOutlined,
   FileTextOutlined,
   FilePdfOutlined,
-  FileOutlined
+  FileOutlined,
+  EyeInvisibleOutlined
 } from '@ant-design/icons';
 import { cloudbase, db } from '../cloudbase';
 import { useParams, useNavigate } from 'react-router-dom';
 import AppLayout from '../components/Layout';
 import DateTimePicker from '../components/DateTimePicker';
+import { normalizePhotos, getVisiblePhotoUrls } from '../utils/photoUtils';
 
 const { TextArea } = Input;
 const { Title, Text } = Typography;
@@ -58,6 +60,7 @@ function WorkOrderDetail() {
   const [previewModalVisible, setPreviewModalVisible] = useState(false);
   const [previewFile, setPreviewFile] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [currentUserRole, setCurrentUserRole] = useState(null);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -68,13 +71,37 @@ function WorkOrderDetail() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // 获取当前用户角色
+  useEffect(() => {
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      try {
+        const user = JSON.parse(userStr);
+        setCurrentUserRole(user.role);
+      } catch (e) {
+        console.error('解析用户信息失败:', e);
+      }
+    }
+  }, []);
+
+  // 检查用户是否是内部人员（管理员、项目经理、客服等）
+  const isInternalUser = () => {
+    if (!currentUserRole) return true; // 默认作为内部用户处理
+    
+    const internalRoles = ['管理员', 'admin', '项目经理', 'manager', '客服', 'cs', '公司管理层', 'management', '工人', 'worker', '施工工人'];
+    if (Array.isArray(currentUserRole)) {
+      return currentUserRole.some(role => internalRoles.includes(role));
+    }
+    return internalRoles.includes(currentUserRole);
+  };
+
   const statusMap = {
     '10': { color: 'orange', label: '待接单' },
     '20': { color: 'cyan', label: '待勘测' },
     '30': { color: 'gold', label: '待报价' },
     '40': { color: 'lime', label: '待确认报价' },
     '45': { color: 'magenta', label: '待派工' },
-    '50': { color: 'blue', label: '待进场' },
+    '50': { color: 'blue', label: '施工准备' },
     '60': { color: 'purple', label: '施工中' },
     '65': { color: 'volcano', label: '重新报价' },
     '70': { color: 'geekblue', label: '待验收' },
@@ -87,7 +114,7 @@ function WorkOrderDetail() {
     '1': { label: '上门勘测打卡', color: 'cyan' },
     '2': { label: '提交方案及报价', color: 'purple' },
     '3': { label: '客户确认报价', color: 'green' },
-    '4': { label: '进场施工打卡', color: 'orange' },
+    '4': { label: '施工准备', color: 'orange' },
     '5': { label: '施工进度汇报', color: 'gold' },
     '6': { label: '提交完工验收', color: 'pink' },
     '7': { label: '内部沟通备注', color: 'gray' },
@@ -335,23 +362,44 @@ function WorkOrderDetail() {
       key: 'images',
       width: 120,
       render: (images) => {
-        if (!images || !Array.isArray(images) || images.length === 0) {
+        const normalized = normalizePhotos(images);
+        const displayPhotos = isInternalUser() ? normalized : normalized.filter(p => p.visible);
+        
+        if (!displayPhotos || displayPhotos.length === 0) {
           return '-';
         }
+        
         return (
-          <div style={{ display: 'flex', gap: '4px' }}>
-            {images.slice(0, 3).map((img, idx) => (
-              <Image
-                key={idx}
-                src={getImageUrl(img)}
-                alt={`照片${idx + 1}`}
-                style={{ width: '36px', height: '36px', borderRadius: '4px', objectFit: 'cover' }}
-                fallback="https://via.placeholder.com/36x36?text=图"
-              />
+          <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+            {displayPhotos.slice(0, 3).map((img, idx) => (
+              <div key={idx} style={{ position: 'relative' }}>
+                <Image
+                  src={getImageUrl(img.url || img)}
+                  alt={`照片${idx + 1}`}
+                  style={{ width: '36px', height: '36px', borderRadius: '4px', objectFit: 'cover' }}
+                  fallback="https://via.placeholder.com/36x36?text=图"
+                />
+                {isInternalUser() && !img.visible && (
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: 'rgba(0,0,0,0.5)',
+                    borderRadius: '4px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <EyeInvisibleOutlined style={{ color: 'white', fontSize: '14px' }} />
+                  </div>
+                )}
+              </div>
             ))}
-            {images.length > 3 && (
+            {displayPhotos.length > 3 && (
               <span style={{ fontSize: '12px', color: '#64748b', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', backgroundColor: '#f1f5f9', borderRadius: '4px' }}>
-                +{images.length - 3}
+                +{displayPhotos.length - 3}
               </span>
             )}
           </div>
@@ -641,22 +689,44 @@ function WorkOrderDetail() {
             )}
           </Card>
 
-          {order.images && order.images.length > 0 && (
-            <Card title="现场照片" style={{ marginBottom: '16px', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.06)' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
-                {order.images.map((img, index) => (
-                  <div key={index} style={{ aspectRatio: '1', overflow: 'hidden', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-                    <Image 
-                      src={getImageUrl(img)} 
-                      alt={`照片${index + 1}`}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                      fallback="https://via.placeholder.com/200x200?text=图片加载失败"
-                    />
+          {order.images && order.images.length > 0 && (() => {
+              const normalized = normalizePhotos(order.images);
+              const displayPhotos = isInternalUser() ? normalized : normalized.filter(p => p.visible);
+              
+              if (displayPhotos.length === 0) return null;
+              
+              return (
+                <Card title="现场照片" style={{ marginBottom: '16px', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.06)' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
+                    {displayPhotos.map((img, index) => (
+                      <div key={index} style={{ position: 'relative', aspectRatio: '1', overflow: 'hidden', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                        <Image 
+                          src={getImageUrl(img.url || img)} 
+                          alt={`照片${index + 1}`}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          fallback="https://via.placeholder.com/200x200?text=图片加载失败"
+                        />
+                        {isInternalUser() && !img.visible && (
+                          <div style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            backgroundColor: 'rgba(0,0,0,0.5)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}>
+                            <EyeInvisibleOutlined style={{ color: 'white', fontSize: '24px' }} />
+                          </div>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </Card>
-          )}
+                </Card>
+              );
+            })()}
 
           <Card title="工单跟进记录" style={{ borderRadius: '12px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.06)' }}>
             {records.length > 0 ? (
@@ -684,26 +754,50 @@ function WorkOrderDetail() {
                           <Text style={{ color: PRIMARY_COLOR, fontWeight: '500' }}>¥{record.price.toFixed(2)}</Text>
                         </div>
                       )}
-                      {record.images && record.images.length > 0 && (
+                      {record.images && record.images.length > 0 && (() => {
+                      const normalized = normalizePhotos(record.images);
+                      const displayPhotos = isInternalUser() ? normalized : normalized.filter(p => p.visible);
+                      
+                      if (displayPhotos.length === 0) return null;
+                      
+                      return (
                         <div style={{ marginTop: '12px' }}>
                           <Text style={{ fontSize: '12px', color: TEXT_SECONDARY, marginBottom: '8px', display: 'block' }}>照片：</Text>
-                          <div style={{ display: 'flex', gap: '8px' }}>
-                            {record.images.slice(0, 3).map((img, idx) => (
-                              <Image
-                                key={idx}
-                                src={getImageUrl(img)}
-                                alt={`照片${idx + 1}`}
-                                style={{ width: '60px', height: '60px', borderRadius: '6px', objectFit: 'cover' }}
-                              />
+                          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                            {displayPhotos.slice(0, 3).map((img, idx) => (
+                              <div key={idx} style={{ position: 'relative' }}>
+                                <Image
+                                  src={getImageUrl(img.url || img)}
+                                  alt={`照片${idx + 1}`}
+                                  style={{ width: '60px', height: '60px', borderRadius: '6px', objectFit: 'cover' }}
+                                />
+                                {isInternalUser() && !img.visible && (
+                                  <div style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    right: 0,
+                                    bottom: 0,
+                                    backgroundColor: 'rgba(0,0,0,0.5)',
+                                    borderRadius: '6px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                  }}>
+                                    <EyeInvisibleOutlined style={{ color: 'white', fontSize: '16px' }} />
+                                  </div>
+                                )}
+                              </div>
                             ))}
-                            {record.images.length > 3 && (
+                            {displayPhotos.length > 3 && (
                               <span style={{ fontSize: '12px', color: '#64748b', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '60px', height: '60px', backgroundColor: '#f1f5f9', borderRadius: '6px' }}>
-                                +{record.images.length - 3}
+                                +{displayPhotos.length - 3}
                               </span>
                             )}
                           </div>
                         </div>
-                      )}
+                      );
+                    })()}
                       {record.attachments && record.attachments.length > 0 && (
                         <div style={{ marginTop: '12px' }}>
                           <Text style={{ fontSize: '12px', color: TEXT_SECONDARY, marginBottom: '8px', display: 'block' }}>附件：</Text>
@@ -922,22 +1016,44 @@ function WorkOrderDetail() {
           </Row>
         </Card>
 
-        {order.images && order.images.length > 0 && (
-          <Card title="现场照片" style={{ marginBottom: '24px', borderRadius: '8px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.06)' }}>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
-              {order.images.map((img, index) => (
-                <div key={index} style={{ width: '200px', height: '200px', overflow: 'hidden', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-                  <Image 
-                    src={getImageUrl(img)} 
-                    alt={`照片${index + 1}`}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    fallback="https://via.placeholder.com/200x200?text=图片加载失败"
-                  />
-                </div>
-              ))}
-            </div>
-          </Card>
-        )}
+        {order.images && order.images.length > 0 && (() => {
+              const normalized = normalizePhotos(order.images);
+              const displayPhotos = isInternalUser() ? normalized : normalized.filter(p => p.visible);
+              
+              if (displayPhotos.length === 0) return null;
+              
+              return (
+                <Card title="现场照片" style={{ marginBottom: '24px', borderRadius: '8px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.06)' }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
+                    {displayPhotos.map((img, index) => (
+                      <div key={index} style={{ position: 'relative', width: '200px', height: '200px', overflow: 'hidden', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                        <Image 
+                          src={getImageUrl(img.url || img)} 
+                          alt={`照片${index + 1}`}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          fallback="https://via.placeholder.com/200x200?text=图片加载失败"
+                        />
+                        {isInternalUser() && !img.visible && (
+                          <div style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            backgroundColor: 'rgba(0,0,0,0.5)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}>
+                            <EyeInvisibleOutlined style={{ color: 'white', fontSize: '32px' }} />
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+              );
+            })()}
 
         <Card title="工单跟进记录" style={{ borderRadius: '8px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.06)' }}>
           {records.length > 0 ? (

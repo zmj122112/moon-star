@@ -9,8 +9,8 @@
     "build:test": "vite build --mode development",
     "build:prod": "vite build --mode production",
     "deploy:test": "npm run build:test && tcb hosting deploy ./dist /moon-star-admin-test",
-    "deploy:prod": "npm run build:prod && tcb hosting deploy ./dist /moon-star-admin",
-    "deploy": "tcb hosting deploy dist -e waterproof-3g9f7h9kdb626bb3",
+    "deploy:prod": "npm run build:prod && tcb hosting deploy ./dist /moon-star-admin && tcb hosting deploy ./public/index.html /index.html",
+    "deploy": "tcb hosting deploy ./dist /moon-star-admin -e waterproof-3g9f7h9kdb626bb3 && tcb hosting deploy ./public/index.html /index.html -e waterproof-3g9f7h9kdb626bb3",
     "prod": "npm run build && npm run deploy",
     "lint": "eslint .",
     "preview": "vite preview"

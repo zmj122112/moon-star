@@ -16,7 +16,8 @@ import {
   Descriptions,
   Image,
   Upload,
-  Modal
+  Modal,
+  Checkbox
 } from 'antd';
 import { 
   ArrowLeftOutlined, 
@@ -25,11 +26,14 @@ import {
   CalendarOutlined,
   DollarOutlined,
   SendOutlined,
-  PlusOutlined
+  PlusOutlined,
+  EyeInvisibleOutlined,
+  EyeOutlined
 } from '@ant-design/icons';
 import { cloudbase, db, storage, uploadFileViaCloudFunction } from '../cloudbase';
 import { useParams, useNavigate } from 'react-router-dom';
 import AppLayout from '../components/Layout';
+import { normalizePhotos, updatePhotoVisibility, formatForStorage } from '../utils/photoUtils';
 
 const { TextArea } = Input;
 const { Title, Text } = Typography;
@@ -62,7 +66,7 @@ const STATUS_MAP = {
   '30': { color: 'gold', label: '待报价' },
   '40': { color: 'lime', label: '待确认报价' },
   '45': { color: 'magenta', label: '待派工' },
-  '50': { color: 'blue', label: '待进场' },
+  '50': { color: 'blue', label: '施工准备' },
   '60': { color: 'purple', label: '施工中' },
   '65': { color: 'volcano', label: '重新报价' },
   '70': { color: 'geekblue', label: '待验收' },
@@ -75,7 +79,7 @@ const recordTypeMap = {
   '1': { label: '上门勘测打卡', color: 'cyan' },
   '2': { label: '提交方案及报价', color: 'purple' },
   '3': { label: '客户确认报价', color: 'green' },
-  '4': { label: '进场施工打卡', color: 'orange' },
+  '4': { label: '施工准备', color: 'orange' },
   '5': { label: '施工进度汇报', color: 'gold' },
   '6': { label: '提交完工验收', color: 'pink' },
   '7': { label: '内部沟通备注', color: 'gray' },
@@ -119,6 +123,11 @@ function ProjectManagerDetail() {
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewFile, setPreviewFile] = useState(null);
   const [filePreviewVisible, setFilePreviewVisible] = useState(false);
+  
+  // 照片可见性编辑相关状态（保留但不再使用模态框）
+  const [photoEditModalVisible, setPhotoEditModalVisible] = useState(false);
+  const [editingRecord, setEditingRecord] = useState(null);
+  const [editingPhotos, setEditingPhotos] = useState([]);
 
   useEffect(() => {
     const userStr = localStorage.getItem('user');
@@ -350,27 +359,136 @@ function ProjectManagerDetail() {
       title: '照片',
       dataIndex: 'images',
       key: 'images',
-      width: 120,
-      render: (images) => {
-        if (!images || !Array.isArray(images) || images.length === 0) {
+      width: 180,
+      render: (images, record) => {
+        const normalizedImages = normalizePhotos(images);
+        if (!normalizedImages || normalizedImages.length === 0) {
           return '-';
         }
+        
+        const toggleVisibility = async (index) => {
+          const docId = record._id || record.id;
+          const currentImages = normalizePhotos(record.images);
+          const newPhotos = [...currentImages];
+          newPhotos[index].visible = !newPhotos[index].visible;
+          
+          try {
+            const updatedPhotos = formatForStorage(newPhotos);
+            
+            const res = await db.collection('wo_records').doc(docId).update({
+              images: updatedPhotos,
+              updateTime: db.serverDate()
+            });
+            
+            if (res.stats && res.stats.updated > 0) {
+              updateLocalRecords(docId, updatedPhotos);
+              message.success(newPhotos[index].visible ? '照片已设为可见' : '照片已设为隐藏');
+            } else {
+              await updateViaCloudFunction(docId, updatedPhotos, newPhotos[index].visible);
+            }
+          } catch (error) {
+            await updateViaCloudFunction(docId, formatForStorage(newPhotos), newPhotos[index].visible);
+          }
+        };
+        
+        const updateLocalRecords = (docId, updatedPhotos) => {
+          setRecords(prev => prev.map(r => {
+            const rId = r._id || r.id;
+            if (rId === docId) {
+              return { ...r, images: updatedPhotos };
+            }
+            return r;
+          }));
+        };
+        
+        const updateViaCloudFunction = async (docId, updatedPhotos, isVisible) => {
+          try {
+            const result = await cloudbase.callFunction({
+              name: 'update-record',
+              data: {
+                collection: 'wo_records',
+                docId: docId,
+                data: {
+                  images: updatedPhotos,
+                  updateTime: new Date().getTime()
+                }
+              }
+            });
+            
+            if (result && result.result && result.result.success) {
+              updateLocalRecords(docId, updatedPhotos);
+              message.success(isVisible ? '照片已设为可见' : '照片已设为隐藏');
+            } else {
+              message.error('更新失败，请联系管理员');
+            }
+          } catch (error) {
+            message.error('更新失败: ' + error.message);
+          }
+        };
+        
         return (
-          <div style={{ display: 'flex', gap: '4px' }}>
-            {images.slice(0, 3).map((img, idx) => (
-              <Image
-                key={idx}
-                src={getImageUrl(img)}
-                alt={`照片${idx + 1}`}
-                style={{ width: '36px', height: '36px', borderRadius: '4px', objectFit: 'cover' }}
-                fallback="https://via.placeholder.com/36x36?text=图"
-              />
-            ))}
-            {images.length > 3 && (
-              <span style={{ fontSize: '12px', color: '#64748b', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', backgroundColor: '#f1f5f9', borderRadius: '4px' }}>
-                +{images.length - 3}
-              </span>
-            )}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+              {normalizedImages.slice(0, 3).map((img, idx) => {
+                const isVisible = img.visible !== false;
+                return (
+                  <div key={idx} style={{ position: 'relative', width: '48px', height: '48px' }}>
+                    <Image
+                      src={getImageUrl(img.url || img)}
+                      alt={`照片${idx + 1}`}
+                      style={{ width: '48px', height: '48px', borderRadius: '4px', objectFit: 'cover' }}
+                      fallback="https://via.placeholder.com/48x48?text=图"
+                    />
+                    {!isVisible && (
+                      <div style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(0,0,0,0.4)',
+                        borderRadius: '4px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}>
+                        <span style={{ color: 'white', fontSize: '16px' }}>●</span>
+                      </div>
+                    )}
+                    <button
+                      onClick={() => toggleVisibility(idx)}
+                      style={{
+                        position: 'absolute',
+                        top: '-6px',
+                        right: '-6px',
+                        width: '22px',
+                        height: '22px',
+                        borderRadius: '50%',
+                        border: '2px solid white',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: isVisible ? '#22c55e' : '#dc2626',
+                        color: 'white',
+                        fontSize: '11px',
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.25)',
+                        zIndex: 10,
+                        padding: 0
+                      }}
+                      title={isVisible ? '点击隐藏此照片' : '点击显示此照片'}
+                    >
+                      {isVisible ? '👁' : '👁‍🗨'}
+                    </button>
+                  </div>
+                );
+              })}
+              {normalizedImages.length > 3 && (
+                <span style={{ fontSize: '12px', color: '#64748b', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '48px', height: '48px', backgroundColor: '#f1f5f9', borderRadius: '4px' }}>
+                  +{normalizedImages.length - 3}
+                </span>
+              )}
+            </div>
           </div>
         );
       },
@@ -770,7 +888,7 @@ function ProjectManagerDetail() {
               </>
             )}
           </Modal>
-        </div>
+      </div>
       </AppLayout>
   );
 }
