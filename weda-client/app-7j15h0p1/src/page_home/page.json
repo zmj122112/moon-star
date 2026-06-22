@@ -1,0 +1,2561 @@
+[
+  {
+    "id": "container21",
+    "component": "Container",
+    "attributes": {
+      "data": {},
+      "style": {
+        "margin": "12px 12px 0 12px",
+        "padding": "16px",
+        "boxShadow": "0 4px 12px rgba(0,0,0,0.05)",
+        "background": "#FFFFFF",
+        "borderRadius": "16px"
+      }
+    },
+    "items": [
+      {
+        "id": "container22",
+        "component": "Container",
+        "attributes": {
+          "data": {},
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "marginBottom": "16px",
+            "flexDirection": "row"
+          }
+        },
+        "items": [
+          {
+            "id": "container23",
+            "component": "Container",
+            "attributes": {
+              "data": {},
+              "style": {
+                "width": "4px",
+                "height": "16px",
+                "background": "#E11D48",
+                "borderRadius": "2px",
+                "backgroundColor": "#E11D48"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "text15",
+            "component": "WdText",
+            "attributes": {
+              "inheritColor": true,
+              "maxLines": "1",
+              "text": "一站式防水修缮服务",
+              "style": {
+                "margin": "0px 0px 0px 8px",
+                "fontSize": "16px",
+                "fontWeight": "bolder"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "scopedStyle": ":scope.wd-typography {\n  margin-left: 8px;\n  font-size: 16px;\n  font-weight: bold;\n  color: #212121;\n}",
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      },
+      {
+        "id": "grid1",
+        "component": "Grid",
+        "attributes": {
+          "gutterX": "8px",
+          "gutterY": "8px",
+          "template": "[1,3]",
+          "style": {
+            "background": "rgb(255, 255, 255)",
+            "borderRadius": "0px 0px 10px 10px"
+          }
+        },
+        "items": [
+          {
+            "id": "row1",
+            "component": "Row",
+            "attributes": {
+              "alignItems": "center"
+            },
+            "items": [
+              {
+                "id": "col1",
+                "component": "Col",
+                "attributes": {
+                  "alignSelf": "auto",
+                  "widthType": "auto-fill"
+                },
+                "items": [
+                  {
+                    "id": "container15",
+                    "component": "Container",
+                    "attributes": {
+                      "data": {},
+                      "style": {
+                        "display": "flex",
+                        "alignItems": "center",
+                        "flexDirection": "column",
+                        "justifyContent": "center"
+                      }
+                    },
+                    "items": [
+                      {
+                        "id": "image1",
+                        "component": "WdImage",
+                        "attributes": {
+                          "alt": "[图片]",
+                          "fit": "widthFix",
+                          "src": "/resources/2026-02/lowcode-2430332",
+                          "style": {
+                            "width": "48px",
+                            "background": "rgb(252, 244, 244)",
+                            "borderRadius": "16px 16px"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "staticResourceAttribute": [
+                            "src"
+                          ],
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "text7",
+                        "component": "WdText",
+                        "attributes": {
+                          "inheritColor": true,
+                          "maxLines": "1",
+                          "text": "卫生间漏水",
+                          "style": {
+                            "color": "#475569",
+                            "margin": "0px 0px 0px 0px",
+                            "fontSize": "12px",
+                            "textAlign": "center",
+                            "fontWeight": "bolder",
+                            "lineHeight": "35px"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "listeners": [
+                      {
+                        "id": "wx2k0mb7suc",
+                        "eventName": "tap",
+                        "type": "platform",
+                        "handler": {
+                          "name": "redirectTo",
+                          "module": "platform",
+                          "params": {
+                            "mode": "weDa",
+                            "packageName": "",
+                            "pageId": "page_repair",
+                            "params": {
+                              "type": "1"
+                            }
+                          }
+                        },
+                        "isCapturePhase": false,
+                        "noPropagation": false
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "col2",
+                "component": "Col",
+                "attributes": {
+                  "alignSelf": "auto",
+                  "widthType": "auto-fill"
+                },
+                "items": [
+                  {
+                    "id": "container16",
+                    "component": "Container",
+                    "attributes": {
+                      "data": {},
+                      "style": {
+                        "display": "flex",
+                        "alignItems": "center",
+                        "flexDirection": "column",
+                        "justifyContent": "center"
+                      }
+                    },
+                    "items": [
+                      {
+                        "id": "image2",
+                        "component": "WdImage",
+                        "attributes": {
+                          "alt": "[图片]",
+                          "fit": "widthFix",
+                          "src": "/resources/2026-02/lowcode-2430333",
+                          "style": {
+                            "width": "48px",
+                            "background": "rgb(252, 244, 244)",
+                            "borderRadius": "16px 16px"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "staticResourceAttribute": [
+                            "src"
+                          ],
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "text8",
+                        "component": "WdText",
+                        "attributes": {
+                          "inheritColor": true,
+                          "maxLines": "1",
+                          "text": "厨房漏水",
+                          "style": {
+                            "color": "#475569",
+                            "margin": "0px 0px 0px 0px",
+                            "fontSize": "12px",
+                            "textAlign": "center",
+                            "fontWeight": "bolder",
+                            "lineHeight": "35px"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "listeners": [
+                      {
+                        "id": "wx2k0mb7suc",
+                        "eventName": "tap",
+                        "type": "platform",
+                        "handler": {
+                          "name": "redirectTo",
+                          "module": "platform",
+                          "params": {
+                            "mode": "weDa",
+                            "packageName": "",
+                            "pageId": "page_repair",
+                            "params": {
+                              "type": "1"
+                            }
+                          }
+                        },
+                        "isCapturePhase": false,
+                        "noPropagation": false
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "col3",
+                "component": "Col",
+                "attributes": {
+                  "alignSelf": "auto",
+                  "widthType": "auto-fill"
+                },
+                "items": [
+                  {
+                    "id": "container18",
+                    "component": "Container",
+                    "attributes": {
+                      "data": {},
+                      "style": {
+                        "display": "flex",
+                        "alignItems": "center",
+                        "flexDirection": "column",
+                        "justifyContent": "center"
+                      }
+                    },
+                    "items": [
+                      {
+                        "id": "image4",
+                        "component": "WdImage",
+                        "attributes": {
+                          "alt": "[图片]",
+                          "fit": "widthFix",
+                          "src": "/resources/2026-02/lowcode-2430334",
+                          "style": {
+                            "width": "48px",
+                            "background": "rgb(252, 244, 244)",
+                            "borderRadius": "16px 16px"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "staticResourceAttribute": [
+                            "src"
+                          ],
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "text12",
+                        "component": "WdText",
+                        "attributes": {
+                          "inheritColor": true,
+                          "maxLines": "1",
+                          "text": "屋顶漏水",
+                          "style": {
+                            "color": "#475569",
+                            "margin": "0px 0px 0px 0px",
+                            "fontSize": "12px",
+                            "textAlign": "center",
+                            "fontWeight": "bolder",
+                            "lineHeight": "35px"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "listeners": [
+                      {
+                        "id": "wx2k0mb7suc",
+                        "eventName": "tap",
+                        "type": "platform",
+                        "handler": {
+                          "name": "redirectTo",
+                          "module": "platform",
+                          "params": {
+                            "mode": "weDa",
+                            "packageName": "",
+                            "pageId": "page_repair",
+                            "params": {
+                              "type": "1"
+                            }
+                          }
+                        },
+                        "isCapturePhase": false,
+                        "noPropagation": false
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "row2",
+            "component": "Row",
+            "attributes": {
+              "alignItems": "stretch"
+            },
+            "items": [
+              {
+                "id": "col4",
+                "component": "Col",
+                "attributes": {
+                  "alignSelf": "auto",
+                  "widthType": "auto-fill"
+                },
+                "items": [
+                  {
+                    "id": "container17",
+                    "component": "Container",
+                    "attributes": {
+                      "data": {},
+                      "style": {
+                        "display": "flex",
+                        "alignItems": "center",
+                        "flexDirection": "column",
+                        "justifyContent": "center"
+                      }
+                    },
+                    "items": [
+                      {
+                        "id": "image3",
+                        "component": "WdImage",
+                        "attributes": {
+                          "alt": "[图片]",
+                          "fit": "widthFix",
+                          "src": "/resources/2026-02/lowcode-2430330",
+                          "style": {
+                            "width": "48px",
+                            "background": "rgb(252, 244, 244)",
+                            "borderRadius": "16px 16px"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "staticResourceAttribute": [
+                            "src"
+                          ],
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "text9",
+                        "component": "WdText",
+                        "attributes": {
+                          "inheritColor": true,
+                          "maxLines": "1",
+                          "text": "阳台漏水",
+                          "style": {
+                            "color": "#475569",
+                            "margin": "0px 0px 0px 0px",
+                            "fontSize": "12px",
+                            "textAlign": "center",
+                            "fontWeight": "bolder",
+                            "lineHeight": "35px"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "listeners": [
+                      {
+                        "id": "wx2k0mb7suc",
+                        "eventName": "tap",
+                        "type": "platform",
+                        "handler": {
+                          "name": "redirectTo",
+                          "module": "platform",
+                          "params": {
+                            "mode": "weDa",
+                            "packageName": "",
+                            "pageId": "page_repair",
+                            "params": {
+                              "type": "1"
+                            }
+                          }
+                        },
+                        "isCapturePhase": false,
+                        "noPropagation": false
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "col5",
+                "component": "Col",
+                "attributes": {
+                  "alignSelf": "auto",
+                  "widthType": "auto-fill"
+                },
+                "items": [
+                  {
+                    "id": "container19",
+                    "component": "Container",
+                    "attributes": {
+                      "data": {},
+                      "style": {
+                        "display": "flex",
+                        "alignItems": "center",
+                        "flexDirection": "column",
+                        "justifyContent": "center"
+                      }
+                    },
+                    "items": [
+                      {
+                        "id": "image5",
+                        "component": "WdImage",
+                        "attributes": {
+                          "alt": "[图片]",
+                          "fit": "widthFix",
+                          "src": "/resources/2026-02/lowcode-2430336",
+                          "style": {
+                            "width": "48px",
+                            "background": "rgb(252, 244, 244)",
+                            "borderRadius": "16px 16px"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "staticResourceAttribute": [
+                            "src"
+                          ],
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "text13",
+                        "component": "WdText",
+                        "attributes": {
+                          "inheritColor": true,
+                          "maxLines": "1",
+                          "text": "外墙防水",
+                          "style": {
+                            "color": "#475569",
+                            "margin": "0px 0px 0px 0px",
+                            "fontSize": "12px",
+                            "textAlign": "center",
+                            "fontWeight": "bolder",
+                            "lineHeight": "35px"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "listeners": [
+                      {
+                        "id": "wx2k0mb7suc",
+                        "eventName": "tap",
+                        "type": "platform",
+                        "handler": {
+                          "name": "redirectTo",
+                          "module": "platform",
+                          "params": {
+                            "mode": "weDa",
+                            "packageName": "",
+                            "pageId": "page_repair",
+                            "params": {
+                              "type": "1"
+                            }
+                          }
+                        },
+                        "isCapturePhase": false,
+                        "noPropagation": false
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "col6",
+                "component": "Col",
+                "attributes": {
+                  "alignSelf": "auto",
+                  "widthType": "auto-fill"
+                },
+                "items": [
+                  {
+                    "id": "container20",
+                    "component": "Container",
+                    "attributes": {
+                      "data": {},
+                      "style": {
+                        "display": "flex",
+                        "alignItems": "center",
+                        "flexDirection": "column",
+                        "justifyContent": "center"
+                      }
+                    },
+                    "items": [
+                      {
+                        "id": "image6",
+                        "component": "WdImage",
+                        "attributes": {
+                          "alt": "[图片]",
+                          "fit": "widthFix",
+                          "src": "/resources/2026-02/lowcode-2430331",
+                          "style": {
+                            "width": "48px",
+                            "background": "rgb(252, 244, 244)",
+                            "borderRadius": "16px 16px"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "staticResourceAttribute": [
+                            "src"
+                          ],
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "text14",
+                        "component": "WdText",
+                        "attributes": {
+                          "inheritColor": true,
+                          "maxLines": "1",
+                          "text": "其它修缮",
+                          "style": {
+                            "color": "#475569",
+                            "margin": "0px 0px 0px 0px",
+                            "fontSize": "12px",
+                            "textAlign": "center",
+                            "fontWeight": "bolder",
+                            "lineHeight": "35px"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "listeners": [
+                      {
+                        "id": "wx2k0mb7suc",
+                        "eventName": "tap",
+                        "type": "platform",
+                        "handler": {
+                          "name": "redirectTo",
+                          "module": "platform",
+                          "params": {
+                            "mode": "weDa",
+                            "packageName": "",
+                            "pageId": "page_repair",
+                            "params": {
+                              "type": "1"
+                            }
+                          }
+                        },
+                        "isCapturePhase": false,
+                        "noPropagation": false
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "container24",
+    "component": "Container",
+    "attributes": {
+      "data": {},
+      "style": {
+        "height": "220px",
+        "margin": "12px 12px 12px 12px",
+        "display": "flex",
+        "flexDirection": "row",
+        "justifyContent": "space-between"
+      }
+    },
+    "items": [
+      {
+        "id": "image7",
+        "component": "WdImage",
+        "attributes": {
+          "alt": "[图片]",
+          "fit": "fill",
+          "src": "/resources/2026-04/lowcode-2453360",
+          "style": {
+            "width": "48%",
+            "height": "100%"
+          }
+        },
+        "listeners": [
+          {
+            "id": "wlsvcp41xz7",
+            "eventName": "tap",
+            "type": "platform",
+            "handler": {
+              "name": "redirectTo",
+              "module": "platform",
+              "params": {
+                "jumpMethod": "page",
+                "mode": "weDa",
+                "packageName": "",
+                "pageId": "page_repair",
+                "params": {
+                  "type": ""
+                }
+              }
+            },
+            "isCapturePhase": false,
+            "noPropagation": false
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "staticResourceAttribute": [
+            "src"
+          ],
+          "attributeExtraData": {}
+        }
+      },
+      {
+        "id": "container26",
+        "component": "Container",
+        "attributes": {
+          "data": {},
+          "style": {
+            "width": "48%",
+            "height": "100%",
+            "display": "flex",
+            "borderRadius": "12px 12px",
+            "flexDirection": "column",
+            "justifyContent": "space-between"
+          }
+        },
+        "items": [
+          {
+            "id": "image13",
+            "component": "WdImage",
+            "attributes": {
+              "alt": "[图片]",
+              "fit": "cover",
+              "src": "/resources/2026-04/lowcode-2452939",
+              "style": {
+                "width": "100%",
+                "height": "48%"
+              }
+            },
+            "listeners": [
+              {
+                "id": "wyrp51t9mdd",
+                "eventName": "tap",
+                "type": "platform",
+                "handler": {
+                  "name": "redirectTo",
+                  "module": "platform",
+                  "params": {
+                    "mode": "weDa",
+                    "packageName": "",
+                    "pageId": "page_process",
+                    "params": {}
+                  }
+                },
+                "isCapturePhase": false,
+                "noPropagation": false
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "staticResourceAttribute": [
+                "src"
+              ],
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "image14",
+            "component": "WdImage",
+            "attributes": {
+              "alt": "[图片]",
+              "fit": "cover",
+              "src": "/resources/2026-04/lowcode-2452941",
+              "style": {
+                "width": "100%",
+                "height": "48%"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "staticResourceAttribute": [
+                "src"
+              ],
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "container29",
+    "component": "Container",
+    "attributes": {
+      "data": {},
+      "style": {
+        "margin": "12px 12px 0 12px",
+        "padding": "16px",
+        "boxShadow": "0 4px 12px rgba(0,0,0,0.05)",
+        "background": "#FFFFFF",
+        "borderRadius": "16px"
+      }
+    },
+    "items": [
+      {
+        "id": "container30",
+        "component": "Container",
+        "attributes": {
+          "data": {},
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "marginBottom": "16px",
+            "flexDirection": "row"
+          }
+        },
+        "items": [
+          {
+            "id": "container31",
+            "component": "Container",
+            "attributes": {
+              "data": {},
+              "style": {
+                "width": "4px",
+                "height": "16px",
+                "background": "#E11D48",
+                "borderRadius": "2px",
+                "backgroundColor": "#E11D48"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "text23",
+            "component": "WdText",
+            "attributes": {
+              "inheritColor": true,
+              "maxLines": "1",
+              "text": "1000+专业团队 品质服务",
+              "style": {
+                "margin": "0px 0px 0px 8px",
+                "fontSize": "16px",
+                "fontWeight": "bolder"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "scopedStyle": ":scope.wd-typography {\n  margin-left: 8px;\n  font-size: 16px;\n  font-weight: bold;\n  color: #212121;\n}",
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      },
+      {
+        "id": "scrollView1",
+        "component": "ScrollView",
+        "attributes": {
+          "bounces": true,
+          "enableBackToTop": false,
+          "enableFlex": false,
+          "enhanced": true,
+          "fastDeceleration": false,
+          "lowerThreshold": 50,
+          "observerSelector": [],
+          "pagingEnabled": false,
+          "refresherBackground": "#fff",
+          "refresherDefaultStyle": "block",
+          "refresherEnabled": false,
+          "refresherThreshold": 50,
+          "refresherTriggered": true,
+          "rootMargin": {
+            "top": "0px",
+            "left": "0px",
+            "right": "0px",
+            "bottom": "0px"
+          },
+          "scrollAnchoring": false,
+          "scrollWithAnimation": false,
+          "scrollX": true,
+          "scrollY": false,
+          "showScrollbar": true,
+          "upperThreshold": 50,
+          "style": {
+            "height": "100px",
+            "marginTop": "16px",
+            "overflowX": "auto",
+            "overflowY": "hidden",
+            "whiteSpace": "nowrap",
+            "scrollbarWidth": "none",
+            "WebkitOverflowScrolling": "touch"
+          }
+        },
+        "items": [
+          {
+            "id": "image8",
+            "component": "WdImage",
+            "attributes": {
+              "alt": "[图片]",
+              "fit": "heightFix",
+              "src": "/resources/2026-04/lowcode-2452336",
+              "style": {
+                "width": "40%",
+                "height": "95%"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "staticResourceAttribute": [
+                "src"
+              ],
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "image9",
+            "component": "WdImage",
+            "attributes": {
+              "alt": "[图片]",
+              "fit": "heightFix",
+              "src": "/resources/2026-04/lowcode-2452334",
+              "style": {
+                "width": "40%",
+                "height": "95%"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "staticResourceAttribute": [
+                "src"
+              ],
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "image10",
+            "component": "WdImage",
+            "attributes": {
+              "alt": "[图片]",
+              "fit": "heightFix",
+              "src": "/resources/2026-04/lowcode-2452333",
+              "style": {
+                "width": "40%",
+                "height": "95%"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "staticResourceAttribute": [
+                "src"
+              ],
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "image11",
+            "component": "WdImage",
+            "attributes": {
+              "alt": "[图片]",
+              "fit": "heightFix",
+              "src": "/resources/2026-04/lowcode-2452335",
+              "style": {
+                "width": "40%",
+                "height": "95%"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "staticResourceAttribute": [
+                "src"
+              ],
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "image12",
+            "component": "WdImage",
+            "attributes": {
+              "alt": "[图片]",
+              "fit": "heightFix",
+              "src": "/resources/2026-04/lowcode-2452332",
+              "style": {
+                "width": "40%",
+                "height": "95%"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "staticResourceAttribute": [
+                "src"
+              ],
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "scopedStyle": ":root::-webkit-scrollbar {\n  display: none;\n}",
+        "extra": {
+          "attributeExtraData": {}
+        }
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "container2",
+    "component": "Container",
+    "attributes": {
+      "data": {},
+      "style": {
+        "margin": "12px 12px 0 12px",
+        "padding": "16px",
+        "boxShadow": "0 4px 12px rgba(0,0,0,0.05)",
+        "background": "#FFFFFF",
+        "borderRadius": "16px"
+      }
+    },
+    "items": [
+      {
+        "id": "container3",
+        "component": "Container",
+        "attributes": {
+          "data": {},
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "marginBottom": "16px",
+            "flexDirection": "row"
+          }
+        },
+        "items": [
+          {
+            "id": "container4",
+            "component": "Container",
+            "attributes": {
+              "data": {},
+              "style": {
+                "width": "4px",
+                "height": "16px",
+                "background": "#E11D48",
+                "borderRadius": "2px",
+                "backgroundColor": "#E11D48"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "text4",
+            "component": "WdText",
+            "attributes": {
+              "inheritColor": true,
+              "maxLines": "1",
+              "text": "全程修缮保障",
+              "style": {
+                "margin": "0px 0px 0px 8px",
+                "fontSize": "16px",
+                "fontWeight": "bolder"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "scopedStyle": ":scope.wd-typography {\n  margin-left: 8px;\n  font-size: 16px;\n  font-weight: bold;\n  color: #212121;\n}",
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      },
+      {
+        "id": "grid2",
+        "component": "Grid",
+        "attributes": {
+          "gutterX": "8px",
+          "gutterY": "8px",
+          "template": "[1,3]"
+        },
+        "items": [
+          {
+            "id": "row3",
+            "component": "Row",
+            "attributes": {
+              "alignItems": "stretch"
+            },
+            "items": [
+              {
+                "id": "col7",
+                "component": "Col",
+                "attributes": {
+                  "alignSelf": "auto",
+                  "widthType": "auto-fill"
+                },
+                "items": [
+                  {
+                    "id": "container5",
+                    "component": "Container",
+                    "attributes": {
+                      "data": {},
+                      "style": {
+                        "display": "flex",
+                        "flexDirection": "column",
+                        "justifyContent": "center"
+                      }
+                    },
+                    "items": [
+                      {
+                        "id": "icon4",
+                        "component": "WdIcon",
+                        "attributes": {
+                          "name": "td:bifurcate",
+                          "size": "xl",
+                          "style": {
+                            "color": "rgb(204, 1, 16)",
+                            "width": "100%"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "staticResourceAttribute": [
+                            "src"
+                          ],
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "text5",
+                        "component": "WdText",
+                        "attributes": {
+                          "inheritColor": true,
+                          "maxLines": "1",
+                          "text": "精准上门勘测",
+                          "style": {
+                            "margin": "0px 0px 0px 8px",
+                            "fontSize": "13px",
+                            "textAlign": "center",
+                            "fontWeight": "normal"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "scopedStyle": ":scope.wd-typography {\n  margin-left: 8px;\n  font-size: 16px;\n  font-weight: bold;\n  color: #212121;\n}",
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "text6",
+                        "component": "WdText",
+                        "attributes": {
+                          "inheritColor": true,
+                          "maxLines": "1",
+                          "text": "红外仪器 查明漏因",
+                          "style": {
+                            "color": "rgb(95, 114, 146)",
+                            "margin": "0px 0px 0px 8px",
+                            "fontSize": "11px",
+                            "textAlign": "center",
+                            "fontWeight": "normal"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "scopedStyle": ":scope.wd-typography {\n  margin-left: 8px;\n  font-size: 16px;\n  font-weight: bold;\n  color: #212121;\n}",
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "col8",
+                "component": "Col",
+                "attributes": {
+                  "alignSelf": "auto",
+                  "widthType": "auto-fill"
+                },
+                "items": [
+                  {
+                    "id": "container6",
+                    "component": "Container",
+                    "attributes": {
+                      "data": {},
+                      "style": {
+                        "display": "flex",
+                        "flexDirection": "column",
+                        "justifyContent": "center"
+                      }
+                    },
+                    "items": [
+                      {
+                        "id": "icon5",
+                        "component": "WdIcon",
+                        "attributes": {
+                          "name": "td:undertake-hold-up",
+                          "size": "xl",
+                          "style": {
+                            "color": "rgb(204, 1, 16)",
+                            "width": "100%"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "staticResourceAttribute": [
+                            "src"
+                          ],
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "text11",
+                        "component": "WdText",
+                        "attributes": {
+                          "inheritColor": true,
+                          "maxLines": "1",
+                          "text": "严选环保材料",
+                          "style": {
+                            "margin": "0px 0px 0px 8px",
+                            "fontSize": "13px",
+                            "textAlign": "center",
+                            "fontWeight": "normal"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "scopedStyle": ":scope.wd-typography {\n  margin-left: 8px;\n  font-size: 16px;\n  font-weight: bold;\n  color: #212121;\n}",
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "text10",
+                        "component": "WdText",
+                        "attributes": {
+                          "inheritColor": true,
+                          "maxLines": "1",
+                          "text": "明码实价 拒绝增项",
+                          "style": {
+                            "color": "rgb(95, 114, 146)",
+                            "margin": "0px 0px 0px 8px",
+                            "fontSize": "11px",
+                            "textAlign": "center",
+                            "fontWeight": "normal"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "scopedStyle": ":scope.wd-typography {\n  margin-left: 8px;\n  font-size: 16px;\n  font-weight: bold;\n  color: #212121;\n}",
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "col9",
+                "component": "Col",
+                "attributes": {
+                  "alignSelf": "auto",
+                  "widthType": "auto-fill"
+                },
+                "items": [
+                  {
+                    "id": "container11",
+                    "component": "Container",
+                    "attributes": {
+                      "data": {},
+                      "style": {
+                        "display": "flex",
+                        "flexDirection": "column",
+                        "justifyContent": "center"
+                      }
+                    },
+                    "items": [
+                      {
+                        "id": "icon6",
+                        "component": "WdIcon",
+                        "attributes": {
+                          "name": "td:thumb-up",
+                          "size": "xl",
+                          "style": {
+                            "color": "rgb(204, 1, 16)",
+                            "width": "100%"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "staticResourceAttribute": [
+                            "src"
+                          ],
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "text24",
+                        "component": "WdText",
+                        "attributes": {
+                          "inheritColor": true,
+                          "maxLines": "1",
+                          "text": "超长质保承诺",
+                          "style": {
+                            "margin": "0px 0px 0px 8px",
+                            "fontSize": "13px",
+                            "textAlign": "center",
+                            "fontWeight": "normal"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "scopedStyle": ":scope.wd-typography {\n  margin-left: 8px;\n  font-size: 16px;\n  font-weight: bold;\n  color: #212121;\n}",
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "text17",
+                        "component": "WdText",
+                        "attributes": {
+                          "inheritColor": true,
+                          "maxLines": "1",
+                          "text": "品质维保 极速响应",
+                          "style": {
+                            "color": "rgb(95, 114, 146)",
+                            "margin": "0px 0px 0px 8px",
+                            "fontSize": "11px",
+                            "textAlign": "center",
+                            "fontWeight": "normal"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "scopedStyle": ":scope.wd-typography {\n  margin-left: 8px;\n  font-size: 16px;\n  font-weight: bold;\n  color: #212121;\n}",
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "container12",
+    "component": "Container",
+    "attributes": {
+      "data": {},
+      "style": {
+        "margin": "12px 12px 0 12px",
+        "padding": "16px",
+        "overflow": "visible",
+        "boxShadow": "0 4px 12px rgba(0,0,0,0.05)",
+        "background": "#FFFFFF",
+        "borderRadius": "16px"
+      },
+      "class": "marquee-card"
+    },
+    "items": [
+      {
+        "id": "container14",
+        "component": "Container",
+        "attributes": {
+          "data": {},
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "marginBottom": "16px",
+            "flexDirection": "row"
+          }
+        },
+        "items": [
+          {
+            "id": "container32",
+            "component": "Container",
+            "attributes": {
+              "data": {},
+              "style": {
+                "width": "4px",
+                "height": "16px",
+                "background": "#E11D48",
+                "borderRadius": "2px",
+                "backgroundColor": "#E11D48"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "text25",
+            "component": "WdText",
+            "attributes": {
+              "inheritColor": true,
+              "maxLines": "1",
+              "text": "见证品质交付",
+              "style": {
+                "margin": "0px 0px 0px 8px",
+                "fontSize": "16px",
+                "fontWeight": "bolder"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "scopedStyle": ":scope.wd-typography {\n  margin-left: 8px;\n  font-size: 16px;\n  font-weight: bold;\n  color: #212121;\n}",
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      },
+      {
+        "id": "scrollView2",
+        "component": "ScrollView",
+        "attributes": {
+          "bounces": true,
+          "enableBackToTop": false,
+          "enableFlex": false,
+          "enhanced": true,
+          "fastDeceleration": false,
+          "lowerThreshold": 50,
+          "observerSelector": [],
+          "pagingEnabled": false,
+          "refresherBackground": "#fff",
+          "refresherDefaultStyle": "block",
+          "refresherEnabled": false,
+          "refresherThreshold": 50,
+          "refresherTriggered": true,
+          "rootMargin": {
+            "top": "0px",
+            "left": "0px",
+            "right": "0px",
+            "bottom": "0px"
+          },
+          "scrollAnchoring": false,
+          "scrollWithAnimation": false,
+          "scrollX": true,
+          "scrollY": false,
+          "showScrollbar": true,
+          "upperThreshold": 50,
+          "style": {
+            "display": "flex",
+            "flexWrap": "nowrap",
+            "flexDirection": "row"
+          },
+          "class": "row1"
+        },
+        "items": [
+          {
+            "id": "container38",
+            "component": "Container",
+            "attributes": {
+              "data": {},
+              "style": {
+                "display": "flex",
+                "flexWrap": "nowrap",
+                "flexDirection": "row"
+              }
+            },
+            "items": [
+              {
+                "id": "container37",
+                "component": "Container",
+                "attributes": {
+                  "data": {},
+                  "style": {
+                    "width": "240px",
+                    "height": "36px",
+                    "display": "flex",
+                    "padding": "0 12px",
+                    "alignItems": "center",
+                    "borderRadius": "999px",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "backgroundColor": "#F4F5F8"
+                  }
+                },
+                "items": [
+                  {
+                    "id": "text30",
+                    "component": "WdText",
+                    "attributes": {
+                      "inheritColor": true,
+                      "maxLines": "1",
+                      "text": "师傅上门很快，全副武装，看着就专业",
+                      "style": {
+                        "margin": "0px 0px 0px 6px",
+                        "fontSize": "12px"
+                      }
+                    },
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "container36",
+                "component": "Container",
+                "attributes": {
+                  "data": {},
+                  "style": {
+                    "width": "240px",
+                    "height": "36px",
+                    "display": "flex",
+                    "padding": "0 12px",
+                    "alignItems": "center",
+                    "borderRadius": "999px",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "backgroundColor": "#F4F5F8"
+                  }
+                },
+                "items": [
+                  {
+                    "id": "text29",
+                    "component": "WdText",
+                    "attributes": {
+                      "inheritColor": true,
+                      "maxLines": "1",
+                      "text": "师傅上门很快，全副武装",
+                      "style": {
+                        "margin": "0px 0px 0px 6px",
+                        "fontSize": "12px"
+                      }
+                    },
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "container35",
+                "component": "Container",
+                "attributes": {
+                  "data": {},
+                  "style": {
+                    "width": "240px",
+                    "height": "36px",
+                    "display": "flex",
+                    "padding": "0 12px",
+                    "alignItems": "center",
+                    "borderRadius": "999px",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "backgroundColor": "#F4F5F8"
+                  }
+                },
+                "items": [
+                  {
+                    "id": "text28",
+                    "component": "WdText",
+                    "attributes": {
+                      "inheritColor": true,
+                      "maxLines": "1",
+                      "text": "卫生间漏水好久了，师傅用仪器精准测漏，",
+                      "style": {
+                        "margin": "0px 0px 0px 6px",
+                        "fontSize": "12px"
+                      }
+                    },
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "container34",
+                "component": "Container",
+                "attributes": {
+                  "data": {},
+                  "style": {
+                    "width": "240px",
+                    "height": "36px",
+                    "display": "flex",
+                    "padding": "0 12px",
+                    "alignItems": "center",
+                    "borderRadius": "999px",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "backgroundColor": "#F4F5F8"
+                  }
+                },
+                "items": [
+                  {
+                    "id": "text27",
+                    "component": "WdText",
+                    "attributes": {
+                      "inheritColor": true,
+                      "maxLines": "1",
+                      "text": "师傅上门很快，进门自带鞋套和施工垫布，修完现场干干净净",
+                      "style": {
+                        "margin": "0px 0px 0px 6px",
+                        "fontSize": "12px"
+                      }
+                    },
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "container33",
+                "component": "Container",
+                "attributes": {
+                  "data": {},
+                  "style": {
+                    "width": "240px",
+                    "height": "36px",
+                    "display": "flex",
+                    "padding": "0 12px",
+                    "alignItems": "center",
+                    "borderRadius": "999px",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "backgroundColor": "#F4F5F8"
+                  }
+                },
+                "items": [
+                  {
+                    "id": "text26",
+                    "component": "WdText",
+                    "attributes": {
+                      "inheritColor": true,
+                      "maxLines": "1",
+                      "text": "找漏点非常专业，没有上来就乱砸",
+                      "style": {
+                        "margin": "0px 0px 0px 6px",
+                        "fontSize": "12px"
+                      }
+                    },
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      },
+      {
+        "id": "scrollView3",
+        "component": "ScrollView",
+        "attributes": {
+          "bounces": true,
+          "enableBackToTop": false,
+          "enableFlex": false,
+          "enhanced": true,
+          "fastDeceleration": false,
+          "lowerThreshold": 50,
+          "observerSelector": [],
+          "pagingEnabled": false,
+          "refresherBackground": "#fff",
+          "refresherDefaultStyle": "block",
+          "refresherEnabled": false,
+          "refresherThreshold": 50,
+          "refresherTriggered": true,
+          "rootMargin": {
+            "top": "0px",
+            "left": "0px",
+            "right": "0px",
+            "bottom": "0px"
+          },
+          "scrollAnchoring": false,
+          "scrollWithAnimation": false,
+          "scrollX": true,
+          "scrollY": false,
+          "showScrollbar": true,
+          "upperThreshold": 50,
+          "style": {
+            "margin": "8px 0px 0px 0px",
+            "display": "flex",
+            "flexWrap": "nowrap",
+            "flexDirection": "row"
+          },
+          "class": "row2"
+        },
+        "items": [
+          {
+            "id": "container39",
+            "component": "Container",
+            "attributes": {
+              "data": {},
+              "style": {
+                "display": "flex",
+                "flexWrap": "nowrap",
+                "flexDirection": "row"
+              }
+            },
+            "items": [
+              {
+                "id": "container40",
+                "component": "Container",
+                "attributes": {
+                  "data": {},
+                  "style": {
+                    "width": "240px",
+                    "height": "36px",
+                    "display": "flex",
+                    "padding": "0 12px",
+                    "alignItems": "center",
+                    "borderRadius": "999px",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "backgroundColor": "#F4F5F8"
+                  }
+                },
+                "items": [
+                  {
+                    "id": "text31",
+                    "component": "WdText",
+                    "attributes": {
+                      "inheritColor": true,
+                      "maxLines": "1",
+                      "text": "报价透明，什么材料多少钱清清楚楚",
+                      "style": {
+                        "margin": "0px 0px 0px 6px",
+                        "fontSize": "12px"
+                      }
+                    },
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "container41",
+                "component": "Container",
+                "attributes": {
+                  "data": {},
+                  "style": {
+                    "width": "240px",
+                    "height": "36px",
+                    "display": "flex",
+                    "padding": "0 12px",
+                    "alignItems": "center",
+                    "borderRadius": "999px",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "backgroundColor": "#F4F5F8"
+                  }
+                },
+                "items": [
+                  {
+                    "id": "text32",
+                    "component": "WdText",
+                    "attributes": {
+                      "inheritColor": true,
+                      "maxLines": "1",
+                      "text": "外墙渗水导致内墙发霉，师傅从外面做了隐形防水层",
+                      "style": {
+                        "margin": "0px 0px 0px 6px",
+                        "fontSize": "12px"
+                      }
+                    },
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "container42",
+                "component": "Container",
+                "attributes": {
+                  "data": {},
+                  "style": {
+                    "width": "240px",
+                    "height": "36px",
+                    "display": "flex",
+                    "padding": "0 12px",
+                    "alignItems": "center",
+                    "borderRadius": "999px",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "backgroundColor": "#F4F5F8"
+                  }
+                },
+                "items": [
+                  {
+                    "id": "text33",
+                    "component": "WdText",
+                    "attributes": {
+                      "inheritColor": true,
+                      "maxLines": "1",
+                      "text": "阳台漏水重做防水，师傅手艺细致",
+                      "style": {
+                        "margin": "0px 0px 0px 6px",
+                        "fontSize": "12px"
+                      }
+                    },
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "container43",
+                "component": "Container",
+                "attributes": {
+                  "data": {},
+                  "style": {
+                    "width": "240px",
+                    "height": "36px",
+                    "display": "flex",
+                    "padding": "0 12px",
+                    "alignItems": "center",
+                    "borderRadius": "999px",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "backgroundColor": "#F4F5F8"
+                  }
+                },
+                "items": [
+                  {
+                    "id": "text34",
+                    "component": "WdText",
+                    "attributes": {
+                      "inheritColor": true,
+                      "maxLines": "1",
+                      "text": "半夜发现漏水急死人，客服响应极快",
+                      "style": {
+                        "margin": "0px 0px 0px 6px",
+                        "fontSize": "12px"
+                      }
+                    },
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "container44",
+                "component": "Container",
+                "attributes": {
+                  "data": {},
+                  "style": {
+                    "width": "240px",
+                    "height": "36px",
+                    "display": "flex",
+                    "padding": "0 12px",
+                    "alignItems": "center",
+                    "borderRadius": "999px",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "backgroundColor": "#F4F5F8"
+                  }
+                },
+                "items": [
+                  {
+                    "id": "text35",
+                    "component": "WdText",
+                    "attributes": {
+                      "inheritColor": true,
+                      "maxLines": "1",
+                      "text": "经验丰富，看一眼漏水痕迹就找到根源了",
+                      "style": {
+                        "margin": "0px 0px 0px 6px",
+                        "fontSize": "12px"
+                      }
+                    },
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "container13",
+    "component": "Container",
+    "attributes": {
+      "data": {},
+      "style": {
+        "height": "120px"
+      }
+    },
+    "directives": {
+      ":if": true
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "container1",
+    "component": "Container",
+    "attributes": {
+      "style": {
+        "left": "0",
+        "right": "0",
+        "width": "100%",
+        "bottom": "0",
+        "height": "60px",
+        "margin": "0px 0px 0px",
+        "zIndex": "100",
+        "display": "flex",
+        "position": "fixed",
+        "boxShadow": "0 -1px 4px rgba(0,0,0,0.1)",
+        "alignItems": "center",
+        "background": "rgb(255, 255, 255)",
+        "flexDirection": "row",
+        "justifyContent": "space-around",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "items": [
+      {
+        "id": "container7",
+        "component": "Container",
+        "attributes": {
+          "data": {},
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "flexDirection": "column",
+            "justifyContent": "center"
+          }
+        },
+        "items": [
+          {
+            "id": "icon1",
+            "component": "WdIcon",
+            "attributes": {
+              "name": "td:home"
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "staticResourceAttribute": [
+                "src"
+              ],
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "text1",
+            "component": "WdText",
+            "attributes": {
+              "inheritColor": true,
+              "maxLines": "1",
+              "text": "首页"
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "listeners": [
+          {
+            "id": "wckpmtjzdy5",
+            "eventName": "tap",
+            "type": "platform",
+            "handler": {
+              "name": "redirectTo",
+              "module": "platform",
+              "params": {
+                "mode": "weDa",
+                "packageName": "",
+                "pageId": "page_home",
+                "params": {}
+              }
+            },
+            "isCapturePhase": false,
+            "noPropagation": false
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      },
+      {
+        "id": "container8",
+        "component": "Container",
+        "attributes": {
+          "data": {},
+          "style": {
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center"
+          }
+        },
+        "items": [
+          {
+            "id": "container10",
+            "component": "Container",
+            "attributes": {
+              "data": {},
+              "style": {
+                "width": "60px",
+                "height": "60px",
+                "margin": "0px 0px 0px",
+                "display": "flex",
+                "boxShadow": "0px 2px 8px 0px rgb(204, 2, 16)",
+                "alignItems": "center",
+                "background": "rgb(255, 0, 0)",
+                "borderRadius": "28px 28px",
+                "justifyContent": "center"
+              }
+            },
+            "items": [
+              {
+                "id": "icon2",
+                "component": "WdIcon",
+                "attributes": {
+                  "name": "td:call-1",
+                  "style": {
+                    "color": "rgb(255, 255, 255)",
+                    "width": "30px",
+                    "height": "30px",
+                    "fontSize": "30px"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "staticResourceAttribute": [
+                    "src"
+                  ],
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "listeners": [
+              {
+                "id": "w5eq2rcx5w9",
+                "eventName": "tap",
+                "type": "platform",
+                "handler": {
+                  "name": "redirectTo",
+                  "module": "platform",
+                  "params": {
+                    "mode": "weDa",
+                    "packageName": "",
+                    "pageId": "page_repair",
+                    "params": {
+                      "type": "1"
+                    }
+                  }
+                },
+                "isCapturePhase": false,
+                "noPropagation": false
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            ":style": "({ marginTop: '-30px' })",
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "text2",
+            "component": "WdText",
+            "attributes": {
+              "inheritColor": true,
+              "maxLines": "1",
+              "text": "报修",
+              "style": {
+                "textAlign": "center"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "listeners": [
+          {
+            "id": "wckpmtjzdy5",
+            "eventName": "tap",
+            "type": "platform",
+            "handler": {
+              "name": "redirectTo",
+              "module": "platform",
+              "params": {
+                "mode": "weDa",
+                "packageName": "",
+                "pageId": "page_repair",
+                "params": {
+                  "type": "1"
+                }
+              }
+            },
+            "isCapturePhase": false,
+            "noPropagation": false
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      },
+      {
+        "id": "container9",
+        "component": "Container",
+        "attributes": {
+          "data": {},
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "flexDirection": "column",
+            "justifyContent": "center"
+          }
+        },
+        "items": [
+          {
+            "id": "icon3",
+            "component": "WdIcon",
+            "attributes": {
+              "name": "td:user-1"
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "staticResourceAttribute": [
+                "src"
+              ],
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "text3",
+            "component": "WdText",
+            "attributes": {
+              "inheritColor": true,
+              "maxLines": "1",
+              "text": "我的"
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "listeners": [
+          {
+            "id": "wckpmtjzdy5",
+            "eventName": "tap",
+            "type": "platform",
+            "handler": {
+              "name": "redirectTo",
+              "module": "platform",
+              "params": {
+                "mode": "weDa",
+                "packageName": "",
+                "pageId": "page_usercenter",
+                "params": {}
+              }
+            },
+            "isCapturePhase": false,
+            "noPropagation": false
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "extra": {}
+  }
+]

@@ -1,0 +1,1957 @@
+[
+  {
+    "id": "input2",
+    "component": "WdInput",
+    "attributes": {
+      ":inputValue": "$w.page.dataset.params.record_id",
+      "label": "orderid参数",
+      "name": "input1",
+      "placeholder": "请输入",
+      "prefixIcon": "success",
+      "prefixType": "",
+      "requiredMsg": "该项为必填项",
+      "status": "edit",
+      "suffixIcon": "success",
+      "suffixType": "",
+      "template": "inputBox"
+    },
+    "directives": {
+      ":display": false
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "input1",
+    "component": "WdInput",
+    "attributes": {
+      "inputValue": "",
+      "label": "标题",
+      "name": "input1",
+      "placeholder": "请输入",
+      "prefixIcon": "success",
+      "prefixType": "",
+      "requiredMsg": "该项为必填项",
+      "status": "edit",
+      "suffixIcon": "success",
+      "suffixType": "",
+      "template": "inputBox"
+    },
+    "directives": {
+      ":display": false
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "button4",
+    "component": "WdButton",
+    "attributes": {
+      "icon": "success",
+      "text": "按钮"
+    },
+    "listeners": [
+      {
+        "id": "wm29dcyp09d",
+        "eventName": "tap",
+        "type": "platform",
+        "handler": {
+          "name": "setCurrentPageParams",
+          "module": "platform",
+          "params": {
+            "params": [
+              {
+                "key": "record_id",
+                ":value": "$w.input1.value"
+              }
+            ]
+          }
+        },
+        "isCapturePhase": false,
+        "noPropagation": false
+      }
+    ],
+    "directives": {
+      ":display": false
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "container1",
+    "component": "Container",
+    "attributes": {
+      "data": {},
+      "class": "ai-generate-wrapper"
+    },
+    "items": [
+      {
+        "id": "container2",
+        "component": "Container",
+        "attributes": {
+          "style": {
+            "margin": "16px",
+            "padding": "16px",
+            "boxShadow": "0 2px 8px rgba(0,0,0,0.1)",
+            "borderRadius": "8px",
+            "backgroundColor": "#ffffff"
+          }
+        },
+        "items": [
+          {
+            "id": "text1",
+            "component": "WdText",
+            "attributes": {
+              "level": "title-4",
+              ":text": "$w.utils.getEnumValue({ \n  optionSetName: 'workorderstatus', // 这里填你创建枚举时关联的“选项集”标识\n  key: $w.query1.data.status \n})",
+              "style": {
+                "color": "#4CAF50",
+                "display": "block",
+                "fontSize": "18px",
+                "fontWeight": "600",
+                "marginBottom": "12px"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "container3",
+            "component": "Container",
+            "attributes": {
+              "style": {
+                "marginBottom": "8px"
+              }
+            },
+            "items": [
+              {
+                "id": "text2",
+                "component": "WdText",
+                "attributes": {
+                  "text": "订单编号：",
+                  "style": {
+                    "color": "#757575",
+                    "display": "inline"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "text3",
+                "component": "WdText",
+                "attributes": {
+                  ":text": "$w.query1.data.order_no",
+                  "style": {
+                    "color": "inherit",
+                    "display": "inline"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {}
+          },
+          {
+            "id": "container4",
+            "component": "Container",
+            "attributes": {
+              "style": {
+                "marginBottom": "8px"
+              }
+            },
+            "items": [
+              {
+                "id": "text4",
+                "component": "WdText",
+                "attributes": {
+                  "text": "报修时间：",
+                  "style": {
+                    "color": "#757575",
+                    "display": "inline"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "text5",
+                "component": "WdText",
+                "attributes": {
+                  ":text": "$w.DateText($w.query1.data.createdAt,'YYYY-MM-DD HH:MM:ss')",
+                  "style": {
+                    "color": "inherit",
+                    "display": "inline"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {}
+          },
+          {
+            "id": "container5",
+            "component": "Container",
+            "attributes": {
+              "style": {
+                "margin": "0px 0px 8px"
+              }
+            },
+            "items": [
+              {
+                "id": "text6",
+                "component": "WdText",
+                "attributes": {
+                  "text": "详细地址：",
+                  "style": {
+                    "color": "#757575",
+                    "display": "inline"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "text7",
+                "component": "WdText",
+                "attributes": {
+                  ":text": "$w.query1.data.addresses",
+                  "style": {
+                    "color": "inherit",
+                    "display": "inline"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {}
+          },
+          {
+            "id": "container14",
+            "component": "Container",
+            "attributes": {
+              "style": {
+                "margin": "0px 0px 8px"
+              }
+            },
+            "items": [
+              {
+                "id": "text13",
+                "component": "WdText",
+                "attributes": {
+                  "maxLines": "1",
+                  "text": "最终价格：",
+                  "style": {
+                    "color": "#757575",
+                    "display": "inline"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "text14",
+                "component": "WdText",
+                "attributes": {
+                  ":text": "$w.query1.data.total_price+\" 元\"",
+                  "style": {
+                    "color": "inherit",
+                    "display": "inline"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":display": "Number($w.query1.data.status) >= 40"
+            },
+            "extra": {}
+          },
+          {
+            "id": "container15",
+            "component": "Container",
+            "attributes": {
+              "style": {
+                "margin": "0px 0px 8px"
+              }
+            },
+            "items": [
+              {
+                "id": "text18",
+                "component": "WdText",
+                "attributes": {
+                  "maxLines": "1",
+                  "text": "项目经理：",
+                  "style": {
+                    "color": "#757575",
+                    "display": "inline"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "text20",
+                "component": "WdText",
+                "attributes": {
+                  ":text": "$w.query2.data.name",
+                  "style": {
+                    "color": "inherit",
+                    "display": "inline"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "icon2",
+                "component": "WdIcon",
+                "attributes": {
+                  "name": "td:call",
+                  "size": "xs",
+                  "style": {
+                    "margin": "0px 5px 0px 10px"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "staticResourceAttribute": [
+                    "src"
+                  ],
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "text21",
+                "component": "WdText",
+                "attributes": {
+                  ":text": "$w.query2.data.phone",
+                  "style": {
+                    "color": "rgb(0, 82, 217)",
+                    "margin": "0px 0px 0px 0px",
+                    "display": "inline"
+                  }
+                },
+                "listeners": [
+                  {
+                    "id": "w2khwismehm",
+                    "eventName": "tap",
+                    "type": "platform",
+                    "handler": {
+                      "name": "callPhone",
+                      "module": "platform",
+                      "params": {
+                        ":tel": "$w.query2.data.phone"
+                      }
+                    },
+                    "isCapturePhase": false,
+                    "noPropagation": false
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":display": "Number($w.query1.data.status) >= 20"
+            },
+            "extra": {}
+          },
+          {
+            "id": "container16",
+            "component": "Container",
+            "attributes": {
+              "style": {
+                "margin": "0px 0px 8px"
+              }
+            },
+            "items": [
+              {
+                "id": "text22",
+                "component": "WdText",
+                "attributes": {
+                  "maxLines": "1",
+                  "text": "预约时间：",
+                  "style": {
+                    "color": "#757575",
+                    "display": "inline"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "text23",
+                "component": "WdText",
+                "attributes": {
+                  ":text": "$w.DateText($w.query1.data.visit_time,'YYYY-MM-DD')",
+                  "style": {
+                    "color": "inherit",
+                    "display": "inline"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":display": "Number($w.query1.data.status) >= 20"
+            },
+            "extra": {}
+          },
+          {
+            "id": "container17",
+            "component": "Container",
+            "attributes": {
+              "style": {
+                "margin": "0px 0px 8px"
+              }
+            },
+            "items": [
+              {
+                "id": "text19",
+                "component": "WdText",
+                "attributes": {
+                  "maxLines": "1",
+                  "text": "预约施工时间：",
+                  "style": {
+                    "color": "#757575",
+                    "display": "inline"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "text25",
+                "component": "WdText",
+                "attributes": {
+                  ":text": "$w.DateText($w.query1.data.date_appointment, 'YYYY-MM-DD')",
+                  "style": {
+                    "color": "inherit",
+                    "display": "inline"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":display": "Number($w.query1.data.status) >= 50"
+            },
+            "extra": {}
+          },
+          {
+            "id": "container18",
+            "component": "Container",
+            "attributes": {
+              "style": {
+                "margin": "0px 0px 8px"
+              }
+            },
+            "items": [
+              {
+                "id": "text26",
+                "component": "WdText",
+                "attributes": {
+                  "maxLines": "1",
+                  "text": "施工工人：",
+                  "style": {
+                    "color": "#757575",
+                    "display": "inline"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "text27",
+                "component": "WdText",
+                "attributes": {
+                  ":text": "$w.query3.data.name",
+                  "style": {
+                    "color": "inherit",
+                    "display": "inline"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "icon3",
+                "component": "WdIcon",
+                "attributes": {
+                  "name": "td:call",
+                  "size": "xs",
+                  "style": {
+                    "margin": "0px 5px 0px 10px"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "staticResourceAttribute": [
+                    "src"
+                  ],
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "text28",
+                "component": "WdText",
+                "attributes": {
+                  ":text": "$w.query3.data.phone",
+                  "style": {
+                    "color": "rgb(0, 82, 217)",
+                    "margin": "0px 0px 0px 0px",
+                    "display": "inline"
+                  }
+                },
+                "listeners": [
+                  {
+                    "id": "w2khwismehm",
+                    "eventName": "tap",
+                    "type": "platform",
+                    "handler": {
+                      "name": "callPhone",
+                      "module": "platform",
+                      "params": {
+                        ":tel": "$w.query3.data.phone"
+                      }
+                    },
+                    "isCapturePhase": false,
+                    "noPropagation": false
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":display": "Number($w.query1.data.status) >= 50"
+            },
+            "extra": {}
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {}
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "scopedStyle": ".ai-generate-wrapper {\n  --wd-font-base: 14px;\n  --wd-font-size-default: 14px;\n  font-size: 14px;\n  font-family: --apple-system- var(--wd-font-family)\n}\n.ai-generate-wrapper view,\n.ai-generate-wrapper div,\n.ai-generate-wrapper button {\n  box-sizing: border-box;\n  border-width: 0;\n  border-style: solid;\n    border-color: currentColor}\n.ai-generate-wrapper button.wd-btn--outline {\n  border-width: 1px\n}\n.ai-generate-wrapper button.wd-btn, .ai-generate-wrapper button.wd-btn:hover:not(.is-disabled) {\n  color: inherit;\n  background-color: transparent;\n  background-image: none;}\n",
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "dataView1",
+    "component": "DataView",
+    "attributes": {
+      "bindConnectMetadata": {},
+      "connectorMethod": {},
+      ":dataSourceData": "$w.query_worecords.data.records[0]",
+      "dataSourceType": "data-model",
+      "datasource": {
+        "name": "wo_records",
+        "type": "datamodal",
+        "extra": {
+          "params": {},
+          "viewId": "view-7yu47meke8",
+          "methodName": "wedaGetRecordsV2"
+        }
+      },
+      "exprToFieldsSchema": "",
+      "isSupportApis": false,
+      ":queryCondition": "({\n \"where\": {\n  \"$and\": [\n   {\n    \"$and\": [\n     {\n      \"_id\": {\n       \"$eq\": $w.query_worecords.data.records[0]._id\n      }\n     }\n    ]\n   }\n  ]\n },\n \"relateWhere\": {}\n})",
+      "supportManyRelated": true
+    },
+    "items": [
+      {
+        "id": "container13",
+        "label": "普通容器",
+        "component": "Container",
+        "attributes": {
+          "data": {},
+          "style": {
+            "margin": "15PX 25PX 15PX 26PX"
+          }
+        },
+        "items": [
+          {
+            "id": "text10",
+            "component": "WdText",
+            "attributes": {
+              "level": "title-6",
+              "maxLines": "1",
+              "text": "维修方案及报价",
+              "style": {
+                "marginBottom": "16PX"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "grid1",
+            "component": "Grid",
+            "attributes": {
+              "gutterX": "8px",
+              "gutterY": 3,
+              "template": "[1,3]"
+            },
+            "items": [
+              {
+                "id": "row4",
+                "component": "Row",
+                "attributes": {
+                  "alignItems": "stretch"
+                },
+                "items": [
+                  {
+                    "id": "col7",
+                    "component": "Col",
+                    "attributes": {
+                      "alignSelf": "auto",
+                      "lgWidthType": "2",
+                      "widthType": "4"
+                    },
+                    "items": [
+                      {
+                        "id": "text16",
+                        "component": "WdText",
+                        "attributes": {
+                          "maxLines": "1",
+                          "text": "总价",
+                          "style": {
+                            "color": "var(--wd-color-text-second)"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  },
+                  {
+                    "id": "col8",
+                    "component": "Col",
+                    "attributes": {
+                      "alignSelf": "auto",
+                      "widthType": "auto-fill"
+                    },
+                    "items": [
+                      {
+                        "id": "text17",
+                        "component": "WdText",
+                        "attributes": {
+                          "maxLines": "1",
+                          ":text": "$w.dataView1.record.price+\" 元\"",
+                          "style": {
+                            "whiteSpace": "pre-line"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "row3",
+                "component": "Row",
+                "attributes": {
+                  "alignItems": "stretch"
+                },
+                "items": [
+                  {
+                    "id": "col5",
+                    "component": "Col",
+                    "attributes": {
+                      "alignSelf": "auto",
+                      "lgWidthType": "2",
+                      "widthType": "4"
+                    },
+                    "items": [
+                      {
+                        "id": "text15",
+                        "component": "WdText",
+                        "attributes": {
+                          "maxLines": "1",
+                          "text": "报价文件",
+                          "style": {
+                            "color": "var(--wd-color-text-second)"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  },
+                  {
+                    "id": "col6",
+                    "component": "Col",
+                    "attributes": {
+                      "alignSelf": "auto",
+                      "widthType": "auto-fill"
+                    },
+                    "items": [
+                      {
+                        "id": "repeater1",
+                        "component": "Repeater",
+                        "attributes": {
+                          ":data": "$w.dataView1.record.attachments",
+                          "forIndex": "index_repeater1",
+                          "forItem": "item_repeater1",
+                          "suffix": "repeater1"
+                        },
+                        "items": [
+                          {
+                            "id": "text24",
+                            "component": "WdText",
+                            "attributes": {
+                              "inheritColor": true,
+                              "maxLines": "1",
+                              ":text": "\" 附件(\"+($w.index_repeater1+1).toString()+\");  \"",
+                              "style": {
+                                "color": "rgb(6, 60, 149)",
+                                "textDecoration": "underline"
+                              }
+                            },
+                            "listeners": [
+                              {
+                                "id": "weiqcm56xto",
+                                "eventName": "tap",
+                                "type": "rematch",
+                                "handler": {
+                                  "name": "fun_previewAttachment",
+                                  "module": "page_order_detail",
+                                  "params": {
+                                    ":target": "$w.item_repeater1"
+                                  }
+                                },
+                                "isCapturePhase": false,
+                                "noPropagation": false
+                              }
+                            ],
+                            "directives": {
+                              ":if": true
+                            },
+                            "extra": {
+                              "attributeExtraData": {}
+                            }
+                          }
+                        ],
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "row12",
+                "component": "Row",
+                "attributes": {
+                  "alignItems": "stretch"
+                },
+                "items": [
+                  {
+                    "id": "col23",
+                    "component": "Col",
+                    "attributes": {
+                      "alignSelf": "auto",
+                      "lgWidthType": "2",
+                      "widthType": "4"
+                    },
+                    "items": [
+                      {
+                        "id": "text32",
+                        "component": "WdText",
+                        "attributes": {
+                          "maxLines": "1",
+                          "text": "图片",
+                          "style": {
+                            "color": "var(--wd-color-text-second)"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  },
+                  {
+                    "id": "col24",
+                    "component": "Col",
+                    "attributes": {
+                      "alignSelf": "auto",
+                      "widthType": "auto-fill"
+                    },
+                    "items": [
+                      {
+                        "id": "repeater2",
+                        "component": "Repeater",
+                        "attributes": {
+                          ":data": "$w.dataView1.record.images",
+                          "forIndex": "index_repeater2",
+                          "forItem": "item_repeater2",
+                          "suffix": "repeater2"
+                        },
+                        "items": [
+                          {
+                            "id": "image1",
+                            "component": "WdImage",
+                            "attributes": {
+                              "alt": "[图片]",
+                              "fit": "cover",
+                              "imgPreview": true,
+                              ":src": "(() => {\n    // 1. 获取当前循环项的数据 (自动适配微搭的变量名)\n    let itemData = $w.item_repeater2;\n    let rawUrl = typeof itemData === 'string' ? itemData : (itemData?.url || itemData?.fileID || '');\n    \n    if (!rawUrl) return '';\n\n    // 2. 如果是 cloud:// 开头的地址，一律实施强制翻译\n    if (rawUrl.startsWith('cloud://')) {\n        let parts = rawUrl.split('/');\n        \n        // 提取真正的文件路径\n        let filePath = parts.slice(3).join('/');\n        \n        // 拼装成绝对正确的腾讯云直连 HTTPS 地址\n        return 'https://7761-waterproof-3g9f7h9kdb626bb3-1257706342.tcb.qcloud.la/' + filePath;\n    }\n    \n    // 如果已经是 http 等正常地址，原样返回\n    return rawUrl;\n})()",
+                              "style": {
+                                "width": "80px",
+                                "height": "80px",
+                                "margin": "0px 5px 0px 0px",
+                                "padding": "0px 0px 0px 0px"
+                              }
+                            },
+                            "directives": {
+                              ":if": true
+                            },
+                            "extra": {
+                              "staticResourceAttribute": [
+                                "src"
+                              ],
+                              "attributeExtraData": {}
+                            }
+                          }
+                        ],
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      }
+    ],
+    "directives": {
+      ":display": "$w.query1.data.status >= '40'"
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "container11",
+    "component": "Container",
+    "attributes": {
+      "data": {},
+      "class": "ai-generate-wrapper"
+    },
+    "items": [
+      {
+        "id": "container19",
+        "component": "Container",
+        "attributes": {
+          "style": {
+            "margin": "16px",
+            "padding": "16px",
+            "boxShadow": "0 2px 8px rgba(0,0,0,0.1)",
+            "borderRadius": "8px",
+            "backgroundColor": "#ffffff"
+          }
+        },
+        "items": [
+          {
+            "id": "topTab1",
+            "component": "WdTopTab",
+            "attributes": {
+              "isMultipleSlot": true,
+              "isSlotAuto": true,
+              "list": [
+                {
+                  "label": "勘测信息",
+                  "value": "1",
+                  "slotKey": "1",
+                  "iconType": "none",
+                  "__sortid__": "vUQfsecy0xQjieBJtLJ2Q",
+                  "isDisabled": false
+                },
+                {
+                  "label": "施工信息",
+                  "value": "2",
+                  "slotKey": "2",
+                  "iconType": "none",
+                  "__sortid__": "00Tx-_H1P15Q0prVGC8zx",
+                  "isDisabled": false
+                }
+              ]
+            },
+            "items": [
+              {
+                "id": "autoPanel_1",
+                "component": "",
+                "items": [
+                  {
+                    "id": "repeater3",
+                    "component": "Repeater",
+                    "attributes": {
+                      ":data": "$w.page.handler.fun_getVisiblePhotos($w.query_kance.data?.records || [])",
+                      "forIndex": "index_repeater3",
+                      "forItem": "item_repeater3",
+                      "suffix": "repeater3"
+                    },
+                    "items": [
+                      {
+                        "id": "container25",
+                        "component": "Container",
+                        "attributes": {
+                          "data": {},
+                          "style": {
+                            "width": "100%",
+                            "display": "flex",
+                            "flexDirection": "row"
+                          }
+                        },
+                        "items": [
+                          {
+                            "id": "container26",
+                            "component": "Container",
+                            "attributes": {
+                              "data": {},
+                              "style": {
+                                "width": "150px",
+                                "display": "flex",
+                                "alignItems": "center",
+                                "justifyContent": "center"
+                              }
+                            },
+                            "items": [
+                              {
+                                "id": "text30",
+                                "component": "WdText",
+                                "attributes": {
+                                  "inheritColor": true,
+                                  "maxLines": "1",
+                                  ":text": "$w.DateText($w.item_repeater3.time, 'YYYY-MM-DD')"
+                                },
+                                "directives": {
+                                  ":if": true
+                                },
+                                "extra": {
+                                  "attributeExtraData": {}
+                                }
+                              }
+                            ],
+                            "directives": {
+                              ":if": true
+                            },
+                            "extra": {
+                              "attributeExtraData": {}
+                            }
+                          },
+                          {
+                            "id": "container27",
+                            "component": "Container",
+                            "attributes": {
+                              "data": {},
+                              "style": {
+                                "display": "flex",
+                                "alignItems": "center",
+                                "flexDirection": "row",
+                                "justifyContent": "center"
+                              }
+                            },
+                            "items": [
+                              {
+                                "id": "repeater6",
+                                "component": "Repeater",
+                                "attributes": {
+                                  ":data": "$w.item_repeater3.photos",
+                                  "forIndex": "index_repeater6",
+                                  "forItem": "item_repeater6",
+                                  "suffix": "repeater6"
+                                },
+                                "items": [
+                                  {
+                                    "id": "image4",
+                                    "component": "WdImage",
+                                    "attributes": {
+                                      "alt": "[图片]",
+                                      "fit": "cover",
+                                      "imgPreview": true,
+                                      ":src": "$w.item_repeater6.url",
+                                      "style": {
+                                        "width": "80px",
+                                        "height": "80px"
+                                      }
+                                    },
+                                    "directives": {
+                                      ":if": true
+                                    },
+                                    "extra": {
+                                      "staticResourceAttribute": [
+                                        "src"
+                                      ],
+                                      "attributeExtraData": {}
+                                    }
+                                  }
+                                ],
+                                "directives": {
+                                  ":if": true
+                                },
+                                "extra": {
+                                  "attributeExtraData": {}
+                                }
+                              }
+                            ],
+                            "directives": {
+                              ":if": true
+                            },
+                            "extra": {
+                              "attributeExtraData": {}
+                            }
+                          }
+                        ],
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "container28",
+                        "component": "Container",
+                        "attributes": {
+                          "data": {},
+                          "style": {
+                            "height": "3px"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  },
+                  {
+                    "id": "text9",
+                    "component": "WdText",
+                    "attributes": {
+                      "inheritColor": true,
+                      "maxLines": "1",
+                      "text": "暂无该阶段照片"
+                    },
+                    "directives": {
+                      ":display": "// 勘测页的提示\n$w.page.handler.fun_getVisiblePhotos($w.query_kance.data?.records || []).length === 0"
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {}
+              },
+              {
+                "id": "autoPanel_2",
+                "component": "",
+                "items": [
+                  {
+                    "id": "repeater4",
+                    "component": "Repeater",
+                    "attributes": {
+                      ":data": "$w.page.handler.fun_getVisiblePhotos($w.query_shigong.data?.records || [])",
+                      "forIndex": "index_repeater4",
+                      "forItem": "item_repeater4",
+                      "suffix": "repeater4"
+                    },
+                    "items": [
+                      {
+                        "id": "container24",
+                        "component": "Container",
+                        "attributes": {
+                          "data": {},
+                          "style": {
+                            "width": "100%",
+                            "display": "flex",
+                            "flexDirection": "row"
+                          }
+                        },
+                        "items": [
+                          {
+                            "id": "container22",
+                            "component": "Container",
+                            "attributes": {
+                              "data": {},
+                              "style": {
+                                "width": "150px",
+                                "display": "flex",
+                                "alignItems": "center",
+                                "justifyContent": "center"
+                              }
+                            },
+                            "items": [
+                              {
+                                "id": "text33",
+                                "component": "WdText",
+                                "attributes": {
+                                  "inheritColor": true,
+                                  "maxLines": "1",
+                                  ":text": "$w.DateText($w.item_repeater4.time, 'YYYY-MM-DD')"
+                                },
+                                "directives": {
+                                  ":if": true
+                                },
+                                "extra": {
+                                  "attributeExtraData": {}
+                                }
+                              }
+                            ],
+                            "directives": {
+                              ":if": true
+                            },
+                            "extra": {
+                              "attributeExtraData": {}
+                            }
+                          },
+                          {
+                            "id": "container23",
+                            "component": "Container",
+                            "attributes": {
+                              "data": {},
+                              "style": {
+                                "display": "flex",
+                                "alignItems": "center",
+                                "flexDirection": "row",
+                                "justifyContent": "center"
+                              }
+                            },
+                            "items": [
+                              {
+                                "id": "repeater5",
+                                "component": "Repeater",
+                                "attributes": {
+                                  ":data": "$w.item_repeater4.photos",
+                                  "forIndex": "index_repeater5",
+                                  "forItem": "item_repeater5",
+                                  "suffix": "repeater5"
+                                },
+                                "items": [
+                                  {
+                                    "id": "image3",
+                                    "component": "WdImage",
+                                    "attributes": {
+                                      "alt": "[图片]",
+                                      "fit": "cover",
+                                      "imgPreview": true,
+                                      ":src": "$w.item_repeater5.url",
+                                      "style": {
+                                        "width": "80px",
+                                        "height": "80px"
+                                      }
+                                    },
+                                    "directives": {
+                                      ":if": true
+                                    },
+                                    "extra": {
+                                      "staticResourceAttribute": [
+                                        "src"
+                                      ],
+                                      "attributeExtraData": {}
+                                    }
+                                  }
+                                ],
+                                "directives": {
+                                  ":if": true
+                                },
+                                "extra": {
+                                  "attributeExtraData": {}
+                                }
+                              }
+                            ],
+                            "directives": {
+                              ":if": true
+                            },
+                            "extra": {
+                              "attributeExtraData": {}
+                            }
+                          }
+                        ],
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "container21",
+                        "component": "Container",
+                        "attributes": {
+                          "data": {},
+                          "style": {
+                            "height": "3px"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  },
+                  {
+                    "id": "text29",
+                    "component": "WdText",
+                    "attributes": {
+                      "inheritColor": true,
+                      "maxLines": "1",
+                      "text": "暂无该阶段照片"
+                    },
+                    "directives": {
+                      ":display": "// 施工页的提示\n$w.page.handler.fun_getVisiblePhotos($w.query_shigong.data?.records || []).length === 0"
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {}
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {}
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "scopedStyle": ".ai-generate-wrapper {\n  --wd-font-base: 14px;\n  --wd-font-size-default: 14px;\n  font-size: 14px;\n  font-family: --apple-system- var(--wd-font-family)\n}\n.ai-generate-wrapper view,\n.ai-generate-wrapper div,\n.ai-generate-wrapper button {\n  box-sizing: border-box;\n  border-width: 0;\n  border-style: solid;\n    border-color: currentColor}\n.ai-generate-wrapper button.wd-btn--outline {\n  border-width: 1px\n}\n.ai-generate-wrapper button.wd-btn, .ai-generate-wrapper button.wd-btn:hover:not(.is-disabled) {\n  color: inherit;\n  background-color: transparent;\n  background-image: none;}\n",
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "container6",
+    "component": "Container",
+    "attributes": {
+      "data": {},
+      "style": {
+        "left": "0px",
+        "color": "rgb(255, 255, 255)",
+        "right": "0px",
+        "bottom": "0px",
+        "margin": "24px 0px 0px",
+        "zIndex": 1,
+        "display": "flex",
+        "position": "fixed",
+        "alignItems": "center",
+        "background": "rgb(255, 255, 255)",
+        "justifyContent": "center"
+      },
+      "class": "ai-generate-wrapper"
+    },
+    "items": [
+      {
+        "id": "container7",
+        "component": "Container",
+        "attributes": {
+          "style": {
+            "color": "rgb(255, 255, 255)",
+            "width": "100%",
+            "margin": "16px",
+            "padding": "16px",
+            "background": "rgb(255, 255, 255)",
+            "borderRadius": "8px",
+            "backgroundColor": "#f5f5f5"
+          }
+        },
+        "items": [
+          {
+            "id": "container8",
+            "component": "Container",
+            "attributes": {
+              "data": {}
+            },
+            "items": [
+              {
+                "id": "button1",
+                "component": "WdButton",
+                "attributes": {
+                  "text": "联系师傅",
+                  "style": {
+                    "width": "100%",
+                    "borderRadius": "24px 24px"
+                  }
+                },
+                "directives": {
+                  ":display": ""
+                },
+                "scopedStyle": ":scope.wd-btn {\n  width: 320px;\n  background-color: #0052d9;\n  color: white;\n  border-radius: 20px 20px;\n}\n\n:scope .wd-btn--base {\n  border-width: 0;\n}\n\n@media (max-width: 768px) {\n  :scope.wd-btn {\n    font-size: 14px;\n  }\n}",
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":display": "$w.query1.data.status == \"1\""
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "container9",
+            "component": "Container",
+            "attributes": {
+              "style": {
+                "padding": "16px",
+                "background": "#F7F8FA",
+                "borderRadius": "12px 12px"
+              }
+            },
+            "items": [
+              {
+                "id": "text8",
+                "component": "WdText",
+                "attributes": {
+                  "text": "👷 师傅正在全力抢修中，请稍候...",
+                  "style": {
+                    "color": "inherit",
+                    "margin": "16px 0px",
+                    "display": "block",
+                    "padding": "12px",
+                    "textAlign": "center"
+                  }
+                },
+                "directives": {
+                  ":display": ""
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":display": "$w.query1.data.status == \"2\""
+            },
+            "extra": {}
+          },
+          {
+            "id": "container10",
+            "component": "Container",
+            "attributes": {},
+            "items": [
+              {
+                "id": "button3",
+                "component": "WdButton",
+                "attributes": {
+                  "text": "确认验收",
+                  "style": {
+                    "color": "white",
+                    "width": "100%",
+                    "borderRadius": "24px 24px",
+                    "backgroundColor": "#0052d9"
+                  }
+                },
+                "listeners": [
+                  {
+                    "id": "wvlwan29v6l",
+                    "eventName": "tap",
+                    "type": "platform",
+                    "handler": {
+                      "name": "cloud.callDataSource",
+                      "module": "platform",
+                      "params": {
+                        "dataSourceName": "workorders",
+                        "methodName": "wedaUpdateV2",
+                        "options": {
+                          "showToast": false,
+                          "showLoading": false
+                        },
+                        "outputs": {},
+                        "params": {
+                          "data": {
+                            "status": "4"
+                          },
+                          "select": {
+                            "$master": true
+                          },
+                          ":filter": "({\n \"where\": {\n  \"$and\": [\n   {\n    \"$and\": [\n     {\n      \"_id\": {\n       \"$eq\": $w.query1.data._id\n      }\n     }\n    ]\n   }\n  ]\n },\n \"relateWhere\": {}\n})"
+                        }
+                      }
+                    },
+                    "isCapturePhase": false,
+                    "noPropagation": false
+                  },
+                  {
+                    "id": "wyqxv3pfd3e",
+                    "eventName": "wvlwan29v6l.success",
+                    "type": "platform",
+                    "handler": {
+                      "name": "showToast",
+                      "module": "platform",
+                      "params": {
+                        "duration": 1500,
+                        "icon": "success",
+                        "title": "验收成功！"
+                      }
+                    },
+                    "isCapturePhase": false,
+                    "noPropagation": false
+                  },
+                  {
+                    "id": "w8w8w2jqbjp",
+                    "eventName": "wvlwan29v6l.success",
+                    "type": "platform",
+                    "handler": {
+                      "name": "callQuery",
+                      "module": "platform",
+                      "params": {
+                        "id": "query1",
+                        "method": "trigger"
+                      }
+                    },
+                    "isCapturePhase": false,
+                    "noPropagation": false
+                  }
+                ],
+                "directives": {
+                  ":display": ""
+                },
+                "scopedStyle": "\n:scope .wd-btn--base {\n border-width: 0;\n}\n@media (max-width: 768px) {\n  :scope {\n    font-size: 14px;\n  }\n}",
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":display": "$w.query1.data.status == \"3\""
+            },
+            "extra": {}
+          },
+          {
+            "id": "container12",
+            "component": "Container",
+            "attributes": {
+              "data": {},
+              "style": {
+                "display": "flex",
+                "flexDirection": "row"
+              }
+            },
+            "items": [
+              {
+                "id": "button2",
+                "component": "WdButton",
+                "attributes": {
+                  "icon": "success",
+                  ":text": "$w.query1.data.status === '40' ? '✅ 查看方案并同意报价' :\n$w.query1.data.status === '65' ? '✅ 查看方案并同意报价' :\n$w.query1.data.status === '70' ? '确认完工验收' :\n$w.query1.data.status === '80' ? '💰 扫码支付尾款' :\n'返回列表'",
+                  "style": {
+                    "borderRadius": "24px 24px"
+                  }
+                },
+                "listeners": [
+                  {
+                    "id": "w7e51yybsq7",
+                    "eventName": "tap",
+                    "type": "rematch",
+                    "handler": {
+                      "name": "function_client_agree",
+                      "module": "page_order_detail",
+                      "params": {}
+                    },
+                    "isCapturePhase": false,
+                    "noPropagation": false
+                  }
+                ],
+                "directives": {
+                  ":display": "$w.query1.data.status === '40' || $w.query1.data.status === '70' || $w.query1.data.status === '80' || $w.query1.data.status === '65'"
+                },
+                "scopedStyle": ":scope.wd-btn {\n  width: 320px;\n  background-color: #0052d9;\n  color: white;\n  border-radius: 20px 20px;\n}\n\n:scope .wd-btn--base {\n  border-width: 0;\n}\n\n@media (max-width: 768px) {\n  :scope.wd-btn {\n    font-size: 14px;\n  }\n}",
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "button7",
+                "component": "WdButton",
+                "attributes": {
+                  "icon": "success",
+                  "text": "退回报价",
+                  "theme": "error",
+                  "style": {
+                    "width": "30%",
+                    "background": "rgba(0, 0, 0, 0.6)",
+                    "borderRadius": "24px 24px"
+                  }
+                },
+                "listeners": [
+                  {
+                    "id": "w7e51yybsq7",
+                    "eventName": "tap",
+                    "type": "rematch",
+                    "handler": {
+                      "name": "function_price_back",
+                      "module": "page_order_detail",
+                      "params": {}
+                    },
+                    "isCapturePhase": false,
+                    "noPropagation": false
+                  }
+                ],
+                "directives": {
+                  ":display": "$w.query1.data.status === '40' ||$w.query1.data.status === '65' "
+                },
+                "scopedStyle": ":scope.wd-btn {\n  width: 320px;\n  background-color: #0052d9;\n  color: white;\n  border-radius: 20px 20px;\n}\n\n:scope .wd-btn--base {\n  border-width: 0;\n}\n\n@media (max-width: 768px) {\n  :scope.wd-btn {\n    font-size: 14px;\n  }\n}",
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {}
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "scopedStyle": ".ai-generate-wrapper {\n  --wd-font-base: 14px;\n  --wd-font-size-default: 14px;\n  font-size: 14px;\n  font-family: --apple-system- var(--wd-font-family)\n}\n.ai-generate-wrapper view,\n.ai-generate-wrapper div,\n.ai-generate-wrapper button {\n  box-sizing: border-box;\n  border-width: 0;\n  border-style: solid;\n    border-color: currentColor}\n.ai-generate-wrapper button.wd-btn--outline {\n  border-width: 1px\n}\n.ai-generate-wrapper button.wd-btn, .ai-generate-wrapper button.wd-btn:hover:not(.is-disabled) {\n  color: inherit;\n  background-color: transparent;\n  background-image: none;}\n",
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "modal1",
+    "label": "弹窗——支付维修款",
+    "component": "WdModal",
+    "attributes": {
+      "closeType": [
+        "mask"
+      ],
+      "defaultMaskShow": true,
+      "defaultShow": false,
+      "position": "center",
+      "template": "default"
+    },
+    "items": [
+      {
+        "id": "headerSlot",
+        "component": "",
+        "items": [
+          {
+            "id": "text11",
+            "label": "弹窗标题",
+            "component": "WdText",
+            "attributes": {
+              "level": "title-7",
+              "maxLines": "1",
+              "text": "弹窗标题",
+              "style": {
+                "fontWeight": "bolder"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "icon1",
+            "label": "关闭按钮",
+            "component": "WdIcon",
+            "attributes": {
+              "name": "td:close",
+              "style": {
+                "color": "rgba(0, 0, 0, 0.6)"
+              }
+            },
+            "listeners": [
+              {
+                "id": "wdModal2393",
+                "eventName": "tap",
+                "type": "platform",
+                "handler": {
+                  "name": "invoke",
+                  "module": "platform",
+                  "params": {
+                    "component": "modal1",
+                    "method": "close",
+                    "params": {
+                      "info": "icon"
+                    }
+                  }
+                },
+                "isCapturePhase": false,
+                "noPropagation": false
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {}
+      },
+      {
+        "id": "contentSlot",
+        "component": "",
+        "items": [
+          {
+            "id": "text12",
+            "component": "WdText",
+            "attributes": {
+              "inheritColor": true,
+              "maxLines": "1",
+              ":text": "\"请扫码支付尾款：\" + Number($w.query1.data.accepted_price || $w.query1.data.total_price || 0).toString() + \" 元\""
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {}
+      },
+      {
+        "id": "footerSlot",
+        "component": "",
+        "items": [
+          {
+            "id": "button5",
+            "label": "取消按钮",
+            "component": "WdButton",
+            "attributes": {
+              "icon": "success",
+              "text": "取消",
+              "theme": "secondary",
+              "variant": "outline"
+            },
+            "listeners": [
+              {
+                "id": "wdModal4681",
+                "eventName": "tap",
+                "type": "platform",
+                "handler": {
+                  "name": "invoke",
+                  "module": "platform",
+                  "params": {
+                    "component": "modal1",
+                    "method": "close",
+                    "params": {
+                      "info": "cancel"
+                    }
+                  }
+                },
+                "isCapturePhase": false,
+                "noPropagation": false
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "button6",
+            "label": "确认按钮",
+            "component": "WdButton",
+            "attributes": {
+              "icon": "success",
+              "text": "确认"
+            },
+            "listeners": [
+              {
+                "id": "wdModal3261",
+                "eventName": "tap",
+                "type": "platform",
+                "handler": {
+                  "name": "invoke",
+                  "module": "platform",
+                  "params": {
+                    "component": "modal1",
+                    "method": "close",
+                    "params": {
+                      "info": "confirm"
+                    }
+                  }
+                },
+                "isCapturePhase": false,
+                "noPropagation": false
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {}
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  }
+]

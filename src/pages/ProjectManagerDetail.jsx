@@ -34,6 +34,16 @@ import { cloudbase, db, storage, uploadFileViaCloudFunction } from '../cloudbase
 import { useParams, useNavigate } from 'react-router-dom';
 import AppLayout from '../components/Layout';
 import { normalizePhotos, updatePhotoVisibility, formatForStorage } from '../utils/photoUtils';
+import {
+  CLOUD_STORAGE_BUCKET,
+  RECORD_TYPE_MAP,
+  getLatestWorkflowRecord,
+  getWorkflowRecordTime,
+  getStatusInfo,
+  hasLaterWorkflowRecord
+} from '../config/business';
+import { getCurrentUser, getCurrentUserId, withAuth } from '../utils/auth';
+import { assertFunctionSuccess } from '../utils/cloudResults';
 
 const { TextArea } = Input;
 const { Title, Text } = Typography;
@@ -60,38 +70,24 @@ const PRIMARY_HOVER = '#1d4ed8';
 const TEXT_COLOR = '#1e293b';
 const TEXT_SECONDARY = '#64748b';
 
-const STATUS_MAP = {
-  '10': { color: 'orange', label: '待接单' },
-  '20': { color: 'cyan', label: '待勘测' },
-  '30': { color: 'gold', label: '待报价' },
-  '40': { color: 'lime', label: '待确认报价' },
-  '45': { color: 'magenta', label: '待派工' },
-  '50': { color: 'blue', label: '施工准备' },
-  '60': { color: 'purple', label: '施工中' },
-  '65': { color: 'volcano', label: '重新报价' },
-  '70': { color: 'geekblue', label: '待验收' },
-  '80': { color: 'red', label: '待支付' },
-  '90': { color: 'green', label: '已结单' },
+const formatTimestampText = (value) => {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric) || numeric <= 0) return value;
+  return new Date(numeric).toLocaleString('zh-CN');
 };
 
-const recordTypeMap = {
-  '0': { label: '客服接单及派单', color: 'blue' },
-  '1': { label: '上门勘测打卡', color: 'cyan' },
-  '2': { label: '提交方案及报价', color: 'purple' },
-  '3': { label: '客户确认报价', color: 'green' },
-  '4': { label: '施工准备', color: 'orange' },
-  '5': { label: '施工进度汇报', color: 'gold' },
-  '6': { label: '提交完工验收', color: 'pink' },
-  '7': { label: '内部沟通备注', color: 'gray' },
-  '9': { label: '客户完工验收', color: 'purple' },
-  '10': { label: '已付款结单', color: 'green' },
-  '3_5': { label: '项目经理派工', color: 'magenta' },
-};
+const formatRecordContent = (content = '') => String(content)
+  .replace(/预计进场时间：(\d{11,13})/g, (_, value) => `预计进场时间：${formatTimestampText(value)}`)
+  .replace(/预约施工时间：(\d{11,13})/g, (_, value) => `预约施工时间：${formatTimestampText(value)}`)
+  .replace(/预约勘测时间：(\d{11,13})/g, (_, value) => `预约勘测时间：${formatTimestampText(value)}`);
+
+const isImageFile = (name = '') => /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(name);
+const isPdfFile = (name = '') => /\.pdf$/i.test(name);
+const isOfficeFile = (name = '') => /\.(doc|docx|xls|xlsx|ppt|pptx)$/i.test(name);
+const isVideoFile = (name = '') => /\.(mp4|mov|m4v|webm)$/i.test(name);
 
 const getImageUrl = (cloudPath) => {
   if (!cloudPath) return '';
-  
-  const bucketName = '7761-waterproof-3g9f7h9kdb626bb3-1257706342';
   
   let filePath = cloudPath;
   if (filePath.startsWith('cloud://')) {
@@ -104,7 +100,7 @@ const getImageUrl = (cloudPath) => {
     }
   }
   
-  return `https://${bucketName}.tcb.qcloud.la/${filePath}`;
+  return `https://${CLOUD_STORAGE_BUCKET}.tcb.qcloud.la/${filePath}`;
 };
 
 function ProjectManagerDetail() {
@@ -130,19 +126,22 @@ function ProjectManagerDetail() {
   const [editingPhotos, setEditingPhotos] = useState([]);
 
   useEffect(() => {
-    const userStr = localStorage.getItem('user');
-    if (userStr) {
-      try {
-        const user = JSON.parse(userStr);
-        setCurrentUser(user);
-      } catch (e) {
-        console.error('解析用户信息失败:', e);
-      }
-    }
+    setCurrentUser(getCurrentUser());
     
     fetchOrder();
     fetchRecords();
   }, []);
+
+  useEffect(() => {
+    if (!order || records.length === 0) return;
+    const latestQuote = getLatestWorkflowRecord(records, '2', order);
+    if (!latestQuote) return;
+    quoteForm.setFieldsValue({
+      price: latestQuote.price || order.total_price || 0,
+      scheme: latestQuote.content || '',
+      remark: ''
+    });
+  }, [order, records, quoteForm]);
 
   const fetchOrder = async () => {
     try {
@@ -170,17 +169,31 @@ function ProjectManagerDetail() {
     }
   };
 
+  const loadRecordsForOrder = async () => {
+    const res = await db.collection('wo_records')
+      .where({ order_id: id })
+      .orderBy('createdAt', 'desc')
+      .get();
+    
+    let recordsData = [];
+    if (res && res.data) {
+      recordsData = Array.isArray(res.data) ? res.data : [];
+    }
+
+    return recordsData;
+  };
+
+  const loadCurrentOrder = async () => {
+    const res = await db.collection('workorders').doc(id).get();
+    if (Array.isArray(res?.data)) {
+      return res.data[0] || null;
+    }
+    return res?.data || null;
+  };
+
   const fetchRecords = async () => {
     try {
-      const res = await db.collection('wo_records')
-        .where({ order_id: id })
-        .orderBy('createdAt', 'desc')
-        .get();
-      
-      let recordsData = [];
-      if (res && res.data) {
-        recordsData = Array.isArray(res.data) ? res.data : [];
-      }
+      const recordsData = await loadRecordsForOrder();
       
       for (const record of recordsData) {
         if (record.creator_id) {
@@ -203,6 +216,28 @@ function ProjectManagerDetail() {
     }
   };
 
+  useEffect(() => {
+    const refreshLatest = () => {
+      fetchOrder();
+      fetchRecords();
+    };
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        refreshLatest();
+      }
+    };
+
+    window.addEventListener('focus', refreshLatest);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    const timer = window.setInterval(refreshLatest, 30000);
+
+    return () => {
+      window.removeEventListener('focus', refreshLatest);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.clearInterval(timer);
+    };
+  }, [id]);
+
   const handleQuoteSubmit = async (values) => {
     if (!order || !currentUser) return;
 
@@ -215,7 +250,23 @@ function ProjectManagerDetail() {
       console.log('待上传图片:', uploadedImages.length);
       console.log('待上传附件:', uploadedAttachments.length);
 
-      const userId = currentUser?.id || currentUser?._id || currentUser?.userId || currentUser?.user_id || currentUser?.phone || '';
+      const userId = getCurrentUserId(currentUser);
+      const latestOrder = await loadCurrentOrder();
+      const latestRecords = await loadRecordsForOrder();
+      if (!latestOrder) {
+        throw new Error('工单不存在，请刷新后重试');
+      }
+      if (!['30', '40'].includes(String(latestOrder.status))) {
+        await fetchOrder();
+        await fetchRecords();
+        throw new Error('工单状态已变化，当前不可修改报价信息');
+      }
+      const existingQuoteRecord = getLatestWorkflowRecord(latestRecords, '2', latestOrder);
+      if (hasLaterWorkflowRecord(latestRecords, '2', latestOrder)) {
+        await fetchOrder();
+        await fetchRecords();
+        throw new Error('客户或后续节点已经处理，当前报价不可修改');
+      }
 
       const imageUrls = [];
       if (uploadedImages.length > 0) {
@@ -254,7 +305,7 @@ function ProjectManagerDetail() {
       }
 
       const recordData = {
-        order_id: order._id,
+        order_id: latestOrder._id || order._id,
         record_type: '2',
         creator_role: 'manager',
         creator_name: currentUser?.name || '项目经理',
@@ -263,39 +314,39 @@ function ProjectManagerDetail() {
         price: values.price || 0,
         manager_name: currentUser?.name || '',
         createdAt: new Date().getTime(),
-        images: imageUrls.length > 0 ? imageUrls : [],
-        attachments: attachmentUrls.length > 0 ? attachmentUrls : [],
+        images: imageUrls.length > 0 ? imageUrls : (existingQuoteRecord?.images || []),
+        attachments: attachmentUrls.length > 0 ? attachmentUrls : (existingQuoteRecord?.attachments || []),
       };
 
-      console.log('添加 wo_records 记录...');
-      const addResult = await db.collection('wo_records').add(recordData);
-      console.log('wo_records 添加结果:', addResult);
-
-      const updateData = {
-        status: '40',
-        total_price: values.price || 0,
-      };
-      console.log('更新 workorders, orderId:', order._id, 'updateData:', updateData);
-
-      // 通过云函数更新 workorders 表
-      console.log('通过云函数更新 workorders...');
-      const cloudFunctionResult = await cloudbase.callFunction({
-        name: 'update-workorder',
-        data: {
-          orderId: order._id,
-          status: '40',
-          total_price: values.price || 0
-        }
+      console.log(existingQuoteRecord?._id ? '通过报价事务修改报价...' : '通过报价事务提交报价...');
+      const updateResult = await cloudbase.callFunction({
+        name: 'quote-workflow',
+        data: withAuth({
+          action: 'save_initial',
+          orderId: latestOrder._id || order._id,
+          actorId: userId,
+          expectedStatus: String(latestOrder.status),
+          expectedQuoteVersion: latestOrder.quote_version === undefined || latestOrder.quote_version === null || latestOrder.quote_version === ''
+            ? undefined
+            : Number(latestOrder.quote_version),
+          expectedQuoteUpdatedAt: getWorkflowRecordTime(existingQuoteRecord || {}),
+          expectedPrice: Number(latestOrder.total_price || 0),
+          price: recordData.price,
+          content: recordData.content,
+          images: recordData.images,
+          attachments: recordData.attachments,
+          creatorName: recordData.creator_name
+        })
       });
-      console.log('云函数返回结果:', cloudFunctionResult);
+      assertFunctionSuccess(updateResult, existingQuoteRecord?._id ? '报价记录更新失败' : '报价记录新增失败');
 
-      message.success('报价提交成功');
+      message.success(existingQuoteRecord?._id ? '报价修改成功' : '报价提交成功');
       setUploadedImages([]);
       setUploadedAttachments([]);
       navigate('/project-manager');
     } catch (err) {
       console.error('报价提交失败:', err);
-      message.error('报价提交失败');
+      message.error(err.message || '报价提交失败');
     } finally {
       setSubmitting(false);
     }
@@ -331,7 +382,7 @@ function ProjectManagerDetail() {
       key: 'record_type',
       width: 150,
       render: (type) => {
-        const info = recordTypeMap[String(type)] || { label: type, color: 'gray' };
+        const info = RECORD_TYPE_MAP[String(type)] || { label: type, color: 'gray' };
         return <Tag color={info.color}>{info.label}</Tag>;
       },
     },
@@ -354,6 +405,7 @@ function ProjectManagerDetail() {
       dataIndex: 'content',
       key: 'content',
       ellipsis: true,
+      render: (content) => formatRecordContent(content),
     },
     {
       title: '照片',
@@ -405,21 +457,23 @@ function ProjectManagerDetail() {
           try {
             const result = await cloudbase.callFunction({
               name: 'update-record',
-              data: {
+              data: withAuth({
                 collection: 'wo_records',
                 docId: docId,
+                orderId: record.order_id,
+                recordType: String(record.record_type || ''),
                 data: {
                   images: updatedPhotos,
                   updateTime: new Date().getTime()
                 }
-              }
+              })
             });
             
             if (result && result.result && result.result.success) {
               updateLocalRecords(docId, updatedPhotos);
               message.success(isVisible ? '照片已设为可见' : '照片已设为隐藏');
             } else {
-              message.error('更新失败，请联系管理员');
+              message.error(result?.result?.message || '更新失败，请联系管理员');
             }
           } catch (error) {
             message.error('更新失败: ' + error.message);
@@ -514,15 +568,14 @@ function ProjectManagerDetail() {
             {attachments.slice(0, 3).map((file, idx) => {
               const fileName = file.split('/').pop().replace(/^\d+_/, '');
               const fileUrl = getImageUrl(file);
-              const lowerFileName = fileName.toLowerCase();
-              const isImage = lowerFileName.match(/\.(jpg|jpeg|png|gif|bmp)$/) || lowerFileName.match(/\.(jpg|jpeg|png|gif|bmp)/);
-              const isOffice = lowerFileName.match(/\.(doc|docx|xls|xlsx|ppt|pptx|pdf)$/) || lowerFileName.match(/\.(doc|docx|xls|xlsx|ppt|pptx|pdf)/);
               
               const handleFileClick = () => {
-                const lowerName = fileName.toLowerCase();
-                if (lowerName.match(/\.(jpg|jpeg|png|gif|bmp)$/)) {
+                if (isImageFile(fileName)) {
                   setPreviewImage(fileUrl);
                   setPreviewVisible(true);
+                } else if (isPdfFile(fileName) || isOfficeFile(fileName) || isVideoFile(fileName)) {
+                  setPreviewFile({ name: fileName, url: fileUrl });
+                  setFilePreviewVisible(true);
                 } else {
                   const link = document.createElement('a');
                   link.href = fileUrl;
@@ -617,7 +670,8 @@ function ProjectManagerDetail() {
     );
   }
 
-  const statusInfo = STATUS_MAP[String(order?.status)] || { label: order?.status, color: 'gray' };
+  const statusInfo = getStatusInfo(order?.status);
+  const canEditQuote = ['30', '40'].includes(String(order?.status)) && !hasLaterWorkflowRecord(records, '2', order);
 
   return (
     <AppLayout>
@@ -711,7 +765,7 @@ function ProjectManagerDetail() {
           </Descriptions>
         </Card>
 
-        {String(order.status) === '30' && (
+        {canEditQuote && (
           <Card 
             style={{ 
               marginBottom: '24px',
@@ -719,7 +773,9 @@ function ProjectManagerDetail() {
               boxShadow: '0 1px 3px rgba(0, 0, 0, 0.06)'
             }}
           >
-            <Title level={4} style={{ marginBottom: '20px' }}>提交报价方案</Title>
+            <Title level={4} style={{ marginBottom: '20px' }}>
+              {String(order.status) === '40' ? '修改报价方案' : '提交报价方案'}
+            </Title>
             <Form
               form={quoteForm}
               layout="vertical"
@@ -804,7 +860,7 @@ function ProjectManagerDetail() {
                     取消
                   </Button>
                   <Button type="primary" htmlType="submit" loading={submitting} icon={<SendOutlined />}>
-                    提交报价
+                    {String(order.status) === '40' ? '保存修改' : '提交报价'}
                   </Button>
                 </Space>
               </Form.Item>
@@ -851,7 +907,7 @@ function ProjectManagerDetail() {
           >
             {previewFile && (
               <>
-                {previewFile.name.toLowerCase().match(/\.(jpg|jpeg|png|gif|bmp)$/) ? (
+                {isImageFile(previewFile.name) ? (
                   <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '500px', padding: '20px' }}>
                     <Image
                       src={previewFile.url}
@@ -859,7 +915,16 @@ function ProjectManagerDetail() {
                       style={{ maxWidth: '100%', maxHeight: '600px', objectFit: 'contain' }}
                     />
                   </div>
-                ) : previewFile.name.toLowerCase().includes('.pdf') ? (
+                ) : isVideoFile(previewFile.name) ? (
+                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '500px', padding: '20px', background: '#000' }}>
+                    <video
+                      src={previewFile.url}
+                      controls
+                      preload="metadata"
+                      style={{ width: '100%', maxHeight: '600px' }}
+                    />
+                  </div>
+                ) : isPdfFile(previewFile.name) ? (
                   <div style={{ width: '100%', height: '600px' }}>
                     <embed
                       src={previewFile.url}
@@ -867,7 +932,7 @@ function ProjectManagerDetail() {
                       style={{ width: '100%', height: '100%' }}
                     />
                   </div>
-                ) : previewFile.name.toLowerCase().match(/\.(doc|docx|xls|xlsx|ppt|pptx)$/) ? (
+                ) : isOfficeFile(previewFile.name) ? (
                   <div style={{ width: '100%', height: '600px' }}>
                     <iframe
                       src={`https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(previewFile.url)}`}

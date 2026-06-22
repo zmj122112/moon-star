@@ -3,6 +3,7 @@ import { Form, Input, Button, Card, Typography, Alert, Space } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import cloudbase from '@cloudbase/js-sdk';
 import { useNavigate } from 'react-router-dom';
+import { CLOUDBASE_ENV_ID } from '../config/env';
 
 const { Title, Text } = Typography;
 
@@ -12,7 +13,7 @@ const TEXT_COLOR = '#1e293b';
 const TEXT_SECONDARY = '#64748b';
 
 const app = cloudbase.init({
-  env: 'waterproof-3g9f7h9kdb626bb3'
+  env: CLOUDBASE_ENV_ID
 });
 
 function Login() {

@@ -1,0 +1,937 @@
+[
+  {
+    "id": "aiWrapper1",
+    "component": "Container",
+    "attributes": {
+      "data": {},
+      "class": "ai-generate-wrapper"
+    },
+    "items": [
+      {
+        "id": "topTab1",
+        "component": "WdTopTab",
+        "attributes": {
+          "isMultipleSlot": false,
+          "isSlotAuto": true,
+          "list": [
+            {
+              "label": "全部",
+              "value": "0",
+              "slotKey": "1",
+              "iconType": "inner",
+              "innerIcon": "td:task-checked",
+              "__sortid__": "tOjnN1wrEP8w1jyls8TSR",
+              "isDisabled": false,
+              "outerImage": "",
+              "iconPosition": "prefix"
+            },
+            {
+              "label": "待上门",
+              "value": "1",
+              "slotKey": "2",
+              "iconType": "inner",
+              "innerIcon": "td:user-talk",
+              "__sortid__": "5yGupZaEeZrN3-r9afpmL",
+              "isDisabled": false,
+              "outerImage": "",
+              "iconPosition": "prefix"
+            },
+            {
+              "label": "服务中",
+              "value": "2",
+              "slotKey": "3",
+              "iconType": "inner",
+              "innerIcon": "td:tools",
+              "__sortid__": "snvp0OZK_eHWwvI8Uh6_M",
+              "isDisabled": false,
+              "outerImage": "",
+              "iconPosition": "prefix"
+            },
+            {
+              "label": "待验收",
+              "value": "3",
+              "slotKey": "mlzyjv63",
+              "iconType": "inner",
+              "innerIcon": "td:undertake-delivery",
+              "__sortid__": "EouaJwnngJC1MBPrdMupx",
+              "isDisabled": false,
+              "outerImage": "",
+              "iconPosition": "prefix"
+            },
+            {
+              "label": "已完成",
+              "value": "4",
+              "slotKey": "mlzykhh5",
+              "iconType": "inner",
+              "innerIcon": "success",
+              "__sortid__": "tXL9-L_tg_HNCUKOJnK8S",
+              "isDisabled": false,
+              "outerImage": "",
+              "iconPosition": "prefix"
+            }
+          ],
+          ":selectedValue": "$w.page.dataset.state.activeTab === \"\" ? 0 : $w.page.dataset.state.activeTab"
+        },
+        "listeners": [
+          {
+            "id": "w3bdc8q1bhg",
+            "eventName": "change",
+            "type": "rematch",
+            "handler": {
+              "name": "function_tab_switch",
+              "module": "page_myorder",
+              "params": {}
+            },
+            "isCapturePhase": false,
+            "noPropagation": false
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      },
+      {
+        "id": "listView1",
+        "component": "ListView",
+        "attributes": {
+          "bindConnectMetadata": {
+            "datasource": {}
+          },
+          "connectorMethod": {
+            "inParams": [],
+            "outParams": []
+          },
+          "connectorParams": {},
+          "dataSourceData": [
+            {}
+          ],
+          "dataSourceType": "data-model",
+          "datasource": {
+            "name": "workorders",
+            "type": "datamodal",
+            "extra": {
+              "params": {},
+              "viewId": "view-7s7xkyibuo",
+              "methodName": "wedaGetRecordsV2"
+            }
+          },
+          "emptyText": "暂无数据",
+          "enableTotal": false,
+          "isSetStatus": true,
+          "isSupportApis": false,
+          "isSupportMultipleSort": true,
+          "loadButtonText": "加载更多",
+          "loadCompletedText": "",
+          "orderType": "asc",
+          "pageIndex": 1,
+          "pageSize": 8,
+          "pagination": "bottomLoad",
+          ":queryCondition": "({\n \"where\": {\n  \"$and\": [\n   {\n    \"$and\": [\n     {\n      \"_openid\": {\n       \"$eq\": $w.auth.currentUser.openId\n      }\n     },\n     {\n      \"status\": {\n       \"$in\": String($w.page.dataset.state.activeTab) === '1' ? ['10', '20'] :String($w.page.dataset.state.activeTab) === '2' ? ['30', '40','45', '50', '60','65'] :String($w.page.dataset.state.activeTab) === '3' ? ['70', '80'] :String($w.page.dataset.state.activeTab) === '4' ? ['90'] :['10', '20', '30', '40','45', '50', '60','65', '70', '80', '90']\n      }\n     }\n    ]\n   }\n  ]\n },\n \"relateWhere\": {}\n})",
+          "selectFields": [],
+          "sorter": [
+            {
+              "label": "更新时间",
+              "orderBy": "updatedAt",
+              "orderType": "desc",
+              "__sortid__": "7TnHzjD4CC-aemPsG4OSB"
+            }
+          ],
+          "supportManyRelated": true,
+          "template": "simpleList",
+          "style": {
+            "padding": "8PX 0px 8PX 0px"
+          }
+        },
+        "items": [
+          {
+            "id": "repeater1",
+            "component": "Repeater",
+            "attributes": {
+              ":data": "$w.listView1.records || []",
+              "forIndex": "index_listView1",
+              "forItem": "item_listView1",
+              "key": "_id",
+              "suffix": "listView1"
+            },
+            "items": [
+              {
+                "id": "container1",
+                "component": "Container",
+                "attributes": {
+                  "data": {},
+                  "style": {
+                    "margin": "0px 16px 12px",
+                    "display": "flex",
+                    "padding": "16PX",
+                    "position": "relative",
+                    "boxSizing": "border-box",
+                    "alignItems": "center",
+                    "background": "rgb(255, 255, 255)",
+                    "borderBottom": "1px solid var(--wd-color-border-separator)",
+                    "borderRadius": "12px 12px",
+                    "flexDirection": "row",
+                    "justifyContent": "flex-start"
+                  }
+                },
+                "items": [
+                  {
+                    "id": "container6",
+                    "component": "Container",
+                    "attributes": {
+                      "data": {},
+                      "style": {
+                        "gap": "4PX",
+                        "flex": "1",
+                        "display": "flex",
+                        "wordBreak": "break-all",
+                        "alignItems": "flex-start",
+                        "flexDirection": "column"
+                      }
+                    },
+                    "items": [
+                      {
+                        "id": "container8",
+                        "component": "Container",
+                        "attributes": {
+                          "data": {},
+                          "style": {
+                            "display": "flex",
+                            "flexDirection": "row",
+                            "justifyContent": "space-between"
+                          }
+                        },
+                        "items": [
+                          {
+                            "id": "text4",
+                            "component": "WdText",
+                            "attributes": {
+                              "inheritColor": true,
+                              "maxLines": "1",
+                              ":text": "\"订单\\n编号：\"",
+                              "style": {
+                                "fontSize": "13px",
+                                "fontWeight": "normal"
+                              }
+                            },
+                            "directives": {
+                              ":if": true
+                            },
+                            "extra": {
+                              "attributeExtraData": {}
+                            }
+                          },
+                          {
+                            "id": "text5",
+                            "component": "WdText",
+                            "attributes": {
+                              "inheritColor": true,
+                              "maxLines": "1",
+                              ":text": "$w.item_listView1.order_no",
+                              "style": {
+                                "width": "150px",
+                                "fontSize": "13px",
+                                "fontWeight": "normal"
+                              }
+                            },
+                            "directives": {
+                              ":if": true
+                            },
+                            "extra": {
+                              "attributeExtraData": {}
+                            }
+                          }
+                        ],
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "container10",
+                        "component": "Container",
+                        "attributes": {
+                          "data": {},
+                          "style": {
+                            "display": "flex",
+                            "flexDirection": "row",
+                            "justifyContent": "space-between"
+                          }
+                        },
+                        "items": [
+                          {
+                            "id": "text6",
+                            "component": "WdText",
+                            "attributes": {
+                              "inheritColor": true,
+                              "maxLines": "1",
+                              "text": "时间：",
+                              "style": {
+                                "fontSize": "13px",
+                                "fontWeight": "normal"
+                              }
+                            },
+                            "directives": {
+                              ":if": true
+                            },
+                            "extra": {
+                              "attributeExtraData": {}
+                            }
+                          },
+                          {
+                            "id": "text10",
+                            "component": "WdText",
+                            "attributes": {
+                              "inheritColor": true,
+                              "maxLines": "1",
+                              ":text": "$w.DateText($w.item_listView1.createdAt, 'YYYY-MM-DD')",
+                              "style": {
+                                "fontSize": "13px",
+                                "fontWeight": "normal"
+                              }
+                            },
+                            "directives": {
+                              ":if": true
+                            },
+                            "extra": {
+                              "attributeExtraData": {}
+                            }
+                          }
+                        ],
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "container9",
+                        "component": "Container",
+                        "attributes": {
+                          "data": {},
+                          "style": {
+                            "display": "flex",
+                            "flexDirection": "row",
+                            "justifyContent": "space-between"
+                          }
+                        },
+                        "items": [
+                          {
+                            "id": "text3",
+                            "component": "WdText",
+                            "attributes": {
+                              "inheritColor": true,
+                              "maxLines": "1",
+                              "text": "地址：",
+                              "style": {
+                                "fontSize": "13px",
+                                "fontWeight": "normal"
+                              }
+                            },
+                            "directives": {
+                              ":if": true
+                            },
+                            "extra": {
+                              "attributeExtraData": {}
+                            }
+                          },
+                          {
+                            "id": "text11",
+                            "component": "WdText",
+                            "attributes": {
+                              "inheritColor": true,
+                              "maxLines": "1",
+                              ":text": "$w.item_listView1.addresses",
+                              "style": {
+                                "fontSize": "13px",
+                                "fontWeight": "normal"
+                              }
+                            },
+                            "directives": {
+                              ":if": true
+                            },
+                            "extra": {
+                              "attributeExtraData": {}
+                            }
+                          }
+                        ],
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  },
+                  {
+                    "id": "container15",
+                    "component": "Container",
+                    "attributes": {
+                      "data": {},
+                      "style": {
+                        "display": "flex",
+                        "flexDirection": "column"
+                      }
+                    },
+                    "items": [
+                      {
+                        "id": "container4",
+                        "component": "Container",
+                        "attributes": {
+                          "data": {},
+                          "style": {
+                            "display": "flex",
+                            "alignItems": "center",
+                            "flexDirection": "row",
+                            "justifyContent": "space-between"
+                          }
+                        },
+                        "items": [
+                          {
+                            "id": "container2",
+                            "component": "Container",
+                            "attributes": {
+                              "data": {},
+                              "style": {
+                                "gap": "4PX",
+                                "flex": "1",
+                                "display": "flex",
+                                "wordBreak": "break-all",
+                                "alignItems": "flex-start",
+                                "flexDirection": "column"
+                              }
+                            },
+                            "items": [
+                              {
+                                "id": "container5",
+                                "component": "Container",
+                                "attributes": {
+                                  "data": {},
+                                  "style": {
+                                    "padding": "3px 10px",
+                                    "borderRadius": "12px 12px"
+                                  }
+                                },
+                                "items": [
+                                  {
+                                    "id": "text2",
+                                    "component": "WdText",
+                                    "attributes": {
+                                      "inheritColor": true,
+                                      "maxLines": "1",
+                                      ":text": "({\"1\": \"待上门\", \"2\": \"服务中\", \"3\": \"待验收\", \"4\": \"已完成\"})[$w.item_listView1.status]",
+                                      "style": {
+                                        "color": "rgb(218, 122, 18)",
+                                        "fontWeight": "normal"
+                                      }
+                                    },
+                                    "directives": {
+                                      ":if": true
+                                    },
+                                    ":style": "({\n  \"color\": ({\"1\": \"#FA8C16\", \"2\": \"#1890FF\", \"3\": \"#722ED1\", \"4\": \"#52C41A\"})[$w.item_listView1.status]\n})",
+                                    "extra": {
+                                      "attributeExtraData": {}
+                                    }
+                                  },
+                                  {
+                                    "id": "text1",
+                                    "component": "WdText",
+                                    "attributes": {
+                                      "level": "title-6",
+                                      "maxLines": "1",
+                                      ":text": "$w.utils.getEnumValue({\n  optionSetName: 'workorderstatus', // 这里换成您工单表状态字段绑定的真实枚举标识\n  key: $w.item_listView1.status // 注意这里前缀变成了当前详情容器的数据\n})",
+                                      "style": {
+                                        "color": "rgba(0, 0, 0, 0.62)",
+                                        "fontSize": "14px",
+                                        "fontWeight": "normal",
+                                        "marginBottom": "16PX"
+                                      }
+                                    },
+                                    "directives": {
+                                      ":if": true
+                                    },
+                                    "extra": {
+                                      "attributeExtraData": {}
+                                    }
+                                  }
+                                ],
+                                "directives": {
+                                  ":if": true
+                                },
+                                ":style": "({\n  \"backgroundColor\": ({\"1\": \"#FFF7E6\", \"2\": \"#E6F7FF\", \"3\": \"#F9F0FF\", \"4\": \"#F6FFED\"})[$w.item_listView1.status]\n})",
+                                "extra": {
+                                  "attributeExtraData": {}
+                                }
+                              }
+                            ],
+                            "directives": {
+                              ":if": true
+                            },
+                            "extra": {
+                              "attributeExtraData": {}
+                            }
+                          },
+                          {
+                            "id": "container3",
+                            "component": "Container",
+                            "attributes": {
+                              "data": {},
+                              "style": {
+                                "color": "var(--wd-color-text-default)",
+                                "width": "24PX",
+                                "height": "24PX",
+                                "display": "flex",
+                                "opacity": 0.9,
+                                "alignItems": "center",
+                                "marginLeft": "16PX",
+                                "justifyContent": "center"
+                              }
+                            },
+                            "items": [
+                              {
+                                "id": "icon1",
+                                "component": "WdIcon",
+                                "attributes": {
+                                  "name": "chevronright",
+                                  "size": "xs",
+                                  "sizeSelfAdaptive": true
+                                },
+                                "listeners": [
+                                  {
+                                    "id": "wbkkysc8e0a",
+                                    "eventName": "tap",
+                                    "type": "platform",
+                                    "handler": {
+                                      "name": "navigateTo",
+                                      "module": "platform",
+                                      "params": {
+                                        "mode": "weDa",
+                                        "packageName": "",
+                                        "pageId": "order_detail",
+                                        "params": {
+                                          ":record_id": "$w.item_listView1._id"
+                                        }
+                                      }
+                                    },
+                                    "isCapturePhase": false,
+                                    "noPropagation": false
+                                  }
+                                ],
+                                "directives": {
+                                  ":if": true
+                                },
+                                "extra": {
+                                  "attributeExtraData": {}
+                                }
+                              }
+                            ],
+                            "directives": {
+                              ":if": true
+                            },
+                            "extra": {
+                              "attributeExtraData": {}
+                            }
+                          }
+                        ],
+                        "listeners": [
+                          {
+                            "id": "w1kp1qxyrz8",
+                            "eventName": "tap",
+                            "type": "platform",
+                            "handler": {
+                              "name": "navigateTo",
+                              "module": "platform",
+                              "params": {
+                                "mode": "weDa",
+                                "packageName": "",
+                                "pageId": "page_order_detail",
+                                "params": {
+                                  ":record_id": "$w.item_listView1._id"
+                                }
+                              }
+                            },
+                            "isCapturePhase": false,
+                            "noPropagation": false
+                          }
+                        ],
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "container16",
+                        "component": "Container",
+                        "attributes": {
+                          "data": {},
+                          "style": {
+                            "gap": "4PX",
+                            "flex": "1",
+                            "display": "flex",
+                            "wordBreak": "break-all",
+                            "alignItems": "flex-start",
+                            "flexDirection": "column"
+                          }
+                        },
+                        "items": [
+                          {
+                            "id": "container17",
+                            "component": "Container",
+                            "attributes": {
+                              "data": {},
+                              "style": {
+                                "padding": "3px 10px",
+                                "borderRadius": "12px 12px"
+                              }
+                            },
+                            "items": [
+                              {
+                                "id": "text9",
+                                "component": "WdText",
+                                "attributes": {
+                                  "inheritColor": true,
+                                  "maxLines": "1",
+                                  "text": "去评价",
+                                  "style": {
+                                    "color": "rgb(218, 122, 18)",
+                                    "fontWeight": "normal"
+                                  }
+                                },
+                                "listeners": [
+                                  {
+                                    "id": "wnn51cdmjy3",
+                                    "eventName": "tap",
+                                    "type": "platform",
+                                    "handler": {
+                                      "name": "_setStateVal",
+                                      "module": "platform",
+                                      "params": {
+                                        ":val": "$w.item_listView1._id",
+                                        "varPath": "$page.current_review_order_id"
+                                      }
+                                    },
+                                    "isCapturePhase": false,
+                                    "noPropagation": false
+                                  },
+                                  {
+                                    "id": "w2h8suvhhp2",
+                                    "eventName": "wnn51cdmjy3.success",
+                                    "type": "rematch",
+                                    "handler": {
+                                      "name": "function2",
+                                      "module": "page_myorder",
+                                      "params": {}
+                                    },
+                                    "isCapturePhase": false,
+                                    "noPropagation": false
+                                  }
+                                ],
+                                "directives": {
+                                  ":display": "$w.item_listView1.status === '90' && !$w.item_listView1.review_stars"
+                                },
+                                ":style": "({\n  \"color\": {\n    \"1\": \"#FA8C16\",\n    \"2\": \"#1890FF\",\n    \"3\": \"#722ED1\",\n    \"4\": \"#52C41A\"\n  }[$w.item_listView1.status]\n})",
+                                "extra": {
+                                  "attributeExtraData": {}
+                                }
+                              },
+                              {
+                                "id": "text9_review",
+                                "component": "WdText",
+                                "attributes": {
+                                  "inheritColor": true,
+                                  "maxLines": "2",
+                                  ":text": "$w.item_listView1.review_stars ? ('已评价 ' + $w.item_listView1.review_stars + ' 星' + ($w.item_listView1.customer_review ? '：' + $w.item_listView1.customer_review : '')) : ''",
+                                  "style": {
+                                    "color": "rgb(56, 142, 60)",
+                                    "fontSize": "12px",
+                                    "fontWeight": "normal"
+                                  }
+                                },
+                                "directives": {
+                                  ":display": "$w.item_listView1.status === '90' && !!$w.item_listView1.review_stars"
+                                },
+                                "extra": {
+                                  "attributeExtraData": {}
+                                }
+                              }
+                            ],
+                            "directives": {
+                              ":if": true
+                            },
+                            ":style": "({\n  \"backgroundColor\": {\n    \"1\": \"#FFF7E6\",\n    \"2\": \"#E6F7FF\",\n    \"3\": \"#F9F0FF\",\n    \"4\": \"#F6FFED\"\n  }[$w.item_listView1.status]\n})",
+                            "extra": {
+                              "attributeExtraData": {}
+                            }
+                          }
+                        ],
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":display": "!!$w.auth.currentUser.openId"
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "scopedStyle": ".ai-generate-wrapper {\n  --wd-font-base: 14px;\n  --wd-font-size-default: 14px;\n  font-size: 14px;\n  font-family: --apple-system- var(--wd-font-family)\n}\n.ai-generate-wrapper view,\n.ai-generate-wrapper div,\n.ai-generate-wrapper button {\n  box-sizing: border-box;\n  border-width: 0;\n  border-style: solid;\n    border-color: currentColor}\n.ai-generate-wrapper button.wd-btn--outline {\n  border-width: 1px\n}\n.ai-generate-wrapper button.wd-btn, .ai-generate-wrapper button.wd-btn:hover:not(.is-disabled) {\n  color: inherit;\n  background-color: transparent;\n  background-image: none;}\n",
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "modal1",
+    "component": "WdModal",
+    "attributes": {
+      "closeType": [
+        "mask"
+      ],
+      "defaultMaskShow": true,
+      "defaultShow": false,
+      "position": "center",
+      "template": "default"
+    },
+    "items": [
+      {
+        "id": "headerSlot",
+        "component": "",
+        "items": [
+          {
+            "id": "text7",
+            "label": "弹窗标题",
+            "component": "WdText",
+            "attributes": {
+              "level": "title-7",
+              "maxLines": "1",
+              "text": "服务评价",
+              "style": {
+                "fontWeight": "bolder"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "icon2",
+            "label": "关闭按钮",
+            "component": "WdIcon",
+            "attributes": {
+              "name": "td:close",
+              "style": {
+                "color": "rgba(0, 0, 0, 0.6)"
+              }
+            },
+            "listeners": [
+              {
+                "id": "wdModal6400",
+                "eventName": "tap",
+                "type": "platform",
+                "handler": {
+                  "name": "invoke",
+                  "module": "platform",
+                  "params": {
+                    "component": "modal1",
+                    "method": "close",
+                    "params": {
+                      "info": "icon"
+                    }
+                  }
+                },
+                "isCapturePhase": false,
+                "noPropagation": false
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {}
+      },
+      {
+        "id": "contentSlot",
+        "component": "",
+        "items": [
+          {
+            "id": "rating1",
+            "component": "WdRating",
+            "attributes": {
+              "callbacks": {
+                ":tooltip": "props => {\n  // return props.value + '分';\n  return props.value;\n}"
+              },
+              "label": "评分",
+              "name": "rating1"
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "textarea1",
+            "component": "WdTextarea",
+            "attributes": {
+              "label": "评价",
+              "name": "textarea1",
+              "placeholder": "请输入",
+              "requiredMsg": "该项为必填项",
+              "status": "edit",
+              "value": ""
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {}
+      },
+      {
+        "id": "footerSlot",
+        "component": "",
+        "items": [
+          {
+            "id": "button1",
+            "label": "取消按钮",
+            "component": "WdButton",
+            "attributes": {
+              "icon": "success",
+              "text": "取消",
+              "theme": "secondary",
+              "variant": "outline"
+            },
+            "listeners": [
+              {
+                "id": "wdModal4362",
+                "eventName": "tap",
+                "type": "platform",
+                "handler": {
+                  "name": "invoke",
+                  "module": "platform",
+                  "params": {
+                    "component": "modal1",
+                    "method": "close",
+                    "params": {
+                      "info": "cancel"
+                    }
+                  }
+                },
+                "isCapturePhase": false,
+                "noPropagation": false
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "button2",
+            "label": "确认按钮",
+            "component": "WdButton",
+            "attributes": {
+              "icon": "success",
+              "text": "确认"
+            },
+            "listeners": [
+              {
+                "id": "wp89k7sxrgc",
+                "eventName": "tap",
+                "type": "rematch",
+                "handler": {
+                  "name": "function1",
+                  "module": "page_myorder",
+                  "params": {}
+                },
+                "isCapturePhase": false,
+                "noPropagation": false
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {}
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  }
+]

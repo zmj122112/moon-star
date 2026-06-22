@@ -1,0 +1,24 @@
+/* 🌟 核心结界：强行锁死白框，只要出了白框的范围，立刻隐身！ */
+.marquee-card {
+    overflow: hidden !important;
+}
+/* 第一排：正常速度 15秒一圈 */
+.row1 {
+    animation: marquee 15s linear infinite;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    width: max-content !important; 
+}
+/* 第二排：改慢一点（18秒），且加了 -7s 的延迟 */
+/* 💡 负延迟的意思是“提前起跑”，这样一打开页面，第二排就已经在路上了，完美形成错开的视觉差！ */
+.row2 {
+    animation: marquee 18s linear infinite -7s;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    width: max-content !important;
+}
+/* 动画轨迹：100vw 代表从屏幕右侧出发，但因为有 .marquee-card 的结界，它只会在进入白框时才显现 */
+@keyframes marquee {
+    0% { transform: translateX(100vw); }   
+    100% { transform: translateX(-100%); } 
+}

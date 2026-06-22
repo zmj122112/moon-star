@@ -9,10 +9,13 @@ import {
   DownOutlined,
   ProjectOutlined,
   BarChartOutlined,
+  RollbackOutlined,
   MenuOutlined,
   XOutlined
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { APP_NAME, isDevEnv } from '../config/env';
+import { MENU_ITEMS, hasAnyRole, parseRoles } from '../config/business';
 
 const { Header, Content, Sider } = Layout;
 const { Title } = Typography;
@@ -24,16 +27,14 @@ const HEADER_BG = '#ffffff';
 const TEXT_COLOR = '#1e293b';
 const TEXT_SECONDARY = '#64748b';
 
-const isDevEnv = import.meta.env.VITE_APP_ENV === 'development';
-const appName = import.meta.env.VITE_APP_NAME || '月星防水管理平台';
-
 const allMenuItems = [
-  { key: '/admin', icon: <HomeOutlined />, label: '客服项目', roles: ['管理员', 'admin', '管理员(admin)', '客服', 'cs', '客服(cs)', '公司管理层', 'management', '公司管理层(management)'] },
-  { key: '/project-manager', icon: <ProjectOutlined />, label: '项目经理', roles: ['管理员', 'admin', '管理员(admin)', '项目经理', 'manager', '项目经理(manager)', '公司管理层', 'management', '公司管理层(management)'] },
-  { key: '/dashboard', icon: <BarChartOutlined />, label: '统计中心', roles: ['管理员', 'admin', '管理员(admin)', '公司管理层', 'management', '公司管理层(management)'] },
-  { key: '/users', icon: <UserOutlined />, label: '用户管理', roles: ['管理员', 'admin', '管理员(admin)'] },
-  { key: '/profile', icon: <UserOutlined />, label: '个人设置', roles: ['管理员', 'admin', '管理员(admin)', '项目经理', 'manager', '项目经理(manager)', '客服', 'cs', '客服(cs)', '工人', 'worker', '施工工人', '施工工人(worker)', '公司管理层', 'management', '公司管理层(management)', '*'] },
-  { key: '/settings', icon: <SettingOutlined />, label: '系统设置', roles: ['管理员', 'admin', '管理员(admin)'] },
+  { ...MENU_ITEMS.find((item) => item.key === '/admin'), icon: <HomeOutlined /> },
+  { ...MENU_ITEMS.find((item) => item.key === '/project-manager'), icon: <ProjectOutlined /> },
+  { ...MENU_ITEMS.find((item) => item.key === '/dashboard'), icon: <BarChartOutlined /> },
+  { ...MENU_ITEMS.find((item) => item.key === '/users'), icon: <UserOutlined /> },
+  { ...MENU_ITEMS.find((item) => item.key === '/operations/rollback'), icon: <RollbackOutlined /> },
+  { ...MENU_ITEMS.find((item) => item.key === '/profile'), icon: <UserOutlined /> },
+  { ...MENU_ITEMS.find((item) => item.key === '/settings'), icon: <SettingOutlined /> },
 ];
 
 function AppLayout({ children }) {
@@ -64,26 +65,7 @@ function AppLayout({ children }) {
       try {
         const user = JSON.parse(userStr);
         setUserInfo(user);
-        let roles = [];
-        if (Array.isArray(user.role)) {
-          roles = user.role;
-        } else if (typeof user.role === 'string') {
-          try {
-            const parsed = JSON.parse(user.role);
-            roles = Array.isArray(parsed) ? parsed : [];
-          } catch {
-            const separator = user.role.includes(';') ? ';' : ',';
-            roles = user.role.split(separator).map(r => {
-              const cleaned = r.replace(/\[|\]|\(|\)/g, '').trim();
-              if (cleaned.includes('admin')) return '管理员';
-              if (cleaned.includes('客服')) return '客服';
-              if (cleaned.includes('工人')) return '工人';
-              if (cleaned.includes('项目经理')) return '项目经理';
-              if (cleaned.includes('management') || cleaned.includes('公司管理层')) return '公司管理层';
-              return cleaned;
-            }).filter(r => r);
-          }
-        }
+        const roles = parseRoles(user.role);
         console.log('解析后的角色:', roles);
         setUserRoles(roles);
       } catch (e) {
@@ -96,7 +78,7 @@ function AppLayout({ children }) {
     if (item.key === '/profile') {
       return true;
     }
-    return item.roles.some(role => userRoles.includes(role));
+    return hasAnyRole(userRoles, item.roles);
   });
 
   useEffect(() => {
@@ -334,7 +316,7 @@ function AppLayout({ children }) {
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '40px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span style={{ color: TEXT_COLOR, fontSize: '16px', fontWeight: '600', lineHeight: '1.4' }}>
-                {appName}
+              {APP_NAME}
               </span>
               {isDevEnv && (
                 <span style={{ 

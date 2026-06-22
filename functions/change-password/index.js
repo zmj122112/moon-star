@@ -1,18 +1,30 @@
 const cloudbase = require('@cloudbase/node-sdk');
 const crypto = require('crypto');
 
+const validateSelfIfTokenProvided = async (db, userId, token) => {
+  if (!token) return { ok: true };
+
+  const result = await db.collection('managers').doc(userId).get();
+  const user = Array.isArray(result.data) ? result.data[0] : result.data;
+  if (!user || user.token !== token) {
+    return { ok: false, code: 401, message: '登录已过期，请重新登录' };
+  }
+
+  return { ok: true, user };
+};
+
 exports.main = async (event, context) => {
   console.log('=== change-password 云函数被调用 ===');
   console.log('event:', JSON.stringify(event));
   
   try {
     const app = cloudbase.init({
-      env: 'waterproof-3g9f7h9kdb626bb3'
+      env: process.env.TCB_ENV_ID || 'waterproof-3g9f7h9kdb626bb3'
     });
     
     const db = app.database();
     
-    const { userId, oldPassword, newPassword } = event;
+    const { userId, oldPassword, newPassword, token } = event;
     
     console.log('修改密码参数:', { userId });
     
@@ -22,17 +34,25 @@ exports.main = async (event, context) => {
         message: '缺少必要参数'
       };
     }
+
+    const authResult = await validateSelfIfTokenProvided(db, userId, token);
+    if (!authResult.ok) {
+      return {
+        code: authResult.code,
+        message: authResult.message
+      };
+    }
     
     const result = await db.collection('managers').doc(userId).get();
+    const user = Array.isArray(result.data) ? result.data[0] : result.data;
     
-    if (!result.data || result.data.length === 0) {
+    if (!user) {
       return {
         code: 404,
         message: '用户不存在'
       };
     }
-    
-    const user = result.data[0];
+
     const hashedOldPassword = crypto.createHash('sha256').update(oldPassword).digest('hex');
     
     if (user.password !== hashedOldPassword) {

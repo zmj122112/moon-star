@@ -1,12 +1,15 @@
 import cloudbase from '@cloudbase/js-sdk';
+import { CLOUDBASE_ENV_ID } from './config/env';
+import { withAuth } from './utils/auth';
 
 const app = cloudbase.init({
-  env: 'waterproof-3g9f7h9kdb626bb3'
+  env: CLOUDBASE_ENV_ID
 });
 
 const db = app.database();
 
 let auth = null;
+let authReadyPromise = null;
 try {
   auth = app.auth({ persistence: 'local' });
 } catch (e) {
@@ -20,6 +23,55 @@ try {
   console.log('Storage initialization skipped:', e.message);
 }
 
+const ensureCloudbaseAuth = async () => {
+  if (!auth) return;
+
+  if (!authReadyPromise) {
+    authReadyPromise = (async () => {
+      let loginState = null;
+      if (typeof auth.getLoginState === 'function') {
+        try {
+          loginState = await auth.getLoginState();
+        } catch (error) {
+          console.warn('CloudBase login state check failed, retrying anonymous sign-in:', error?.message || error);
+        }
+      }
+
+      if (!loginState && typeof auth.signInAnonymously === 'function') {
+        await auth.signInAnonymously();
+      }
+    })().catch((error) => {
+      authReadyPromise = null;
+      throw error;
+    });
+  }
+
+  return authReadyPromise;
+};
+
+const rawCallFunction = app.callFunction.bind(app);
+
+const callFunction = async (options) => {
+  await ensureCloudbaseAuth();
+
+  try {
+    return await rawCallFunction(options);
+  } catch (error) {
+    const message = String(error?.message || error || '');
+    const shouldRetry = /network request error|ERR_CONNECTION_CLOSED|login|auth/i.test(message);
+
+    if (!shouldRetry) {
+      throw error;
+    }
+
+    authReadyPromise = null;
+    await ensureCloudbaseAuth();
+    return rawCallFunction(options);
+  }
+};
+
+app.callFunction = callFunction;
+
 const uploadFileViaCloudFunction = async (file, folder) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -31,11 +83,11 @@ const uploadFileViaCloudFunction = async (file, folder) => {
         
         const result = await app.callFunction({
           name: 'upload-file',
-          data: {
+          data: withAuth({
             fileName: file.name,
             fileContent: base64Data,
             folder: folder
-          }
+          })
         });
 
         console.log('云函数返回结果:', result);
@@ -60,4 +112,4 @@ const uploadFileViaCloudFunction = async (file, folder) => {
   });
 };
 
-export { app as cloudbase, db, auth, storage, uploadFileViaCloudFunction };
+export { app as cloudbase, db, auth, storage, ensureCloudbaseAuth, callFunction, uploadFileViaCloudFunction };

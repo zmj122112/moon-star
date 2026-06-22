@@ -7,7 +7,7 @@ exports.main = async (event, context) => {
   
   try {
     const app = cloudbase.init({
-      env: 'waterproof-3g9f7h9kdb626bb3'
+      env: process.env.TCB_ENV_ID || 'waterproof-3g9f7h9kdb626bb3'
     });
     
     const db = app.database();
@@ -92,7 +92,7 @@ exports.main = async (event, context) => {
       department: user.department,
       role: roles,
       token: token,
-      needChangePassword: user.needChangePassword || true
+      needChangePassword: user.needChangePassword ?? true
     };
     
     return {

@@ -1,0 +1,25 @@
+{
+  "attributes": {
+    "backgroundColor": "#FFFFFF",
+    "backgroundColorBottom": "#FFFFFF",
+    "backgroundColorTop": "#FFFFFF",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": false,
+    "namespace": "国企背景",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "国企背景",
+    "navigationStyle": "default",
+    "pageOrientation": "portrait",
+    "reachBottomDistance": 50,
+    "src": "",
+    "title": "国企背景"
+  },
+  "dataset": {
+    "query": {},
+    "state": {},
+    "params": {}
+  },
+  "extra": {},
+  "_ignoreResources": []
+}

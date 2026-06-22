@@ -11,6 +11,13 @@
       "installDependency": true
     },
     {
+      "name": "login",
+      "timeout": 15,
+      "runtime": "Nodejs20.19",
+      "handler": "index.main",
+      "installDependency": true
+    },
+    {
       "name": "change-password",
       "timeout": 15,
       "runtime": "Nodejs18.15",
@@ -25,6 +32,34 @@
       "installDependency": true
     },
     {
+      "name": "update-user",
+      "timeout": 15,
+      "runtime": "Nodejs18.15",
+      "handler": "index.main",
+      "installDependency": true
+    },
+    {
+      "name": "delete-user",
+      "timeout": 15,
+      "runtime": "Nodejs18.15",
+      "handler": "index.main",
+      "installDependency": true
+    },
+    {
+      "name": "update-workorder",
+      "timeout": 15,
+      "runtime": "Nodejs18.15",
+      "handler": "index.main",
+      "installDependency": true
+    },
+    {
+      "name": "rollback-workorder",
+      "timeout": 15,
+      "runtime": "Nodejs20.19",
+      "handler": "index.main",
+      "installDependency": true
+    },
+    {
       "name": "upload-file",
       "timeout": 30,
       "runtime": "Nodejs20.19",
@@ -35,6 +70,13 @@
       "name": "update-record",
       "timeout": 15,
       "runtime": "Nodejs18.15",
+      "handler": "index.main",
+      "installDependency": true
+    },
+    {
+      "name": "quote-workflow",
+      "timeout": 20,
+      "runtime": "Nodejs20.19",
       "handler": "index.main",
       "installDependency": true
     }

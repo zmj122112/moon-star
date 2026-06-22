@@ -1,0 +1,48 @@
+{
+  "attributes": {
+    "backgroundColor": "#FFFFFF",
+    "backgroundColorBottom": "#FFFFFF",
+    "backgroundColorTop": "#FFFFFF",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": false,
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "师傅工作台",
+    "navigationStyle": "default",
+    "pageOrientation": "portrait",
+    "reachBottomDistance": 50,
+    "src": "",
+    "title": "师傅工作台",
+    "style": {
+      "background": "#F7F8FA"
+    }
+  },
+  "dataset": {
+    "state": {
+      "currentRole": {
+        "name": "currentRole",
+        "label": "",
+        "varType": "state",
+        "dataType": "array",
+        "initialValue": [],
+        "enableSyncLocal": false
+      }
+    }
+  },
+  "extra": {},
+  "listeners": [
+    {
+      "id": "wirgk258dtm",
+      "eventName": "show",
+      "type": "rematch",
+      "handler": {
+        "name": "function2",
+        "module": "page_master_home",
+        "params": {}
+      },
+      "isCapturePhase": false,
+      "noPropagation": false
+    }
+  ],
+  "_ignoreResources": []
+}

@@ -1,0 +1,77 @@
+{
+  "attributes": {
+    "backgroundColor": "#FFFFFF",
+    "backgroundColorBottom": "#FFFFFF",
+    "backgroundColorTop": "#FFFFFF",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": false,
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "工单详情表",
+    "navigationStyle": "default",
+    "pageOrientation": "portrait",
+    "reachBottomDistance": 50,
+    "src": "",
+    "title": "工单详情表",
+    "style": {
+      "background": "rgb(245, 246, 247)"
+    }
+  },
+  "dataset": {
+    "query": {
+      "query_managers": {
+        "id": "query_managers",
+        "name": "query_managers",
+        "type": "model",
+        "trigger": "auto",
+        "description": "",
+        "handler": {
+          "module": "platform",
+          "name": "cloud.callDataSource",
+          "params": {
+            "dataSourceName": "managers",
+            "methodName": "wedaGetRecordsV2",
+            "params": {
+              "select": {
+                "$master": true
+              }
+            }
+          }
+        },
+        "listeners": []
+      },
+      "query_currentManager": {
+        "id": "query_currentManager",
+        "name": "query_currentManager",
+        "type": "model",
+        "trigger": "auto",
+        "description": "",
+        "handler": {
+          "module": "platform",
+          "name": "cloud.callDataSource",
+          "params": {
+            "dataSourceName": "managers",
+            "methodName": "wedaGetItemV2",
+            "params": {
+              "select": {
+                "$master": true
+              },
+              ":filter": "({\n \"where\": {\n  \"$and\": [\n   {\n    \"$and\": [\n     {\n      \"_id\": {\n       \"$eq\": $w.dataView1.record.manager_id\n      }\n     }\n    ]\n   }\n  ]\n },\n \"relateWhere\": {}\n})"
+            }
+          }
+        },
+        "listeners": []
+      }
+    },
+    "state": {},
+    "params": {
+      "record_id": {
+        "name": "record_id",
+        "varType": "params",
+        "required": true
+      }
+    }
+  },
+  "extra": {},
+  "_ignoreResources": []
+}

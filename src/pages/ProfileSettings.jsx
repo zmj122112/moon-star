@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Form, Input, Button, Card, Typography, Alert, Space } from 'antd';
 import { LockOutlined, UserOutlined, SaveOutlined } from '@ant-design/icons';
-import cloudbase from '@cloudbase/js-sdk';
+import { cloudbase } from '../cloudbase';
 import AppLayout from '../components/Layout';
+import { getCurrentUserId, withAuth } from '../utils/auth';
 
 const { Title, Text } = Typography;
 
@@ -10,10 +11,6 @@ const PRIMARY_COLOR = '#2563eb';
 const PRIMARY_HOVER = '#1d4ed8';
 const TEXT_COLOR = '#1e293b';
 const TEXT_SECONDARY = '#64748b';
-
-const app = cloudbase.init({
-  env: 'waterproof-3g9f7h9kdb626bb3'
-});
 
 function ProfileSettings({ onPasswordChanged }) {
   const [loading, setLoading] = useState(false);
@@ -30,13 +27,13 @@ function ProfileSettings({ onPasswordChanged }) {
     setSuccess('');
 
     try {
-      const result = await app.callFunction({
+      const result = await cloudbase.callFunction({
         name: 'change-password',
-        data: {
-          userId: user?.userId,
+        data: withAuth({
+          userId: getCurrentUserId(user),
           oldPassword: values.oldPassword,
           newPassword: values.newPassword
-        }
+        })
       });
 
       if (result.result.code === 200) {

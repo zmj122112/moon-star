@@ -1,0 +1,42 @@
+{
+  "attributes": {
+    "backgroundColor": "#FFFFFF",
+    "backgroundColorBottom": "#FFFFFF",
+    "backgroundColorTop": "#FFFFFF",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": false,
+    "namespace": "标准工艺",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "标准工艺",
+    "navigationStyle": "default",
+    "pageOrientation": "portrait",
+    "reachBottomDistance": 50,
+    "src": "",
+    "title": "标准工艺"
+  },
+  "dataset": {
+    "query": {},
+    "state": {},
+    "params": {}
+  },
+  "extra": {},
+  "_ignoreResources": [
+    {
+      "code": "\n/*\n* 可通过 $page.computed.xxx 访问这里定义的计算状态\n* 注意：页面级别的计算状态仅在所属的页面有效\n*/\n\nexport default {\n  name() { return 'LowCode' }\n}",
+      "name": "computed",
+      "path": "page_bg/computed",
+      "system": true,
+      "type": "CODE",
+      "codeType": "computed"
+    },
+    {
+      "code": "/*\n* 可通过 $page.state.xxx 访问这里定义的状态\n* 注意：页面级别的状态仅在所属的页面有效\n* 修改状态时，直接赋值即可。如：$page.state.xxx = 'xxx'\n* 请注意：避免在页面处于后台状态时state，页面在后台时对全局state的修改会丢失！\n*/\n\n\nexport default {\n  name: 'LowCode'\n}\n\n/* 在这里定义页面变量。\n*  页面变量区别于 state 的是：页面变量不会作响应处理，不可被绑定\n*  在 handler 中使用的例子：import { data } from '../state'\n*  \n*/\nexport const data = {\n\n}\n\n\n",
+      "name": "state",
+      "path": "page_bg/state",
+      "system": true,
+      "type": "CODE",
+      "codeType": "state"
+    }
+  ]
+}

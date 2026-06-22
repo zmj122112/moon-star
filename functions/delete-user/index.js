@@ -1,5 +1,34 @@
 const cloudbase = require('@cloudbase/node-sdk');
 
+const parseRoles = (role) => {
+  if (Array.isArray(role)) return role.map(String);
+  if (typeof role === 'string') {
+    try {
+      const parsed = JSON.parse(role);
+      if (Array.isArray(parsed)) return parsed.map(String);
+    } catch {}
+    return role.split(role.includes(';') ? ';' : ',').map(r => r.trim()).filter(Boolean);
+  }
+  return [];
+};
+
+const validateAdminIfTokenProvided = async (db, operatorId, operatorToken) => {
+  if (!operatorToken) return { ok: true };
+
+  const result = await db.collection('managers').doc(operatorId).get();
+  const operator = Array.isArray(result.data) ? result.data[0] : result.data;
+  if (!operator || operator.token !== operatorToken) {
+    return { ok: false, code: 401, message: '登录已过期，请重新登录' };
+  }
+
+  const isAdmin = parseRoles(operator.role).some(role => role.includes('admin') || role.includes('管理员'));
+  if (!isAdmin) {
+    return { ok: false, code: 403, message: '无权限执行该操作' };
+  }
+
+  return { ok: true };
+};
+
 const saveOperationLog = async (db, operatorId, operatorName, action, targetUserId, targetUserName, detail) => {
   try {
     await db.collection('user_operation_logs').add({
@@ -24,12 +53,12 @@ exports.main = async (event, context) => {
   
   try {
     const app = cloudbase.init({
-      env: 'waterproof-3g9f7h9kdb626bb3'
+      env: process.env.TCB_ENV_ID || 'waterproof-3g9f7h9kdb626bb3'
     });
     
     const db = app.database();
     
-    const { userId, operatorId, operatorName } = event;
+    const { userId, operatorId, operatorName, operatorToken } = event;
     
     console.log('参数:', { userId, operatorId, operatorName });
     
@@ -37,6 +66,14 @@ exports.main = async (event, context) => {
       return {
         code: 400,
         message: '缺少必要参数：userId'
+      };
+    }
+
+    const authResult = await validateAdminIfTokenProvided(db, operatorId, operatorToken);
+    if (!authResult.ok) {
+      return {
+        code: authResult.code,
+        message: authResult.message
       };
     }
     

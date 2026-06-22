@@ -1,0 +1,1541 @@
+[
+  {
+    "id": "input1",
+    "component": "WdInput",
+    "attributes": {
+      ":inputValue": "$w.page.dataset.params.record_id",
+      "label": "orderid参数",
+      "name": "input1",
+      "placeholder": "请输入",
+      "prefixIcon": "success",
+      "prefixType": "",
+      "requiredMsg": "该项为必填项",
+      "status": "edit",
+      "suffixIcon": "success",
+      "suffixType": "",
+      "template": "inputBox"
+    },
+    "directives": {
+      ":display": false
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "input2",
+    "component": "WdInput",
+    "attributes": {
+      "inputValue": "",
+      "label": "标题",
+      "name": "input1",
+      "placeholder": "请输入",
+      "prefixIcon": "success",
+      "prefixType": "",
+      "requiredMsg": "该项为必填项",
+      "status": "edit",
+      "suffixIcon": "success",
+      "suffixType": "",
+      "template": "inputBox"
+    },
+    "directives": {
+      ":display": false
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "button9",
+    "component": "WdButton",
+    "attributes": {
+      "icon": "success",
+      "text": "按钮"
+    },
+    "listeners": [
+      {
+        "id": "wm29dcyp09d",
+        "eventName": "tap",
+        "type": "platform",
+        "handler": {
+          "name": "setCurrentPageParams",
+          "module": "platform",
+          "params": {
+            "params": [
+              {
+                "key": "record_id",
+                ":value": "$w.input1.value"
+              }
+            ]
+          }
+        },
+        "isCapturePhase": false,
+        "noPropagation": false
+      }
+    ],
+    "directives": {
+      ":display": false
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "dataView1",
+    "component": "DataView",
+    "attributes": {
+      "bindConnectMetadata": {},
+      "connectorMethod": {},
+      "dataSourceData": {},
+      "dataSourceType": "data-model",
+      "datasource": {
+        "name": "workorders",
+        "type": "datamodal",
+        "extra": {
+          "params": {},
+          "viewId": "view-7u8q4k3khs",
+          "methodName": "wedaGetRecordsV2"
+        }
+      },
+      "exprToFieldsSchema": "",
+      "isSupportApis": false,
+      ":queryCondition": "({\n \"where\": {\n  \"$and\": [\n   {\n    \"$and\": [\n     {\n      \"_id\": {\n       \"$eq\": $w.page.dataset.params.record_id\n      }\n     }\n    ]\n   }\n  ]\n },\n \"relateWhere\": {}\n})",
+      "supportManyRelated": true,
+      "style": {
+        "padding": "15px"
+      }
+    },
+    "items": [
+      {
+        "id": "container2",
+        "component": "Container",
+        "attributes": {
+          "data": {},
+          "style": {
+            "padding": "15px",
+            "boxShadow": "0px 2px 4px 0px rgba(0, 0, 0, 0.05)",
+            "background": "rgb(255, 255, 255)",
+            "borderRadius": "8px 8px"
+          }
+        },
+        "items": [
+          {
+            "id": "text35",
+            "component": "WdText",
+            "attributes": {
+              "level": "title-6",
+              "maxLines": "1",
+              ":text": "$w.utils.getEnumValue({ optionSetName: 'workorderstatus', key: $w.dataView1.record.status })",
+              "style": {
+                "color": "rgb(204, 2, 16)",
+                "fontWeight": "bolder",
+                "marginBottom": "16PX"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "container3",
+            "component": "Container",
+            "attributes": {
+              "data": {},
+              "style": {
+                "display": "flex",
+                "flexDirection": "row"
+              }
+            },
+            "items": [
+              {
+                "id": "text4",
+                "component": "WdText",
+                "attributes": {
+                  "level": "title-6",
+                  "maxLines": "1",
+                  ":text": "'客户：'+$w.dataView1.record.name + \"  \"",
+                  "style": {
+                    "color": "rgba(0, 0, 0, 0.62)",
+                    "fontSize": "14px",
+                    "fontWeight": "normal",
+                    "marginBottom": "16PX"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "text37",
+                "component": "WdText",
+                "attributes": {
+                  "level": "title-6",
+                  "maxLines": "1",
+                  ":text": "$w.dataView1.record.phone",
+                  "style": {
+                    "color": "rgb(0, 82, 217)",
+                    "margin": "0px 0px 16PX 10px",
+                    "fontSize": "14px",
+                    "fontWeight": "normal"
+                  }
+                },
+                "listeners": [
+                  {
+                    "id": "w5l851tm5gs",
+                    "eventName": "tap",
+                    "type": "platform",
+                    "handler": {
+                      "name": "callPhone",
+                      "module": "platform",
+                      "params": {
+                        ":tel": "$w.dataView1.record.phone"
+                      }
+                    },
+                    "isCapturePhase": false,
+                    "noPropagation": false
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "text36",
+            "component": "WdText",
+            "attributes": {
+              "level": "title-6",
+              "maxLines": "1",
+              ":text": "'地址：'+$w.dataView1.record.addresses",
+              "style": {
+                "color": "rgba(0, 0, 0, 0.62)",
+                "fontSize": "14px",
+                "fontWeight": "normal",
+                "marginBottom": "16PX"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "repeater2",
+            "component": "Repeater",
+            "attributes": {
+              ":data": "$w.dataView1.record.images",
+              "forIndex": "index_repeater2",
+              "forItem": "item_repeater2",
+              "suffix": "repeater2"
+            },
+            "items": [
+              {
+                "id": "image3",
+                "component": "WdImage",
+                "attributes": {
+                  "alt": "",
+                  "fit": "cover",
+                  "imgPreview": true,
+                  "showMenuByLongpress": false,
+                  ":src": "$w.item_repeater2",
+                  "style": {
+                    "width": "100px",
+                    "height": "100px",
+                    "padding": "0px 5px 0px 0px"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "staticResourceAttribute": [
+                    "src"
+                  ],
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":display": "$w.dataView1.record.images && $w.dataView1.record.images.length > 0"
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "container4",
+            "component": "Container",
+            "attributes": {
+              "data": {},
+              "style": {
+                "display": "flex",
+                "flexDirection": "row"
+              }
+            },
+            "items": [
+              {
+                "id": "text6",
+                "component": "WdText",
+                "attributes": {
+                  "level": "title-6",
+                  "maxLines": "1",
+                  ":text": "'项目经理：'+$w.query_currentManager.data.name+'  '",
+                  "style": {
+                    "color": "rgba(0, 0, 0, 0.62)",
+                    "fontSize": "14px",
+                    "fontWeight": "normal",
+                    "marginBottom": "16PX"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "text7",
+                "component": "WdText",
+                "attributes": {
+                  "level": "title-6",
+                  "maxLines": "1",
+                  ":text": "$w.query_currentManager.data.phone",
+                  "style": {
+                    "color": "rgb(0, 82, 217)",
+                    "margin": "0px 0px 16PX 10px",
+                    "fontSize": "14px",
+                    "fontWeight": "normal"
+                  }
+                },
+                "listeners": [
+                  {
+                    "id": "w5l851tm5gs",
+                    "eventName": "tap",
+                    "type": "platform",
+                    "handler": {
+                      "name": "callPhone",
+                      "module": "platform",
+                      "params": {
+                        ":tel": "$w.query_managers.data.records[0].phone"
+                      }
+                    },
+                    "isCapturePhase": false,
+                    "noPropagation": false
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "listView1",
+    "component": "ListView",
+    "attributes": {
+      "bindConnectMetadata": {
+        "datasource": {}
+      },
+      "connectorMethod": {
+        "inParams": [],
+        "outParams": []
+      },
+      "connectorParams": {},
+      "dataSourceData": [
+        {}
+      ],
+      "dataSourceType": "data-model",
+      "datasource": {
+        "name": "wo_records",
+        "type": "datamodal",
+        "extra": {
+          "params": {},
+          "viewId": "view-7y6z0um4zk",
+          "methodName": "wedaGetRecordsV2"
+        }
+      },
+      "emptyText": "暂无数据",
+      "enableTotal": false,
+      "isSetStatus": true,
+      "isSupportApis": false,
+      "isSupportMultipleSort": true,
+      "loadButtonText": "加载更多",
+      "loadCompletedText": "",
+      "orderType": "asc",
+      "pageIndex": 1,
+      "pageSize": 8,
+      "pagination": "bottomLoad",
+      ":queryCondition": "({\n \"where\": {\n  \"$and\": [\n   {\n    \"$and\": [\n     {\n      \"order_id\": {\n       \"$eq\": $w.page.dataset.params.record_id\n      }\n     }\n    ]\n   }\n  ]\n },\n \"relateWhere\": {}\n})",
+      "selectFields": [],
+      "sorter": [
+        {
+          "label": "创建时间",
+          "orderBy": "createdAt",
+          "orderType": "desc",
+          "__sortid__": "kImfYqCShX1cbRvrCI2wa"
+        }
+      ],
+      "supportManyRelated": true,
+      "template": "simpleList",
+      "style": {
+        "padding": "8PX 16PX"
+      }
+    },
+    "items": [
+      {
+        "id": "repeater1",
+        "component": "Repeater",
+        "attributes": {
+          ":data": "$w.listView1.records || []",
+          "forIndex": "index_listView1",
+          "forItem": "item_listView1",
+          "key": "_id",
+          "suffix": "listView1"
+        },
+        "items": [
+          {
+            "id": "container5",
+            "component": "Container",
+            "attributes": {
+              "data": {},
+              "style": {
+                "padding": "0px 15px",
+                "background": "rgb(255, 255, 255)"
+              }
+            },
+            "items": [
+              {
+                "id": "text3",
+                "component": "WdText",
+                "attributes": {
+                  "inheritColor": true,
+                  "maxLines": "1",
+                  ":text": "$w.DateText($w.item_listView1.updatedAt, 'YYYY-MM-DD HH:mm:ss') + ' - ' + $w.utils.getEnumValue({optionSetName: 'record_type_dict', key: $w.item_listView1.record_type})",
+                  "style": {
+                    "color": "rgb(0, 0, 0)",
+                    "fontSize": "14px"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "text5",
+                "component": "WdText",
+                "attributes": {
+                  "inheritColor": true,
+                  "maxLines": "1",
+                  ":text": "$w.item_listView1.content",
+                  "style": {
+                    "color": "rgba(0, 0, 0, 0.6)",
+                    "fontSize": "12px"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "repeater4",
+                "component": "Repeater",
+                "attributes": {
+                  ":data": "$w.item_listView1.attachments",
+                  "forIndex": "index_repeater4",
+                  "forItem": "item_repeater4",
+                  "suffix": "repeater4"
+                },
+                "items": [
+                  {
+                    "id": "text8",
+                    "component": "WdText",
+                    "attributes": {
+                      "inheritColor": true,
+                      "maxLines": "1",
+                      ":text": "decodeURIComponent($w.item_repeater4.split('/').pop()).replace(/^[^-]+-/, '')"
+                    },
+                    "listeners": [
+                      {
+                        "id": "wutnoxm4thq",
+                        "eventName": "tap",
+                        "type": "rematch",
+                        "handler": {
+                          "name": "function_openDoc",
+                          "module": "page_master_order_detail",
+                          "params": {
+                            ":target": "$w.item_repeater4"
+                          }
+                        },
+                        "isCapturePhase": false,
+                        "noPropagation": false
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":display": "$w.item_listView1.attachments && $w.item_listView1.attachments.length > 0"
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "repeater3",
+                "component": "Repeater",
+                "attributes": {
+                  ":data": "$w.page.handler.fun_getAllPhotosForManager($w.item_listView1.images || [], $w.item_listView1._id)",
+                  "forIndex": "index_repeater3",
+                  "forItem": "item_repeater3",
+                  "suffix": "repeater3"
+                },
+                "items": [
+                  {
+                    "id": "container7",
+                    "component": "Container",
+                    "attributes": {
+                      "data": {},
+                      "style": {
+                        "display": "flex",
+                        "padding": "0px 0px 05px",
+                        "alignItems": "center",
+                        "flexDirection": "row"
+                      }
+                    },
+                    "items": [
+                      {
+                        "id": "image2",
+                        "component": "WdImage",
+                        "attributes": {
+                          "alt": "",
+                          "fit": "cover",
+                          "imgPreview": true,
+                          "showMenuByLongpress": false,
+                          ":src": "$w.item_repeater3.url",
+                          "style": {
+                            "height": "100px",
+                            "padding": "0px 5px 0px 0px"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "staticResourceAttribute": [
+                            "src"
+                          ],
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "switch2",
+                        "component": "WdSwitch",
+                        "attributes": {
+                          "borderedH5": false,
+                          "extra": "",
+                          "label": "客户可见",
+                          "name": "switch2",
+                          "required": false,
+                          "requiredFlag": true,
+                          "requiredMsg": "该项为必填项",
+                          "size": "",
+                          "status": "edit",
+                          ":value": "$w.item_repeater3.visible !== false"
+                        },
+                        "listeners": [
+                          {
+                            "id": "w6q8jzsgh7r",
+                            "eventName": "change",
+                            "type": "rematch",
+                            "handler": {
+                              "name": "fun_changeimgvisible",
+                              "module": "page_master_order_detail",
+                              "params": {
+                                ":target": "$w.item_repeater3"
+                              }
+                            },
+                            "isCapturePhase": false,
+                            "noPropagation": false
+                          }
+                        ],
+                        "directives": {
+                          ":if": true
+                        },
+                        "scopedStyle": ":scope.wd-switch-root .wd-form-item-wrap__label {\n  font-size: 12px;\n}\n\n:scope.wd-switch-root .wd-form-item-wrap__control {\n  font-size: 12px;\n}\n\n:scope.wd-switch-root .wd-g-text-error {\n  font-size: 12px;\n}\n\n:scope.wd-switch-root .wd-form-item__help-text {\n  font-size: 12px;\n}",
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":display": "$w.item_listView1.images && $w.item_listView1.images.length > 0"
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "divider1",
+                "component": "WdDivider",
+                "directives": {
+                  ":if": true
+                },
+                "extra": {}
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "container1",
+    "component": "Container",
+    "attributes": {
+      "data": {},
+      "style": {
+        "width": "100%",
+        "bottom": "0px",
+        "height": "60px",
+        "display": "flex",
+        "position": "fixed",
+        "boxShadow": "2px 0px 4px 0px rgba(0, 0, 0, 0.05)",
+        "background": "rgb(255, 255, 255)",
+        "justifyContent": "space-around"
+      }
+    },
+    "items": [
+      {
+        "id": "button1",
+        "component": "WdButton",
+        "attributes": {
+          ":disabled": "!((['20', '30', '40', '45'].includes($w.dataView1.record.status) && String($w.dataView1.record.manager_id || '') === String($w.app.dataset.state.myEmployeeId || '')) || ($w.dataView1.record.status === '50' && (String($w.dataView1.record.manager_id || '') === String($w.app.dataset.state.myEmployeeId || '') || String($w.dataView1.record.worker_id || '') === String($w.app.dataset.state.myEmployeeId || ''))) || (['60', '70'].includes($w.dataView1.record.status) && String($w.dataView1.record.worker_id || '') === String($w.app.dataset.state.myEmployeeId || '')))",
+          "icon": "success",
+          ":text": "$w.dataView1.record.status === '20' ? '📍 上门勘测打卡' : \n($w.dataView1.record.status === '30' ? '💰 提交方案及报价' : \n($w.dataView1.record.status === '40' ? '💰 修改方案及报价' : \n($w.dataView1.record.status === '45' ? '👷‍♂️ 指派施工师傅' : \n($w.dataView1.record.status === '50' && String($w.dataView1.record.worker_id || '') === String($w.app.dataset.state.myEmployeeId || '') ? '🏗️ 提交施工准备' :\n($w.dataView1.record.status === '50' ? '👷‍♂️ 修改派工信息' : \n($w.dataView1.record.status === '60' ? '📝 施工进度汇报' : \n($w.dataView1.record.status === '70' ? '✅ 修改完工验收' : '流程不可操作')))))))",
+          "style": {
+            "margin": "5px 0px"
+          }
+        },
+        "listeners": [
+          {
+            "id": "wyaa28w7sz0",
+            "eventName": "tap",
+            "type": "rematch",
+            "handler": {
+              "name": "function_open_modal",
+              "module": "page_master_order_detail",
+              "params": {}
+            },
+            "isCapturePhase": false,
+            "noPropagation": false
+          }
+        ],
+        "directives": {
+          ":display": "true"
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      },
+      {
+        "id": "button6",
+        "component": "WdButton",
+        "attributes": {
+          ":disabled": "!(['60', '65'].includes($w.dataView1.record.status) && String($w.dataView1.record.worker_id || '') === String($w.app.dataset.state.myEmployeeId || ''))",
+          "icon": "success",
+          "text": "💰 现场重新报价",
+          "style": {
+            "margin": "5px 0px"
+          }
+        },
+        "listeners": [
+          {
+            "id": "wyaa28w7sz0",
+            "eventName": "tap",
+            "type": "rematch",
+            "handler": {
+              "name": "function1",
+              "module": "page_master_order_detail",
+              "params": {}
+            },
+            "isCapturePhase": false,
+            "noPropagation": false
+          }
+        ],
+        "directives": {
+          ":display": "['60', '65'].includes($w.dataView1.record.status) && String($w.dataView1.record.worker_id || '') === String($w.app.dataset.state.myEmployeeId || '')"
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "modal1",
+    "label": "弹窗——打卡",
+    "component": "WdModal",
+    "attributes": {
+      "closeType": [
+        "mask"
+      ],
+      "defaultMaskShow": true,
+      "defaultShow": false,
+      "position": "center",
+      "template": "default"
+    },
+    "items": [
+      {
+        "id": "headerSlot",
+        "component": "",
+        "items": [
+          {
+            "id": "text1",
+            "label": "弹窗标题",
+            "component": "WdText",
+            "attributes": {
+              "level": "title-7",
+              "maxLines": "1",
+              ":text": "$w.dataView1.record.status === '30' ? '提交方案及报价' : ($w.dataView1.record.status === '40' ? '修改方案及报价' : '打卡记录')",
+              "style": {
+                "fontWeight": "bolder"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "icon1",
+            "label": "关闭按钮",
+            "component": "WdIcon",
+            "attributes": {
+              "name": "td:close",
+              "style": {
+                "color": "rgba(0, 0, 0, 0.6)"
+              }
+            },
+            "listeners": [
+              {
+                "id": "wdModal2660",
+                "eventName": "tap",
+                "type": "platform",
+                "handler": {
+                  "name": "invoke",
+                  "module": "platform",
+                  "params": {
+                    "component": "modal1",
+                    "method": "close",
+                    "params": {
+                      "info": "icon"
+                    }
+                  }
+                },
+                "isCapturePhase": false,
+                "noPropagation": false
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {}
+      },
+      {
+        "id": "contentSlot",
+        "component": "",
+        "items": [
+          {
+            "id": "inputNumber1",
+            "component": "WdInputNumber",
+            "attributes": {
+              "clearable": false,
+              "label": "总价（元）",
+              "name": "inputNumber1",
+              "placeholder": "请输入",
+              "prefixIcon": "success",
+              "prefixType": "",
+              "required": true,
+              "requiredMsg": "该项为必填项",
+              "status": "edit",
+              "step": 1,
+              "suffixIcon": "success",
+              "suffixType": ""
+            },
+            "directives": {
+              ":display": "['30', '40'].includes($w.dataView1.record.status)"
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "uploadFile1",
+            "component": "WdUploadFile",
+            "attributes": {
+              "callbacks": {
+                ":beforeUpload": "result => {\n  // console.log('beforeUpload', result);\n  return true; // 可以通过返回false，禁用默认上传逻辑，自定义上传\n  // return false;\n}"
+              },
+              "label": "方案附件",
+              "labelWrap": true,
+              "name": "uploadFile1",
+              "requiredMsg": "该项为必填项",
+              "status": "edit",
+              "value": []
+            },
+            "directives": {
+              ":display": "['30', '40'].includes($w.dataView1.record.status)"
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "textarea1",
+            "component": "WdTextarea",
+            "attributes": {
+              "label": "打卡记录",
+              "name": "textarea1",
+              "placeholder": "请输入",
+              "requiredMsg": "该项为必填项",
+              "status": "edit",
+              "value": ""
+            },
+            "directives": {
+              ":display": "!['30', '40'].includes($w.dataView1.record.status)"
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "uploadImage1",
+            "component": "WdUploadImage",
+            "attributes": {
+              "callbacks": {
+                ":beforeUpload": "result => {\n  // console.log('beforeUpload', result);\n  return true; // 可以通过返回false，禁用默认上传逻辑，自定义上传\n  // return false;\n}"
+              },
+              "label": "图片上传",
+              "name": "uploadImage1",
+              "requiredMsg": "该项为必填项",
+              "status": "edit",
+              "value": []
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "uploadVideo1",
+            "component": "WdUploadFile",
+            "attributes": {
+              "callbacks": {
+                ":beforeUpload": "result => {\n  return true;\n}"
+              },
+              "label": "现场视频（完工验收必填）",
+              "labelWrap": true,
+              "name": "uploadVideo1",
+              "requiredMsg": "完工验收需要上传现场视频",
+              "status": "edit",
+              "value": []
+            },
+            "directives": {
+              ":display": "($w.dataView1.record.status === '60' && $w.switch1.value === true) || $w.dataView1.record.status === '70'"
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "switch1",
+            "component": "WdSwitch",
+            "attributes": {
+              "borderedH5": true,
+              ":label": "$w.dataView1.record.status === '20' ? '本次勘测已全部完成（进入报价阶段）' : ($w.dataView1.record.status === '70' ? '已提交完工验收，可继续修改本次验收内容' : '本次施工已全部完成（申请验收）')",
+              "labelWrap": true,
+              "layout": "horizontal",
+              "name": "switch1",
+              "required": false,
+              "requiredFlag": true,
+              "requiredMsg": "该项为必填项",
+              "size": "",
+              "status": "edit",
+              "value": false
+            },
+            "directives": {
+              ":display": "['20', '60', '70'].includes($w.dataView1.record.status)"
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {}
+      },
+      {
+        "id": "footerSlot",
+        "component": "",
+        "items": [
+          {
+            "id": "button2",
+            "label": "取消按钮",
+            "component": "WdButton",
+            "attributes": {
+              "icon": "success",
+              "text": "取消",
+              "theme": "secondary",
+              "variant": "outline"
+            },
+            "listeners": [
+              {
+                "id": "wzu0hfsmxqs",
+                "eventName": "tap",
+                "type": "platform",
+                "handler": {
+                  "name": "invoke",
+                  "module": "platform",
+                  "params": {
+                    "component": "modal1",
+                    "method": "close",
+                    "params": {}
+                  }
+                },
+                "isCapturePhase": false,
+                "noPropagation": false
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "button3",
+            "label": "确认按钮",
+            "component": "WdButton",
+            "attributes": {
+              "icon": "success",
+              "text": "确认"
+            },
+            "listeners": [
+              {
+                "id": "wdModal7578",
+                "eventName": "tap",
+                "type": "rematch",
+                "handler": {
+                  "name": "function_confirm_content",
+                  "module": "page_master_order_detail",
+                  "params": {}
+                },
+                "isCapturePhase": false,
+                "noPropagation": false
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {}
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "modal2",
+    "label": "弹窗——项目经理派单",
+    "component": "WdModal",
+    "attributes": {
+      "closeType": [
+        "mask"
+      ],
+      "defaultMaskShow": true,
+      "defaultShow": false,
+      "position": "center",
+      "template": "default"
+    },
+    "items": [
+      {
+        "id": "headerSlot",
+        "component": "",
+        "items": [
+          {
+            "id": "text2",
+            "label": "弹窗标题",
+            "component": "WdText",
+            "attributes": {
+              "level": "title-7",
+              "maxLines": "1",
+              "text": "弹窗标题",
+              "style": {
+                "fontWeight": "bolder"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "icon2",
+            "label": "关闭按钮",
+            "component": "WdIcon",
+            "attributes": {
+              "name": "td:close",
+              "style": {
+                "color": "rgba(0, 0, 0, 0.6)"
+              }
+            },
+            "listeners": [
+              {
+                "id": "wdModal2393",
+                "eventName": "tap",
+                "type": "platform",
+                "handler": {
+                  "name": "invoke",
+                  "module": "platform",
+                  "params": {
+                    "component": "modal2",
+                    "method": "close",
+                    "params": {
+                      "info": "icon"
+                    }
+                  }
+                },
+                "isCapturePhase": false,
+                "noPropagation": false
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {}
+      },
+      {
+        "id": "contentSlot",
+        "component": "",
+        "items": [
+          {
+            "id": "select1",
+            "component": "WdSelect",
+            "attributes": {
+              "label": "选择工人",
+              "name": "select1",
+              "placeholder": "请选择",
+              "prefixIcon": "success",
+              "prefixType": "",
+              "queryCondition": true,
+              ":range": "($w.query_managers?.data?.records || [])\n  .filter(user => user.role && user.role.includes('worker'))\n  .map(user => ({\n    label: user.name + ' - ' + user.phone,\n    value: user._id\n  })).map((item) => ({label: item['label'],value: item['value'],}))",
+              "requiredMsg": "该项为必填项",
+              "searchPlaceholder": "搜索选项",
+              "selectFieldLabel": "",
+              "selectFields": [],
+              "sorter": [
+                {
+                  "label": "更新时间",
+                  "orderBy": "updatedAt",
+                  "orderType": "desc"
+                }
+              ],
+              "status": "edit",
+              "suffixIcon": "success",
+              "suffixType": "fixed",
+              "supportManyRelated": false,
+              "value": ""
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {
+                "range": {
+                  "x-bind-props": {
+                    "x-data-source": {
+                      "type": "bind",
+                      "bindData": {
+                        "type": "expression",
+                        "bindType": "expression",
+                        "bindDataPath": "($w.query_managers?.data?.records || [])\n  .filter(user => user.role && user.role.includes('worker'))\n  .map(user => ({\n    label: user.name + ' - ' + user.phone,\n    value: user._id\n  }))",
+                        "propertyPath": "range"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "date1",
+            "component": "WdDate",
+            "attributes": {
+              "label": "预约上门时间",
+              "name": "date1",
+              "placeholder": "请选择",
+              "prefixIcon": "success",
+              "prefixType": "",
+              "requiredMsg": "该项为必填项",
+              "status": "edit",
+              "suffixIcon": "td:calendar",
+              "suffixType": "inner"
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {}
+      },
+      {
+        "id": "footerSlot",
+        "component": "",
+        "items": [
+          {
+            "id": "button4",
+            "label": "取消按钮",
+            "component": "WdButton",
+            "attributes": {
+              "icon": "success",
+              "text": "取消",
+              "theme": "secondary",
+              "variant": "outline"
+            },
+            "listeners": [
+              {
+                "id": "wdModal4681",
+                "eventName": "tap",
+                "type": "platform",
+                "handler": {
+                  "name": "invoke",
+                  "module": "platform",
+                  "params": {
+                    "component": "modal2",
+                    "method": "close",
+                    "params": {
+                      "info": "cancel"
+                    }
+                  }
+                },
+                "isCapturePhase": false,
+                "noPropagation": false
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "button5",
+            "label": "确认按钮",
+            "component": "WdButton",
+            "attributes": {
+              "icon": "success",
+              "text": "确认"
+            },
+            "listeners": [
+              {
+                "id": "w42fcnkrhg9",
+                "eventName": "tap",
+                "type": "rematch",
+                "handler": {
+                  "name": "function_dispatch_worker",
+                  "module": "page_master_order_detail",
+                  "params": {}
+                },
+                "isCapturePhase": false,
+                "noPropagation": false
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {}
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "modal3",
+    "label": "弹窗——重新报价",
+    "component": "WdModal",
+    "attributes": {
+      "closeType": [
+        "mask"
+      ],
+      "defaultMaskShow": true,
+      "defaultShow": false,
+      "position": "center",
+      "template": "default"
+    },
+    "items": [
+      {
+        "id": "headerSlot",
+        "component": "",
+        "items": [
+          {
+            "id": "text9",
+            "label": "弹窗标题",
+            "component": "WdText",
+            "attributes": {
+              "level": "title-7",
+              "maxLines": "1",
+              ":text": "'修改价格'",
+              "style": {
+                "fontWeight": "bolder"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "icon3",
+            "label": "关闭按钮",
+            "component": "WdIcon",
+            "attributes": {
+              "name": "td:close",
+              "style": {
+                "color": "rgba(0, 0, 0, 0.6)"
+              }
+            },
+            "listeners": [
+              {
+                "id": "wdModal2660",
+                "eventName": "tap",
+                "type": "platform",
+                "handler": {
+                  "name": "invoke",
+                  "module": "platform",
+                  "params": {
+                    "component": "modal3",
+                    "method": "close",
+                    "params": {
+                      "info": "icon"
+                    }
+                  }
+                },
+                "isCapturePhase": false,
+                "noPropagation": false
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {}
+      },
+      {
+        "id": "contentSlot",
+        "component": "",
+        "items": [
+          {
+            "id": "inputNumber2",
+            "component": "WdInputNumber",
+            "attributes": {
+              "clearable": false,
+              "label": "总价（元）",
+              "name": "inputNumber1",
+              "placeholder": "请输入",
+              "prefixIcon": "success",
+              "prefixType": "",
+              "required": true,
+              "requiredMsg": "该项为必填项",
+              "status": "edit",
+              "step": 1,
+              "suffixIcon": "success",
+              "suffixType": ""
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "uploadFile2",
+            "component": "WdUploadFile",
+            "attributes": {
+              "callbacks": {
+                ":beforeUpload": "result => {\n  // console.log('beforeUpload', result);\n  return true; // 可以通过返回false，禁用默认上传逻辑，自定义上传\n  // return false;\n}"
+              },
+              "label": "方案附件",
+              "labelWrap": true,
+              "name": "uploadFile1",
+              "requiredMsg": "该项为必填项",
+              "status": "edit",
+              "value": []
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "uploadImage2",
+            "component": "WdUploadImage",
+            "attributes": {
+              "callbacks": {
+                ":beforeUpload": "result => {\n  // console.log('beforeUpload', result);\n  return true; // 可以通过返回false，禁用默认上传逻辑，自定义上传\n  // return false;\n}"
+              },
+              "label": "图片上传",
+              "name": "uploadImage1",
+              "requiredMsg": "该项为必填项",
+              "status": "edit",
+              "value": []
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {}
+      },
+      {
+        "id": "footerSlot",
+        "component": "",
+        "items": [
+          {
+            "id": "button7",
+            "label": "取消按钮",
+            "component": "WdButton",
+            "attributes": {
+              "icon": "success",
+              "text": "取消",
+              "theme": "secondary",
+              "variant": "outline"
+            },
+            "listeners": [
+              {
+                "id": "wzu0hfsmxqs",
+                "eventName": "tap",
+                "type": "platform",
+                "handler": {
+                  "name": "invoke",
+                  "module": "platform",
+                  "params": {
+                    "component": "modal3",
+                    "method": "close",
+                    "params": {}
+                  }
+                },
+                "isCapturePhase": false,
+                "noPropagation": false
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "button8",
+            "label": "确认按钮",
+            "component": "WdButton",
+            "attributes": {
+              "icon": "success",
+              "text": "确认"
+            },
+            "listeners": [
+              {
+                "id": "wdModal7578",
+                "eventName": "tap",
+                "type": "rematch",
+                "handler": {
+                  "name": "fun_priceagain",
+                  "module": "page_master_order_detail",
+                  "params": {}
+                },
+                "isCapturePhase": false,
+                "noPropagation": false
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {}
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  }
+]

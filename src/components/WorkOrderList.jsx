@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Table, Spin, Alert, Tag } from 'antd';
 import { db } from '../cloudbase';
+import { getStatusInfo } from '../config/business';
 
 function WorkOrderList() {
   const [data, setData] = useState([]);
@@ -63,13 +64,7 @@ function WorkOrderList() {
       key: 'status',
       width: 100,
       render: (status) => {
-        const statusMap = {
-          pending: { color: 'orange', label: '待处理' },
-          processing: { color: 'blue', label: '处理中' },
-          completed: { color: 'green', label: '已完成' },
-          cancelled: { color: 'red', label: '已取消' },
-        };
-        const item = statusMap[status] || { color: 'gray', label: status };
+        const item = getStatusInfo(status);
         return <Tag color={item.color}>{item.label}</Tag>;
       },
     },

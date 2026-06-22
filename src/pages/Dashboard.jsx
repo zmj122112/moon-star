@@ -11,22 +11,9 @@ import {
 import { db } from '../cloudbase';
 import AppLayout from '../components/Layout';
 import ResponsiveTable from '../components/ResponsiveTable';
+import { STATUS_MAP, getStatusInfo } from '../config/business';
 
 const { RangePicker } = DatePicker;
-
-const STATUS_MAP = {
-  '10': { color: 'orange', label: '待接单' },
-  '20': { color: 'cyan', label: '待勘测' },
-  '30': { color: 'gold', label: '待报价' },
-  '40': { color: 'lime', label: '待确认报价' },
-  '45': { color: 'magenta', label: '待派工' },
-  '50': { color: 'blue', label: '施工准备' },
-  '60': { color: 'purple', label: '施工中' },
-  '65': { color: 'volcano', label: '重新报价' },
-  '70': { color: 'geekblue', label: '待验收' },
-  '80': { color: 'red', label: '待支付' },
-  '90': { color: 'green', label: '已结单' },
-};
 
 const COLOR_MAP = {
   orange: '#f97316',
@@ -290,7 +277,7 @@ function Dashboard() {
       key: 'status',
       width: 100,
       render: (status) => {
-        const info = STATUS_MAP[status];
+        const info = getStatusInfo(status);
         return info ? <Tag color={info.color}>{info.label}</Tag> : status;
       },
     },

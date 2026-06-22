@@ -17,6 +17,7 @@ import {
 import { SearchOutlined, EyeOutlined } from '@ant-design/icons';
 import { db } from '../cloudbase';
 import { useNavigate } from 'react-router-dom';
+import { getStatusInfo, STATUS_MAP } from '../config/business';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -25,6 +26,37 @@ const PRIMARY_COLOR = '#2563eb';
 const PRIMARY_HOVER = '#1d4ed8';
 const TEXT_COLOR = '#1e293b';
 const TEXT_SECONDARY = '#64748b';
+
+const renderReviewSummary = (record) => {
+  const stars = Number(record?.review_stars || 0);
+  const reviewText = String(record?.customer_review || '').trim();
+  if (!stars && !reviewText) return '-';
+  return (
+    <div style={{ lineHeight: 1.5 }}>
+      {stars ? (
+        <div style={{ color: '#f59e0b', fontWeight: 500 }}>
+          {'★'.repeat(stars)}
+          {'☆'.repeat(Math.max(0, 5 - stars))}
+        </div>
+      ) : null}
+      {reviewText ? (
+        <div
+          style={{
+            color: TEXT_SECONDARY,
+            fontSize: '12px',
+            maxWidth: '220px',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap'
+          }}
+          title={reviewText}
+        >
+          {reviewText}
+        </div>
+      ) : null}
+    </div>
+  );
+};
 
 function CustomerServiceList() {
   const navigate = useNavigate();
@@ -43,20 +75,6 @@ function CustomerServiceList() {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
-
-  const statusMap = {
-    '10': { color: 'orange', label: '待接单' },
-    '20': { color: 'cyan', label: '待勘测' },
-    '30': { color: 'gold', label: '待报价' },
-    '40': { color: 'lime', label: '待确认报价' },
-    '45': { color: 'magenta', label: '待派工' },
-    '50': { color: 'blue', label: '待进场' },
-    '60': { color: 'purple', label: '施工中' },
-    '65': { color: 'volcano', label: '重新报价' },
-    '70': { color: 'geekblue', label: '待验收' },
-    '80': { color: 'red', label: '待支付' },
-    '90': { color: 'green', label: '已结单' },
-  };
 
   const fetchManagers = async () => {
     try {
@@ -180,7 +198,7 @@ function CustomerServiceList() {
       width: 100,
       render: (status) => {
         const statusStr = String(status);
-        const item = statusMap[statusStr] || { color: 'gray', label: status };
+        const item = getStatusInfo(statusStr);
         return <Tag color={item.color}>{item.label}</Tag>;
       },
     },
@@ -195,6 +213,12 @@ function CustomerServiceList() {
         }
         return '-';
       },
+    },
+    {
+      title: '客户评价',
+      key: 'review',
+      width: 180,
+      render: (_, record) => renderReviewSummary(record),
     },
     {
       title: '操作',
@@ -222,10 +246,11 @@ function CustomerServiceList() {
 
   const renderMobileCard = (record) => {
     const statusStr = String(record.status);
-    const statusInfo = statusMap[statusStr] || { color: 'gray', label: record.status };
+    const statusInfo = getStatusInfo(statusStr);
     const manager = managers.find(m => m.value === record.manager_id);
     const managerName = manager ? manager.label : (record.manager_id || '-');
     const price = record.total_price;
+    const reviewSummary = renderReviewSummary(record);
 
     return (
       <Card 
@@ -276,6 +301,11 @@ function CustomerServiceList() {
               {price ? `¥${price.toFixed(2)}` : '-'}
             </span>
           </div>
+        </div>
+
+        <div style={{ marginTop: '10px', fontSize: '12px', color: TEXT_SECONDARY }}>
+          <div style={{ marginBottom: '4px' }}>评价</div>
+          <div>{reviewSummary}</div>
         </div>
         
         <div style={{ 
@@ -357,16 +387,9 @@ function CustomerServiceList() {
                 }}
               >
                 <Option value="all">全部</Option>
-                <Option value="10">待接单</Option>
-                <Option value="20">待勘测</Option>
-                <Option value="30">待报价</Option>
-                <Option value="40">待确认报价</Option>
-                <Option value="45">待派工</Option>
-                <Option value="50">施工准备</Option>
-                <Option value="60">施工中</Option>
-                <Option value="70">待验收</Option>
-                <Option value="80">待支付</Option>
-                <Option value="90">已结单</Option>
+                {Object.entries(STATUS_MAP).map(([value, item]) => (
+                  <Option key={value} value={value}>{item.label}</Option>
+                ))}
               </Select>
             </Form.Item>
             <Space style={{ width: '100%' }}>
@@ -448,16 +471,9 @@ function CustomerServiceList() {
                     }}
                   >
                     <Option value="all">全部</Option>
-                    <Option value="10">待接单</Option>
-                    <Option value="20">待勘测</Option>
-                    <Option value="30">待报价</Option>
-                    <Option value="40">待确认报价</Option>
-                    <Option value="45">待派工</Option>
-                    <Option value="50">施工准备</Option>
-                    <Option value="60">施工中</Option>
-                    <Option value="70">待验收</Option>
-                    <Option value="80">待支付</Option>
-                    <Option value="90">已结单</Option>
+                    {Object.entries(STATUS_MAP).map(([value, item]) => (
+                      <Option key={value} value={value}>{item.label}</Option>
+                    ))}
                   </Select>
                 </Form.Item>
               </Col>

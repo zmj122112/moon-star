@@ -1,0 +1,1021 @@
+[
+  {
+    "id": "container3",
+    "component": "Container",
+    "attributes": {
+      "data": {},
+      "style": {
+        "margin": "12px",
+        "display": "flex",
+        "padding": "20px 10px",
+        "background": "rgb(255, 255, 255)",
+        "borderRadius": "12px 12px",
+        "flexDirection": "row",
+        "justifyContent": "space-around"
+      }
+    },
+    "items": [
+      {
+        "id": "container6",
+        "component": "Container",
+        "attributes": {
+          "data": {},
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "flexDirection": "column",
+            "justifyContent": "center"
+          }
+        },
+        "items": [
+          {
+            "id": "icon3",
+            "component": "WdIcon",
+            "attributes": {
+              "name": "td:device",
+              "style": {
+                "width": "32px",
+                "height": "32px"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "staticResourceAttribute": [
+                "src"
+              ],
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "text4",
+            "component": "WdText",
+            "attributes": {
+              "inheritColor": true,
+              "maxLines": "1",
+              "text": "在线预约",
+              "style": {
+                "fontSize": "12px"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      },
+      {
+        "id": "container8",
+        "component": "Container",
+        "attributes": {
+          "data": {}
+        },
+        "items": [
+          {
+            "id": "text6",
+            "component": "WdText",
+            "attributes": {
+              "inheritColor": true,
+              "maxLines": "1",
+              "text": ">",
+              "style": {
+                "fontSize": "12px"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      },
+      {
+        "id": "container7",
+        "component": "Container",
+        "attributes": {
+          "data": {},
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "flexDirection": "column",
+            "justifyContent": "center"
+          }
+        },
+        "items": [
+          {
+            "id": "icon4",
+            "component": "WdIcon",
+            "attributes": {
+              "name": "td:map-ruler",
+              "style": {
+                "width": "32px",
+                "height": "32px"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "staticResourceAttribute": [
+                "src"
+              ],
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "text5",
+            "component": "WdText",
+            "attributes": {
+              "inheritColor": true,
+              "maxLines": "1",
+              "text": "上门勘测",
+              "style": {
+                "fontSize": "12px"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      },
+      {
+        "id": "container9",
+        "component": "Container",
+        "attributes": {
+          "data": {}
+        },
+        "items": [
+          {
+            "id": "text7",
+            "component": "WdText",
+            "attributes": {
+              "inheritColor": true,
+              "maxLines": "1",
+              "text": ">",
+              "style": {
+                "fontSize": "12px"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      },
+      {
+        "id": "container5",
+        "component": "Container",
+        "attributes": {
+          "data": {},
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "flexDirection": "column",
+            "justifyContent": "center"
+          }
+        },
+        "items": [
+          {
+            "id": "icon2",
+            "component": "WdIcon",
+            "attributes": {
+              "name": "td:article",
+              "style": {
+                "width": "32px",
+                "height": "32px"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "staticResourceAttribute": [
+                "src"
+              ],
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "text3",
+            "component": "WdText",
+            "attributes": {
+              "inheritColor": true,
+              "maxLines": "1",
+              "text": "制定方案",
+              "style": {
+                "fontSize": "12px"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      },
+      {
+        "id": "container10",
+        "component": "Container",
+        "attributes": {
+          "data": {}
+        },
+        "items": [
+          {
+            "id": "text8",
+            "component": "WdText",
+            "attributes": {
+              "inheritColor": true,
+              "maxLines": "1",
+              "text": ">",
+              "style": {
+                "fontSize": "12px"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      },
+      {
+        "id": "container4",
+        "component": "Container",
+        "attributes": {
+          "data": {},
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "flexDirection": "column",
+            "justifyContent": "center"
+          }
+        },
+        "items": [
+          {
+            "id": "icon1",
+            "component": "WdIcon",
+            "attributes": {
+              "name": "success",
+              "style": {
+                "width": "32px",
+                "height": "32px"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "text2",
+            "component": "WdText",
+            "attributes": {
+              "inheritColor": true,
+              "maxLines": "1",
+              "text": "竣工验收",
+              "style": {
+                "fontSize": "12px"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "container11",
+    "component": "Container",
+    "attributes": {
+      "data": {},
+      "style": {
+        "margin": "12px",
+        "padding": "24px 16px",
+        "background": "rgb(255, 255, 255)",
+        "borderRadius": "12px 12px"
+      }
+    },
+    "items": [
+      {
+        "id": "form1",
+        "component": "WdForm",
+        "attributes": {
+          "_id": "",
+          "dataSourceName": "workorders",
+          "fields": [
+            {}
+          ],
+          "formType_bind": false,
+          "initialValues": {},
+          "lgWidth": "md",
+          "methodCreate": "",
+          "methodGetItem": "",
+          "methodUpdate": "",
+          "paramGetItem": {},
+          "style": {
+            "display": "block"
+          }
+        },
+        "items": [
+          {
+            "id": "contentSlot",
+            "component": "",
+            "items": [
+              {
+                "id": "input1",
+                "label": "联系人姓名",
+                "component": "WdInput",
+                "attributes": {
+                  "inputValue": null,
+                  "label": "联系人姓名",
+                  "name": "name",
+                  "placeholder": "请输入",
+                  "prefixIcon": "success",
+                  "prefixType": "",
+                  "required": true,
+                  "requiredMsg": "该项为必填项",
+                  "status": "edit",
+                  "suffixIcon": "success",
+                  "suffixType": "",
+                  "template": "inputBox"
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "inputPhone1",
+                "label": "联系人电话",
+                "component": "WdInputPhone",
+                "attributes": {
+                  "inputValue": "",
+                  "label": "联系人电话",
+                  "name": "phone",
+                  "placeholder": "请输入手机号",
+                  "prefixIcon": "success",
+                  "prefixType": "",
+                  "required": true,
+                  "requiredMsg": "该项为必填项",
+                  "status": "edit",
+                  "suffixIcon": "success",
+                  "suffixType": "",
+                  "template": "inputBox"
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "input2",
+                "label": "地址",
+                "component": "WdInput",
+                "attributes": {
+                  "inputValue": null,
+                  "label": "地址",
+                  "name": "addresses",
+                  "placeholder": "请输入",
+                  "prefixIcon": "success",
+                  "prefixType": "",
+                  "required": true,
+                  "requiredMsg": "该项为必填项",
+                  "status": "edit",
+                  "suffixIcon": "success",
+                  "suffixType": "",
+                  "template": "inputBox"
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "textarea1",
+                "label": "备注（详细描述）",
+                "component": "WdTextarea",
+                "attributes": {
+                  "label": "备注",
+                  "name": "description",
+                  "placeholder": "请输入详细描述",
+                  "requiredFlag": false,
+                  "requiredMsg": "该项为必填项",
+                  "status": "edit",
+                  "value": ""
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "select1",
+                "label": "状态",
+                "component": "WdSelect",
+                "attributes": {
+                  "enumName": "workorderstatus",
+                  "format": "x-enum",
+                  "label": "状态",
+                  "name": "status",
+                  "placeholder": "请选择",
+                  "prefixIcon": "success",
+                  "prefixType": "",
+                  "required": true,
+                  "requiredMsg": "该项为必填项",
+                  "searchPlaceholder": "搜索选项",
+                  "status": "edit",
+                  "suffixIcon": "success",
+                  "suffixType": "fixed",
+                  "supportManyRelated": false,
+                  "value": "10"
+                },
+                "directives": {
+                  ":display": false
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "uploadImage1",
+                "label": "照片",
+                "component": "WdUploadImage",
+                "attributes": {
+                  "callbacks": {
+                    ":beforeUpload": "result => {\n        // console.log('beforeUpload', result);\n        return true;\n\n        // 可以通过返回false，禁用默认上传逻辑，自定义上传\n        // return false;\n      }"
+                  },
+                  "label": "照片",
+                  "maxSize": 6,
+                  "name": "images",
+                  "requiredFlag": false,
+                  "requiredMsg": "该项为必填项",
+                  "status": "edit",
+                  "value": null
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              },
+              {
+                "id": "container1",
+                "component": "Container",
+                "attributes": {
+                  "data": {},
+                  "class": "wd-form__action"
+                },
+                "items": [
+                  {
+                    "id": "button1",
+                    "component": "WdButton",
+                    "attributes": {
+                      ":disabled": "$w.form1.isDisabledSubmit",
+                      "formType": "submit",
+                      "icon": "success",
+                      "text": "提交预约",
+                      "style": {
+                        "margin": "0px 0px 60px"
+                      }
+                    },
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {}
+          }
+        ],
+        "listeners": [
+          {
+            "id": "who3jsivqq5",
+            "eventName": "submit",
+            "type": "platform",
+            "handler": {
+              "name": "navigateTo",
+              "module": "platform",
+              "params": {
+                "mode": "weDa",
+                "packageName": "",
+                "pageId": "page_myorder",
+                "params": {
+                  "status": "1"
+                }
+              }
+            },
+            "isCapturePhase": false,
+            "noPropagation": false
+          },
+          {
+            "id": "wd7913yxk",
+            "eventName": "submit",
+            "type": "platform",
+            "handler": {
+              "name": "invoke",
+              "module": "platform",
+              "params": {
+                "component": "form1",
+                "method": "disableSubmit"
+              }
+            },
+            "isCapturePhase": false,
+            "noPropagation": false
+          },
+          {
+            "id": "w5oclectd",
+            "eventName": "wd7913yxk.success",
+            "type": "platform",
+            "handler": {
+              "name": "cloud.callDataSource",
+              "module": "platform",
+              "params": {
+                "dataSourceName": "workorders",
+                "methodName": "wedaCreateV2",
+                "options": {
+                  "showToast": false,
+                  "showLoading": true
+                },
+                ":params": "$w.form1.submitParams"
+              }
+            },
+            "isCapturePhase": false,
+            "noPropagation": false
+          },
+          {
+            "id": "wsj95pnza",
+            "eventName": "w5oclectd.success",
+            "type": "platform",
+            "handler": {
+              "name": "invoke",
+              "module": "platform",
+              "params": {
+                "component": "form1",
+                "method": "enableSubmit"
+              }
+            },
+            "isCapturePhase": false,
+            "noPropagation": false
+          },
+          {
+            "id": "whq5xqffx",
+            "eventName": "w5oclectd.success",
+            "type": "platform",
+            "handler": {
+              "name": "showToast",
+              "module": "platform",
+              "params": {
+                "duration": 3000,
+                "icon": "success",
+                "title": "预约成功，稍后客服会和您联系"
+              }
+            },
+            "isCapturePhase": false,
+            "noPropagation": false
+          },
+          {
+            "id": "wuu7ltrao",
+            "eventName": "w5oclectd.fail",
+            "type": "platform",
+            "handler": {
+              "name": "invoke",
+              "module": "platform",
+              "params": {
+                "component": "form1",
+                "method": "enableSubmit"
+              }
+            },
+            "isCapturePhase": false,
+            "noPropagation": false
+          },
+          {
+            "id": "w9dq5tp1k",
+            "eventName": "w5oclectd.fail",
+            "type": "platform",
+            "handler": {
+              "name": "showModal",
+              "module": "platform",
+              "params": {
+                "cancelColor": "#000000",
+                "cancelText": "取消",
+                "confirmColor": "#576B95",
+                "confirmText": "确认",
+                ":content": "event.detail.message || JSON.stringify(event.detail)",
+                "showCancel": false,
+                "title": "提交失败"
+              }
+            },
+            "isCapturePhase": false,
+            "noPropagation": false
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  },
+  {
+    "id": "container2",
+    "component": "Container",
+    "attributes": {
+      "style": {
+        "left": "0",
+        "right": "0",
+        "width": "100%",
+        "bottom": "0",
+        "height": "60px",
+        "margin": "0px 0px 0px",
+        "zIndex": "100",
+        "display": "flex",
+        "position": "fixed",
+        "boxShadow": "0 -1px 4px rgba(0,0,0,0.1)",
+        "alignItems": "center",
+        "background": "rgb(255, 255, 255)",
+        "flexDirection": "row",
+        "justifyContent": "space-around",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "items": [
+      {
+        "id": "container12",
+        "component": "Container",
+        "attributes": {
+          "data": {},
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "flexDirection": "column",
+            "justifyContent": "center"
+          }
+        },
+        "items": [
+          {
+            "id": "icon5",
+            "component": "WdIcon",
+            "attributes": {
+              "name": "td:home"
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "staticResourceAttribute": [
+                "src"
+              ],
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "text1",
+            "component": "WdText",
+            "attributes": {
+              "inheritColor": true,
+              "maxLines": "1",
+              "text": "首页"
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "listeners": [
+          {
+            "id": "wckpmtjzdy5",
+            "eventName": "tap",
+            "type": "platform",
+            "handler": {
+              "name": "redirectTo",
+              "module": "platform",
+              "params": {
+                "mode": "weDa",
+                "packageName": "",
+                "pageId": "page_home",
+                "params": {}
+              }
+            },
+            "isCapturePhase": false,
+            "noPropagation": false
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      },
+      {
+        "id": "container13",
+        "component": "Container",
+        "attributes": {
+          "data": {},
+          "style": {
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center"
+          }
+        },
+        "items": [
+          {
+            "id": "container15",
+            "component": "Container",
+            "attributes": {
+              "data": {},
+              "style": {
+                "width": "60px",
+                "height": "60px",
+                "margin": "0px 0px 0px",
+                "display": "flex",
+                "boxShadow": "0px 2px 8px 0px rgb(204, 2, 16)",
+                "alignItems": "center",
+                "background": "rgb(255, 0, 0)",
+                "borderRadius": "28px 28px",
+                "justifyContent": "center"
+              }
+            },
+            "items": [
+              {
+                "id": "icon6",
+                "component": "WdIcon",
+                "attributes": {
+                  "name": "td:call-1",
+                  "style": {
+                    "color": "rgb(255, 255, 255)",
+                    "width": "30px",
+                    "height": "30px",
+                    "fontSize": "30px"
+                  }
+                },
+                "directives": {
+                  ":if": true
+                },
+                "extra": {
+                  "staticResourceAttribute": [
+                    "src"
+                  ],
+                  "attributeExtraData": {}
+                }
+              }
+            ],
+            "listeners": [
+              {
+                "id": "w5eq2rcx5w9",
+                "eventName": "tap",
+                "type": "platform",
+                "handler": {
+                  "name": "redirectTo",
+                  "module": "platform",
+                  "params": {
+                    "mode": "weDa",
+                    "packageName": "",
+                    "pageId": "page_repair",
+                    "params": {
+                      "type": "1"
+                    }
+                  }
+                },
+                "isCapturePhase": false,
+                "noPropagation": false
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            ":style": "({\n  marginTop: '-30px'\n})",
+            "extra": {
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "text9",
+            "component": "WdText",
+            "attributes": {
+              "inheritColor": true,
+              "maxLines": "1",
+              "text": "报修",
+              "style": {
+                "textAlign": "center"
+              }
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "listeners": [
+          {
+            "id": "wckpmtjzdy5",
+            "eventName": "tap",
+            "type": "platform",
+            "handler": {
+              "name": "redirectTo",
+              "module": "platform",
+              "params": {
+                "mode": "weDa",
+                "packageName": "",
+                "pageId": "page_repair",
+                "params": {
+                  "type": "1"
+                }
+              }
+            },
+            "isCapturePhase": false,
+            "noPropagation": false
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      },
+      {
+        "id": "container14",
+        "component": "Container",
+        "attributes": {
+          "data": {},
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "flexDirection": "column",
+            "justifyContent": "center"
+          }
+        },
+        "items": [
+          {
+            "id": "icon7",
+            "component": "WdIcon",
+            "attributes": {
+              "name": "td:user-1"
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "staticResourceAttribute": [
+                "src"
+              ],
+              "attributeExtraData": {}
+            }
+          },
+          {
+            "id": "text10",
+            "component": "WdText",
+            "attributes": {
+              "inheritColor": true,
+              "maxLines": "1",
+              "text": "我的"
+            },
+            "directives": {
+              ":if": true
+            },
+            "extra": {
+              "attributeExtraData": {}
+            }
+          }
+        ],
+        "listeners": [
+          {
+            "id": "wckpmtjzdy5",
+            "eventName": "tap",
+            "type": "platform",
+            "handler": {
+              "name": "redirectTo",
+              "module": "platform",
+              "params": {
+                "mode": "weDa",
+                "packageName": "",
+                "pageId": "page_usercenter",
+                "params": {}
+              }
+            },
+            "isCapturePhase": false,
+            "noPropagation": false
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "extra": {}
+  }
+]

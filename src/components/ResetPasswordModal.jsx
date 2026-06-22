@@ -1,16 +1,13 @@
 import { useState } from 'react';
 import { Modal, Button, Alert, Space } from 'antd';
 import { RefreshCwOutlined } from '@ant-design/icons';
-import cloudbase from '@cloudbase/js-sdk';
+import { cloudbase } from '../cloudbase';
+import { withOperator } from '../utils/auth';
 
 const PRIMARY_COLOR = '#2563eb';
 const PRIMARY_HOVER = '#1d4ed8';
 const TEXT_COLOR = '#1e293b';
 const TEXT_SECONDARY = '#64748b';
-
-const app = cloudbase.init({
-  env: 'waterproof-3g9f7h9kdb626bb3'
-});
 
 function ResetPasswordModal({ userId, phone, onSuccess, onCancel }) {
   const [loading, setLoading] = useState(false);
@@ -23,9 +20,9 @@ function ResetPasswordModal({ userId, phone, onSuccess, onCancel }) {
     setResult(null);
 
     try {
-      const res = await app.callFunction({
+      const res = await cloudbase.callFunction({
         name: 'reset-password',
-        data: { userId }
+        data: withOperator({ userId })
       });
 
       if (res.result.code === 200) {

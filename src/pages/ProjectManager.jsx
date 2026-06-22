@@ -4,27 +4,45 @@ import { SearchOutlined, EyeOutlined, DollarOutlined } from '@ant-design/icons';
 import { db } from '../cloudbase';
 import { useNavigate } from 'react-router-dom';
 import AppLayout from '../components/Layout';
+import { getStatusInfo, hasAnyRole } from '../config/business';
 
 const { Title, Text } = Typography;
-
-const STATUS_MAP = {
-  '10': { color: 'orange', label: '待接单' },
-  '20': { color: 'cyan', label: '待勘测' },
-  '30': { color: 'gold', label: '待报价' },
-  '40': { color: 'lime', label: '待确认报价' },
-  '45': { color: 'magenta', label: '待派工' },
-  '50': { color: 'blue', label: '施工准备' },
-  '60': { color: 'purple', label: '施工中' },
-  '65': { color: 'volcano', label: '重新报价' },
-  '70': { color: 'geekblue', label: '待验收' },
-  '80': { color: 'red', label: '待支付' },
-  '90': { color: 'green', label: '已结单' },
-};
 
 const PRIMARY_COLOR = '#2563eb';
 const PRIMARY_HOVER = '#1d4ed8';
 const TEXT_COLOR = '#1e293b';
 const TEXT_SECONDARY = '#64748b';
+
+const renderReviewSummary = (record) => {
+  const stars = Number(record?.review_stars || 0);
+  const reviewText = String(record?.customer_review || '').trim();
+  if (!stars && !reviewText) return '-';
+  return (
+    <div style={{ lineHeight: 1.5 }}>
+      {stars ? (
+        <div style={{ color: '#f59e0b', fontWeight: 500 }}>
+          {'★'.repeat(stars)}
+          {'☆'.repeat(Math.max(0, 5 - stars))}
+        </div>
+      ) : null}
+      {reviewText ? (
+        <div
+          style={{
+            color: TEXT_SECONDARY,
+            fontSize: '12px',
+            maxWidth: '220px',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap'
+          }}
+          title={reviewText}
+        >
+          {reviewText}
+        </div>
+      ) : null}
+    </div>
+  );
+};
 
 function ProjectManager() {
   const navigate = useNavigate();
@@ -80,12 +98,8 @@ function ProjectManager() {
     try {
       const userId = user?.id || user?._id || user?.userId || user?.user_id || user?.phone || '';
       const userRoles = user?.role || [];
-      const isManagement = Array.isArray(userRoles) 
-        ? userRoles.some(r => String(r).includes('management') || String(r).includes('公司管理层'))
-        : String(userRoles).includes('management') || String(userRoles).includes('公司管理层');
-      const isAdmin = Array.isArray(userRoles) 
-        ? userRoles.some(r => String(r).includes('admin') || String(r).includes('管理员'))
-        : String(userRoles).includes('admin') || String(userRoles).includes('管理员');
+      const isManagement = hasAnyRole(userRoles, ['management']);
+      const isAdmin = hasAnyRole(userRoles, ['admin']);
 
       let res;
       if (isManagement || isAdmin) {
@@ -172,7 +186,7 @@ function ProjectManager() {
       key: 'status',
       width: 100,
       render: (status) => {
-        const info = STATUS_MAP[String(status)] || { label: status, color: 'gray' };
+        const info = getStatusInfo(status);
         return <Tag color={info.color}>{info.label}</Tag>;
       },
     },
@@ -185,6 +199,12 @@ function ProjectManager() {
         const displayPrice = record.final_price || price || 0;
         return `¥${displayPrice.toFixed(2)}`;
       },
+    },
+    {
+      title: '客户评价',
+      key: 'review',
+      width: 180,
+      render: (_, record) => renderReviewSummary(record),
     },
     {
       title: '操作',
@@ -202,14 +222,14 @@ function ProjectManager() {
           >
             查看
           </Button>
-          {String(record.status) === '30' && (
+          {['30', '40'].includes(String(record.status)) && (
             <Button
               type="primary"
               size="small"
               icon={<DollarOutlined />}
               onClick={() => handleQuote(record)}
             >
-              报价
+              {String(record.status) === '40' ? '改价' : '报价'}
             </Button>
           )}
         </Space>
@@ -219,11 +239,12 @@ function ProjectManager() {
 
   const renderMobileCard = (record) => {
     const statusStr = String(record.status);
-    const statusInfo = STATUS_MAP[statusStr] || { color: 'gray', label: record.status };
+    const statusInfo = getStatusInfo(statusStr);
     const manager = managers.find(m => m.value === record.manager_id);
     const managerName = manager ? manager.label : (record.manager_id || '-');
     const displayPrice = record.final_price || record.total_price || 0;
-    const canQuote = statusStr === '30';
+    const canQuote = ['30', '40'].includes(statusStr);
+    const reviewSummary = renderReviewSummary(record);
 
     return (
       <Card 
@@ -273,6 +294,11 @@ function ProjectManager() {
             <span style={{ color: PRIMARY_COLOR, fontWeight: '500' }}>¥{displayPrice.toFixed(2)}</span>
           </div>
         </div>
+
+        <div style={{ marginTop: '10px', fontSize: '12px', color: TEXT_SECONDARY }}>
+          <div style={{ marginBottom: '4px' }}>客户评价</div>
+          <div>{reviewSummary}</div>
+        </div>
         
         <div style={{ 
           marginTop: '12px', 
@@ -317,7 +343,7 @@ function ProjectManager() {
                 padding: '0 20px'
               }}
             >
-              报价
+              {statusStr === '40' ? '改价' : '报价'}
             </Button>
           )}
         </div>

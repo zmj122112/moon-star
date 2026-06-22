@@ -37,6 +37,16 @@ import { useParams, useNavigate } from 'react-router-dom';
 import AppLayout from '../components/Layout';
 import DateTimePicker from '../components/DateTimePicker';
 import { normalizePhotos, getVisiblePhotoUrls } from '../utils/photoUtils';
+import {
+  CLOUD_STORAGE_BUCKET,
+  RECORD_TYPE_MAP,
+  getLatestWorkflowRecord,
+  getStatusInfo,
+  hasLaterWorkflowRecord,
+  isInternalRole
+} from '../config/business';
+import { getCurrentUser, getCurrentUserId, withAuth } from '../utils/auth';
+import { assertFunctionSuccess } from '../utils/cloudResults';
 
 const { TextArea } = Input;
 const { Title, Text } = Typography;
@@ -45,6 +55,22 @@ const PRIMARY_COLOR = '#2563eb';
 const PRIMARY_HOVER = '#1d4ed8';
 const TEXT_COLOR = '#1e293b';
 const TEXT_SECONDARY = '#64748b';
+
+const isImageFile = (name = '') => /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(name);
+const isPdfFile = (name = '') => /\.pdf$/i.test(name);
+const isOfficeFile = (name = '') => /\.(doc|docx|xls|xlsx|ppt|pptx)$/i.test(name);
+const isVideoFile = (name = '') => /\.(mp4|mov|m4v|webm)$/i.test(name);
+
+const formatTimestampText = (value) => {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric) || numeric <= 0) return value;
+  return new Date(numeric).toLocaleString('zh-CN');
+};
+
+const formatRecordContent = (content = '') => String(content)
+  .replace(/预计进场时间：(\d{11,13})/g, (_, value) => `预计进场时间：${formatTimestampText(value)}`)
+  .replace(/预约施工时间：(\d{11,13})/g, (_, value) => `预约施工时间：${formatTimestampText(value)}`)
+  .replace(/预约勘测时间：(\d{11,13})/g, (_, value) => `预约勘测时间：${formatTimestampText(value)}`);
 
 function WorkOrderDetail() {
   const { id } = useParams();
@@ -60,7 +86,7 @@ function WorkOrderDetail() {
   const [previewModalVisible, setPreviewModalVisible] = useState(false);
   const [previewFile, setPreviewFile] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [currentUserRole, setCurrentUserRole] = useState(null);
+  const [currentUserRole, setCurrentUserRole] = useState([]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -86,41 +112,8 @@ function WorkOrderDetail() {
 
   // 检查用户是否是内部人员（管理员、项目经理、客服等）
   const isInternalUser = () => {
-    if (!currentUserRole) return true; // 默认作为内部用户处理
-    
-    const internalRoles = ['管理员', 'admin', '项目经理', 'manager', '客服', 'cs', '公司管理层', 'management', '工人', 'worker', '施工工人'];
-    if (Array.isArray(currentUserRole)) {
-      return currentUserRole.some(role => internalRoles.includes(role));
-    }
-    return internalRoles.includes(currentUserRole);
-  };
-
-  const statusMap = {
-    '10': { color: 'orange', label: '待接单' },
-    '20': { color: 'cyan', label: '待勘测' },
-    '30': { color: 'gold', label: '待报价' },
-    '40': { color: 'lime', label: '待确认报价' },
-    '45': { color: 'magenta', label: '待派工' },
-    '50': { color: 'blue', label: '施工准备' },
-    '60': { color: 'purple', label: '施工中' },
-    '65': { color: 'volcano', label: '重新报价' },
-    '70': { color: 'geekblue', label: '待验收' },
-    '80': { color: 'red', label: '待支付' },
-    '90': { color: 'green', label: '已结单' },
-  };
-
-  const recordTypeMap = {
-    '0': { label: '客服接单及派单', color: 'blue' },
-    '1': { label: '上门勘测打卡', color: 'cyan' },
-    '2': { label: '提交方案及报价', color: 'purple' },
-    '3': { label: '客户确认报价', color: 'green' },
-    '4': { label: '施工准备', color: 'orange' },
-    '5': { label: '施工进度汇报', color: 'gold' },
-    '6': { label: '提交完工验收', color: 'pink' },
-    '7': { label: '内部沟通备注', color: 'gray' },
-    '9': { label: '客户完工验收', color: 'purple' },
-    '10': { label: '已付款结单', color: 'green' },
-    '3_5': { label: '项目经理派工', color: 'magenta' },
+    if (!currentUserRole || currentUserRole.length === 0) return true;
+    return isInternalRole(currentUserRole);
   };
 
   const fetchManagers = async () => {
@@ -148,6 +141,28 @@ function WorkOrderDetail() {
     }
   };
 
+  const loadRecordsForOrder = async () => {
+    const res = await db.collection('wo_records')
+      .where({ order_id: id })
+      .orderBy('createdAt', 'desc')
+      .get();
+    
+    let recordsData = [];
+    if (res && res.data) {
+      recordsData = Array.isArray(res.data) ? res.data : [];
+    }
+
+    return recordsData;
+  };
+
+  const loadCurrentOrder = async () => {
+    const res = await db.collection('workorders').doc(id).get();
+    if (Array.isArray(res?.data)) {
+      return res.data[0] || null;
+    }
+    return res?.data || null;
+  };
+
   const handleUpgradeToSurvey = async (values) => {
     setSubmitting(true);
     try {
@@ -163,31 +178,22 @@ function WorkOrderDetail() {
       const managerId = values.manager_id;
       const remark = values.remark;
 
-      const updateData = {
-        status: '20',
-        visit_time: visitTime,
-        manager_id: managerId,
-        cs_remark: remark,
-      };
-      
-      const result = await cloudbase.callFunction({
-        name: 'update-workorder',
-        data: {
-          orderId: id,
-          status: '20',
-          visit_time: visitTime,
-          manager_id: managerId
-        }
-      });
-      
-      if (!result.result || !result.result.success) {
-        throw new Error(result.result?.message || '更新失败');
-      }
-
       const manager = managers.find(m => m.value === managerId);
-      const userStr = localStorage.getItem('user');
-      const currentUser = userStr ? JSON.parse(userStr) : null;
-      const userId = currentUser?.id || currentUser?._id || currentUser?.userId || currentUser?.user_id || currentUser?.phone || '';
+      const currentUser = getCurrentUser();
+      const userId = getCurrentUserId(currentUser);
+      const latestOrder = await loadCurrentOrder();
+      const latestRecords = await loadRecordsForOrder();
+      if (!latestOrder) {
+        throw new Error('工单不存在，请刷新后重试');
+      }
+      if (!['10', '20'].includes(String(latestOrder.status))) {
+        throw new Error('工单状态已变化，当前不可修改派单信息');
+      }
+      if (hasLaterWorkflowRecord(latestRecords, '0', latestOrder)) {
+        await fetchOrder();
+        await fetchRecords();
+        throw new Error('项目经理已保存或提交勘测/后续节点，派单信息不可再修改。如需处理，请走运维退回。');
+      }
       const recordData = {
         order_id: id,
         record_type: '0',
@@ -196,24 +202,66 @@ function WorkOrderDetail() {
         creator_id: userId,
         content: remark || '客服接单并派单',
         price: 0,
+        manager_id: managerId,
         manager_name: manager?.label || '',
+        visit_time: visitTime,
         createdAt: new Date().getTime(),
       };
       
       try {
-        const addResult = await db.collection('wo_records').add(recordData);
+        const existingRecord = getLatestWorkflowRecord(latestRecords, '0', latestOrder);
+        const updateRecordResult = await cloudbase.callFunction({
+          name: 'update-record',
+          data: withAuth({
+            collection: 'wo_records',
+            docId: existingRecord?._id,
+            orderId: id,
+            recordType: '0',
+            upsert: true,
+            allowedStatuses: ['10', '20'],
+            data: {
+              content: recordData.content,
+              price: recordData.price,
+              manager_id: recordData.manager_id,
+              manager_name: recordData.manager_name,
+              visit_time: recordData.visit_time,
+              creator_role: recordData.creator_role,
+              creator_name: recordData.creator_name,
+              creator_id: recordData.creator_id,
+              createdAt: recordData.createdAt,
+              updatedAt: new Date().getTime()
+            }
+          })
+        });
+        assertFunctionSuccess(updateRecordResult, existingRecord?._id ? '派单流水更新失败' : '派单流水新增失败');
       } catch (addErr) {
         console.error('记录插入失败:', addErr);
         throw new Error('记录插入失败: ' + (addErr.message || '未知错误'));
       }
 
+      const result = await cloudbase.callFunction({
+        name: 'update-workorder',
+        data: withAuth({
+          orderId: id,
+          status: '20',
+          visit_time: visitTime,
+          manager_id: managerId,
+          cs_remark: remark
+        })
+      });
+      assertFunctionSuccess(result, '工单派单信息更新失败');
+
       upgradeForm.resetFields();
-      fetchOrder();
-      fetchRecords();
+      await fetchOrder();
+      await fetchRecords();
     } catch (err) {
       console.error('升级状态失败:', err);
-      setError('升级状态失败: ' + (err.message || '未知错误'));
-      alert('保存失败: ' + (err.message || '请检查控制台'));
+      const errorMessage = err.message || '未知错误';
+      if (errorMessage.includes('不可') || errorMessage.includes('已变化')) {
+        await fetchOrder();
+        await fetchRecords();
+      }
+      alert('保存失败: ' + errorMessage);
     } finally {
       setSubmitting(false);
     }
@@ -221,8 +269,6 @@ function WorkOrderDetail() {
 
   const getImageUrl = (cloudPath) => {
     if (!cloudPath) return '';
-    
-    const bucketName = '7761-waterproof-3g9f7h9kdb626bb3-1257706342';
     
     let filePath = cloudPath;
     if (filePath.startsWith('cloud://')) {
@@ -235,7 +281,7 @@ function WorkOrderDetail() {
       }
     }
     
-    return `https://${bucketName}.tcb.qcloud.la/${filePath}`;
+    return `https://${CLOUD_STORAGE_BUCKET}.tcb.qcloud.la/${filePath}`;
   };
 
   const fetchOrder = async () => {
@@ -264,15 +310,7 @@ function WorkOrderDetail() {
 
   const fetchRecords = async () => {
     try {
-      const res = await db.collection('wo_records')
-        .where({ order_id: id })
-        .orderBy('createdAt', 'desc')
-        .get();
-      
-      let recordsData = [];
-      if (res && res.data) {
-        recordsData = Array.isArray(res.data) ? res.data : [];
-      }
+      const recordsData = await loadRecordsForOrder();
       
       for (const record of recordsData) {
         if (record.creator_id) {
@@ -304,6 +342,37 @@ function WorkOrderDetail() {
     fetchManagers();
   }, [id]);
 
+  useEffect(() => {
+    const refreshLatest = () => {
+      fetchOrder();
+      fetchRecords();
+    };
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        refreshLatest();
+      }
+    };
+
+    window.addEventListener('focus', refreshLatest);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    const timer = window.setInterval(refreshLatest, 30000);
+
+    return () => {
+      window.removeEventListener('focus', refreshLatest);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.clearInterval(timer);
+    };
+  }, [id]);
+
+  useEffect(() => {
+    if (!order) return;
+    upgradeForm.setFieldsValue({
+      visit_time: order.visit_time || null,
+      manager_id: order.manager_id || undefined,
+      remark: order.cs_remark || ''
+    });
+  }, [order, upgradeForm]);
+
   if (loading) {
     return (
       <AppLayout>
@@ -323,7 +392,8 @@ function WorkOrderDetail() {
   }
 
   const statusStr = String(order.status);
-  const statusInfo = statusMap[statusStr];
+  const statusInfo = getStatusInfo(statusStr);
+  const canEditAssignment = ['10', '20'].includes(statusStr) && !hasLaterWorkflowRecord(records, '0', order);
 
   const recordColumns = [
     {
@@ -332,7 +402,7 @@ function WorkOrderDetail() {
       key: 'record_type',
       width: 150,
       render: (type) => {
-        const info = recordTypeMap[String(type)] || { label: type, color: 'gray' };
+        const info = RECORD_TYPE_MAP[String(type)] || { label: type, color: 'gray' };
         return <Tag color={info.color}>{info.label}</Tag>;
       },
     },
@@ -544,9 +614,9 @@ function WorkOrderDetail() {
             <Title level={2} style={{ marginBottom: '0', color: TEXT_COLOR, fontSize: '18px' }}>工单详情</Title>
           </div>
 
-          {String(order.status) === '10' && (
+          {canEditAssignment && (
             <Card 
-              title="安排勘测" 
+              title={statusStr === '20' ? '修改派单信息' : '安排勘测'} 
               style={{ 
                 marginBottom: '16px', 
                 borderLeft: '4px solid ' + PRIMARY_COLOR,
@@ -732,7 +802,7 @@ function WorkOrderDetail() {
             {records.length > 0 ? (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {records.map((record, index) => {
-                  const typeInfo = recordTypeMap[String(record.record_type)] || { label: record.record_type, color: 'gray' };
+                  const typeInfo = RECORD_TYPE_MAP[String(record.record_type)] || { label: record.record_type, color: 'gray' };
                   return (
                     <Card key={record._id || index} style={{ borderRadius: '8px', border: '1px solid #e2e8f0' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
@@ -747,7 +817,7 @@ function WorkOrderDetail() {
                           {record.creator_name || (record.creator_role === 'cs' ? '客服' : record.creator_role === 'manager' ? '项目经理' : '客户')}
                         </Text>
                       </div>
-                      <p style={{ color: TEXT_COLOR, fontSize: '14px', marginBottom: '8px' }}>{record.content}</p>
+                      <p style={{ color: TEXT_COLOR, fontSize: '14px', marginBottom: '8px' }}>{formatRecordContent(record.content)}</p>
                       {record.price && (
                         <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                           <WalletOutlined style={{ color: PRIMARY_COLOR }} />
@@ -805,11 +875,13 @@ function WorkOrderDetail() {
                             {record.attachments.slice(0, 2).map((file, idx) => {
                               const fileName = typeof file === 'string' ? file.split('/').pop().replace(/^\d+_/, '') : (file.name || `附件${idx + 1}`);
                               const fileUrl = typeof file === 'string' ? getImageUrl(file) : (file.url ? getImageUrl(file.url) : '#');
-                              const lowerName = fileName.toLowerCase();
                               
                               const handleFileClick = () => {
-                                if (lowerName.match(/\.(jpg|jpeg|png|gif|bmp)$/)) {
+                                if (isImageFile(fileName)) {
                                   setPreviewImage(fileUrl);
+                                } else if (isPdfFile(fileName) || isOfficeFile(fileName) || isVideoFile(fileName)) {
+                                  setPreviewFile({ name: fileName, url: fileUrl });
+                                  setPreviewModalVisible(true);
                                 } else {
                                   const link = document.createElement('a');
                                   link.href = fileUrl;
@@ -863,9 +935,9 @@ function WorkOrderDetail() {
           <Title level={2} style={{ marginBottom: '0', color: TEXT_COLOR }}>工单详情</Title>
         </div>
 
-        {String(order.status) === '10' && (
+        {canEditAssignment && (
           <Card 
-            title="安排勘测" 
+            title={statusStr === '20' ? '修改派单信息' : '安排勘测'} 
             style={{ 
               marginBottom: '24px', 
               borderLeft: '4px solid ' + PRIMARY_COLOR,
@@ -1082,7 +1154,7 @@ function WorkOrderDetail() {
         >
           {previewFile && (
             <>
-              {previewFile.name.toLowerCase().match(/\.(jpg|jpeg|png|gif|bmp)$/) ? (
+              {isImageFile(previewFile.name) ? (
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '500px', padding: '20px' }}>
                   <Image
                     src={previewFile.url}
@@ -1091,7 +1163,16 @@ function WorkOrderDetail() {
                     fallback="https://via.placeholder.com/400x300?text=图片加载失败"
                   />
                 </div>
-              ) : previewFile.name.toLowerCase().includes('.pdf') ? (
+              ) : isVideoFile(previewFile.name) ? (
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '500px', padding: '20px', background: '#000' }}>
+                  <video
+                    src={previewFile.url}
+                    controls
+                    preload="metadata"
+                    style={{ width: '100%', maxHeight: '600px' }}
+                  />
+                </div>
+              ) : isPdfFile(previewFile.name) ? (
                 <div style={{ width: '100%', height: '600px' }}>
                   <embed
                     src={previewFile.url}
@@ -1099,7 +1180,7 @@ function WorkOrderDetail() {
                     style={{ width: '100%', height: '100%' }}
                   />
                 </div>
-              ) : previewFile.name.toLowerCase().match(/\.(doc|docx|xls|xlsx|ppt|pptx)$/) ? (
+              ) : isOfficeFile(previewFile.name) ? (
                 <div style={{ width: '100%', height: '600px' }}>
                   <iframe
                     src={`https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(previewFile.url)}`}

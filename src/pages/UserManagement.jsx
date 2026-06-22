@@ -17,6 +17,8 @@ import {
 import { PlusOutlined, EditOutlined, DeleteOutlined, EyeOutlined, ReloadOutlined } from '@ant-design/icons';
 import { cloudbase, db } from '../cloudbase';
 import AppLayout from '../components/Layout';
+import { ROLE_OPTIONS, getRoleOption } from '../config/business';
+import { withOperator } from '../utils/auth';
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -25,14 +27,6 @@ const PRIMARY_COLOR = '#2563eb';
 const PRIMARY_HOVER = '#1d4ed8';
 const TEXT_COLOR = '#1e293b';
 const TEXT_SECONDARY = '#64748b';
-
-const roleOptions = [
-  { value: 'manager', label: '项目经理', color: 'orange' },
-  { value: 'worker', label: '工人', color: 'cyan' },
-  { value: 'cs', label: '客服', color: 'blue' },
-  { value: 'management', label: '公司管理层', color: 'gold' },
-  { value: 'admin', label: '管理员', color: 'purple' },
-];
 
 function UserManagement() {
   const [loading, setLoading] = useState(true);
@@ -49,14 +43,11 @@ function UserManagement() {
   const [searchName, setSearchName] = useState('');
   const [searchPhone, setSearchPhone] = useState('');
   const [searchRole, setSearchRole] = useState('');
-  const [currentUser, setCurrentUser] = useState(null);
-
   useEffect(() => {
     const userStr = localStorage.getItem('user');
     if (userStr) {
       try {
         const user = JSON.parse(userStr);
-        setCurrentUser(user);
         console.log('当前用户:', user);
       } catch (err) {
         console.error('解析用户信息失败:', err);
@@ -93,12 +84,12 @@ function UserManagement() {
       
       const result = await cloudbase.callFunction({
         name: 'create-user',
-        data: {
+        data: withOperator({
           phone,
           name,
           department: department || '',
           role: Array.isArray(role) ? role.join(',') : role
-        }
+        })
       });
       
       console.log('云函数返回结果:', result);
@@ -129,11 +120,7 @@ function UserManagement() {
         try {
           const result = await cloudbase.callFunction({
             name: 'delete-user',
-            data: { 
-              userId,
-              operatorId: currentUser?.id || currentUser?._id || '',
-              operatorName: currentUser?.name || ''
-            }
+            data: withOperator({ userId })
           });
           
           if (result.result.code === 200) {
@@ -175,15 +162,13 @@ function UserManagement() {
       
       const result = await cloudbase.callFunction({
         name: 'update-user',
-        data: {
+        data: withOperator({
           userId: editUser._id,
           phone,
           name,
           department: department || '',
-          role: Array.isArray(role) ? role.join(',') : role,
-          operatorId: currentUser?.id || currentUser?._id || '',
-          operatorName: currentUser?.name || ''
-        }
+          role: Array.isArray(role) ? role.join(',') : role
+        })
       });
       
       if (result.result.code === 200) {
@@ -253,7 +238,7 @@ function UserManagement() {
         try {
           const result = await cloudbase.callFunction({
             name: 'reset-password',
-            data: { userId }
+            data: withOperator({ userId })
           });
           
           if (result.result.code === 200) {
@@ -301,7 +286,7 @@ function UserManagement() {
         return (
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
             {roles.map((r) => {
-              const roleInfo = roleOptions.find(opt => opt.value === r);
+              const roleInfo = getRoleOption(r);
               return roleInfo ? (
                 <Tag key={r} color={roleInfo.color}>{roleInfo.label}</Tag>
               ) : (
@@ -409,7 +394,7 @@ function UserManagement() {
             onChange={setSearchRole}
             style={{ width: '150px', borderRadius: '8px' }}
           >
-            {roleOptions.map(role => (
+            {ROLE_OPTIONS.map(role => (
               <Option key={role.value} value={role.value}>
                 {role.label}
               </Option>
@@ -556,7 +541,7 @@ function UserManagement() {
                       placeholder="请选择角色（可多选）"
                       style={{ width: '100%', borderRadius: '8px' }}
                     >
-                      {roleOptions.map(role => (
+                      {ROLE_OPTIONS.map(role => (
                         <Option key={role.value} value={role.value}>
                           {role.label}
                         </Option>
@@ -644,7 +629,7 @@ function UserManagement() {
                   }
                   if (roles.length === 0) return <Text>-</Text>;
                   return roles.map((r) => {
-                    const roleInfo = roleOptions.find(opt => opt.value === r);
+                    const roleInfo = getRoleOption(r);
                     return roleInfo ? (
                       <Tag key={r} color={roleInfo.color}>{roleInfo.label}</Tag>
                     ) : (
@@ -753,7 +738,7 @@ function UserManagement() {
                       placeholder="请选择角色（可多选）"
                       style={{ width: '100%', borderRadius: '8px' }}
                     >
-                      {roleOptions.map(role => (
+                      {ROLE_OPTIONS.map(role => (
                         <Option key={role.value} value={role.value}>
                           {role.label}
                         </Option>

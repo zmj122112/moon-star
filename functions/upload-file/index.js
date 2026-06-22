@@ -9,10 +9,10 @@ exports.main = async (event, context) => {
   
   try {
     const app = cloudbase.init({
-      env: 'waterproof-3g9f7h9kdb626bb3'
+      env: process.env.TCB_ENV_ID || 'waterproof-3g9f7h9kdb626bb3'
     });
     
-    const { fileName, fileContent, folder } = event;
+    const { fileName, fileContent, folder, userId, token } = event;
     
     console.log('参数:', { fileName, folder, fileContentLength: fileContent?.length });
     
@@ -21,6 +21,18 @@ exports.main = async (event, context) => {
         success: false,
         message: '缺少必要参数'
       };
+    }
+
+    if (token) {
+      const db = app.database();
+      const result = await db.collection('managers').doc(userId).get();
+      const user = Array.isArray(result.data) ? result.data[0] : result.data;
+      if (!user || user.token !== token) {
+        return {
+          success: false,
+          message: '登录已过期，请重新登录'
+        };
+      }
     }
 
     const fullFileName = `${folder}/${Date.now()}_${fileName}`;

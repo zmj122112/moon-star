@@ -9,6 +9,7 @@ import ProfileSettings from './pages/ProfileSettings';
 import ProjectManager from './pages/ProjectManager';
 import ProjectManagerDetail from './pages/ProjectManagerDetail';
 import Dashboard from './pages/Dashboard';
+import OperationRollback from './pages/OperationRollback';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 
@@ -51,6 +52,11 @@ function App() {
           <Route path="/dashboard" element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/operations/rollback" element={
+            <ProtectedRoute>
+              <OperationRollback />
             </ProtectedRoute>
           } />
         </Routes>
