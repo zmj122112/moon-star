@@ -1,5 +1,69 @@
 [
   {
+    "id": "carousel1",
+    "component": "Carousel",
+    "attributes": {
+      "autoplay": true,
+      "circular": true,
+      "duration": 500,
+      "images": [
+        {
+          "image": "/resources/2026-06/lowcode-2488826",
+          "title": "图片1",
+          "fit": "cover",
+          "tapMode": "tap",
+          "height": "185px",
+          "width": "100%",
+          "__sortid__": "a92prFZ9FiegtB0ARiFE7",
+          "packageName": ""
+        },
+        {
+          "image": "/resources/2026-06/lowcode-2488827",
+          "title": "图片2",
+          "fit": "cover",
+          "tapMode": "tap",
+          "height": "185px",
+          "width": "100%",
+          "__sortid__": "oAM6a3EDD1TEg1qmdbhtK",
+          "packageName": ""
+        },
+        {
+          "image": "/resources/2026-06/lowcode-2488825",
+          "title": "图片3",
+          "fit": "cover",
+          "tapMode": "tap",
+          "height": "185px",
+          "width": "100%",
+          "__sortid__": "CHY45PgRWtlB2TpPlZXzE",
+          "packageName": ""
+        }
+      ],
+      "indicatorActiveColor": "rgb(225, 29, 72)",
+      "indicatorColor": "rgba(200, 200, 200, 0.9)",
+      "indicatorDots": true,
+      "interval": 3000,
+      "vertical": false,
+      "style": {
+        "width": "95%",
+        "height": "185px",
+        "margin": "0px 12px 0px",
+        "borderRadius": "16px 16px",
+        "justifyContent": "flex-start",
+        "display": "flex",
+        "padding": "0px 0px 0px"
+      }
+    },
+    "directives": {
+      ":if": true
+    },
+    "extra": {
+      "staticResourceAttribute": [
+        "images.*.image"
+      ],
+      "attributeExtraData": {}
+    }
+  },
+  {
     "id": "container21",
     "component": "Container",
     "attributes": {
