@@ -105,6 +105,42 @@ npm run deploy:functions
 
 注意：当前测试版和正式版前端使用不同 Hosting 路径，但云函数共用同一个 CloudBase 环境。云函数变更会影响该环境下所有前端入口。
 
+## 访问入口
+
+正式版后台：
+
+- [https://m.yuexing1947.com/moon-star-admin/](https://m.yuexing1947.com/moon-star-admin/)
+
+测试版后台：
+
+- [https://m.yuexing1947.com/moon-star-admin-test/](https://m.yuexing1947.com/moon-star-admin-test/)
+
+CloudBase Hosting 源站：
+
+- 正式版路径：`/moon-star-admin`
+- 测试版路径：`/moon-star-admin-test`
+
+## 小程序代码同步
+
+微搭小程序当前本地工作区路径：
+
+```text
+/Users/swift/.weda-workspaces/waterproof-3g9f7h9kdb626bb3/apps/app-7j15h0p1
+```
+
+仓库内保留的小程序源码快照路径：
+
+```text
+weda-client/app-7j15h0p1
+```
+
+说明：
+
+- 微搭在线编辑器上的修改，不会自动进入本仓库。
+- 当前仓库里的 `weda-client/app-7j15h0p1` 是一份可追踪的源码快照，用于 Git 备份和协作留档。
+- 如果你先在微搭在线编辑器里改了页面，再需要同步回仓库，建议先从微搭拉到本地工作区，再覆盖到仓库内的 `weda-client/app-7j15h0p1`。
+- 如果你先在仓库里改了 PC 端代码，发布后台时不影响微搭小程序端。
+
 ## 维护约定
 
 - 工单状态、记录类型、角色配置集中在 `src/config/business.js`。
