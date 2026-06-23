@@ -48,11 +48,13 @@
         "width": "95%",
         "height": "185px",
         "margin": "0px 12px 0px",
-        "borderRadius": "16px 16px",
+        "borderRadius": "16px",
         "justifyContent": "flex-start",
-        "display": "flex",
-        "padding": "0px 0px 0px"
-      }
+        "display": "block",
+        "padding": "0px 0px 0px",
+        "overflow": "hidden"
+      },
+      "className": "hero-carousel rounded-carousel"
     },
     "directives": {
       ":if": true
