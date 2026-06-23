@@ -9,6 +9,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      TCB_SECRET_ID: ${{ secrets.TCB_SECRET_ID }}
+      TCB_SECRET_KEY: ${{ secrets.TCB_SECRET_KEY }}
+      TCB_ENV_ID: ${{ secrets.TCB_ENV_ID }}
     
     steps:
       - name: Checkout code
@@ -29,8 +33,14 @@ jobs:
       - name: Install CloudBase CLI
         run: npm install -g @cloudbase/cli
 
+      - name: Validate CloudBase secrets
+        run: |
+          test -n "$TCB_SECRET_ID" || (echo "Missing GitHub secret: TCB_SECRET_ID" && exit 1)
+          test -n "$TCB_SECRET_KEY" || (echo "Missing GitHub secret: TCB_SECRET_KEY" && exit 1)
+          test -n "$TCB_ENV_ID" || (echo "Missing GitHub secret: TCB_ENV_ID" && exit 1)
+
+      - name: Login CloudBase CLI
+        run: tcb login --apiKeyId "$TCB_SECRET_ID" --apiKey "$TCB_SECRET_KEY"
+
       - name: Deploy to CloudBase
-        run: tcb hosting deploy dist -e waterproof-3g9f7h9kdb626bb3
-        env:
-          TCB_SECRET_ID: ${{ secrets.TCB_SECRET_ID }}
-          TCB_SECRET_KEY: ${{ secrets.TCB_SECRET_KEY }}
+        run: tcb hosting deploy dist -e "$TCB_ENV_ID"
