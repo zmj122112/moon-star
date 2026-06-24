@@ -34,13 +34,15 @@
     "@tcwd/CLOUDBASE_STANDARD": "weda:components?v=1.10.4"
   },
   "extra": {
+    "domain": "waterproof-3g9f7h9kdb626bb3-1257706342.tcloudbaseapp.com",
     "miniprogramPlugins": [],
     "npmDependencies": {},
     "plugins": [],
     "rootPath": "",
-    "originHistoryId": "6621816",
+    "originHistoryId": "6623781",
     "disabled": false,
     "enableAsyncMaterials": true,
+    "clientId": "AOJ8yAABZ6y4SzlzPOY",
     "loginConfigVersion": "",
     "enableLoginStatusShare": false,
     "pageTree": [
@@ -125,6 +127,11 @@
       "u_shi_fu_gong_zuo_tai"
     ],
     "processPages": [],
+    "mpAppId": "wxaa145c7ed1e37a15",
+    "endpointType": "",
+    "resourceAppId": "wxaa145c7ed1e37a15",
+    "envId": "waterproof-3g9f7h9kdb626bb3",
+    "uin": "100007664889",
     "access": {
       "pureAnonymousLogin": false
     }

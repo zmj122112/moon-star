@@ -9,40 +9,40 @@
       "duration": 500,
       "images": [
         {
-          "image": "/resources/2026-06/lowcode-2488826",
+          "image": "/resources/2026-06/lowcode-2489130",
           "title": "图片1",
           "fit": "cover",
           "tapMode": "tap",
           "height": "185px",
           "width": "100%",
-          "__sortid__": "EzdZwMrnhdLtK-VTh6LxV",
+          "__sortid__": "ayBdjNb6cN1_b1mt3DbWK",
           "packageName": ""
         },
         {
-          "image": "/resources/2026-06/lowcode-2488827",
+          "image": "/resources/2026-06/lowcode-2489010",
           "title": "图片2",
           "fit": "cover",
           "tapMode": "tap",
           "height": "185px",
           "width": "100%",
-          "__sortid__": "h8YPwI_mM_GbVeD86ooaY",
+          "__sortid__": "hWHa1OrifBxOpU845gwhO",
           "packageName": ""
         },
         {
-          "image": "/resources/2026-06/lowcode-2488825",
+          "image": "/resources/2026-06/lowcode-2489014",
           "title": "图片3",
           "fit": "cover",
           "tapMode": "tap",
           "height": "185px",
           "width": "100%",
-          "__sortid__": "tndnzB5DVQFk4YiInmbQd",
+          "__sortid__": "RaoaPqVDVlsji4cwlsO-C",
           "packageName": ""
         }
       ],
       "indicatorActiveColor": "rgb(225, 29, 72)",
       "indicatorColor": "rgba(200, 200, 200, 0.9)",
-      "indicatorDots": true,
-      "interval": 3000,
+      "indicatorDots": false,
+      "interval": 6000,
       "vertical": false,
       "style": {
         "width": "95%",
@@ -53,8 +53,7 @@
         "display": "block",
         "padding": "0px 0px 0px",
         "overflow": "hidden"
-      },
-      "className": "hero-carousel rounded-carousel"
+      }
     },
     "directives": {
       ":if": true
